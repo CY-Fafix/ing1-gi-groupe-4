@@ -1,0 +1,22 @@
+Pour les administrateurs :
+Fonctionnalités d'administration :
+-définir et administrer des utilisateurs (formulaire d'une dizaine d'informations)
+-définir et administrer des data challenges (formulaire)
+-définir et administrer différentes ressources : liste d’URLs correspondant
+généralement à des ressources sous différents formats (notebooks, pdf, html, vidéo) (pas le plus important)
+
+Pour les gestionnaires :
+(id et mdp fournis par un admin)
+-peut modifier son mdp
+-acceder a une page ou sont présents ses projets rattachés et acceder a ses infos
+-selectionner un projet data et acceder a tous les projets rattachés
+-communiquer avec les participants à un projet
+-créer un message type mail transmis à tous les participants d'un projet
+-créer et supprimer un questionnaire avec une durée prédéfinie (formulaire) et visualiser les réponses (classement public)
+
+Pour les participants :
+-créer un compte/se connecter
+-s'inscrire à un data challenge puis acceder à ses infos
+-créer une équipe si capitaine, ajouter des membres à l'équipe, supprimer l'équipe
+-(capitaine) répondre à un qcm
+-spécifier un lien d'hébergement du code
