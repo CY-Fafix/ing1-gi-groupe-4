@@ -20,3 +20,5 @@ Pour les participants :
 -créer une équipe si capitaine, ajouter des membres à l'équipe, supprimer l'équipe
 -(capitaine) répondre à un qcm
 -spécifier un lien d'hébergement du code
+
+Test
