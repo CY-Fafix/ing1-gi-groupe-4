@@ -102,7 +102,57 @@ class UserController {
             echo "Error: " . $e->getMessage();
         }
     }
+    public function connectionUser($identifiant, $password){
+    // Vérifie si l'utilisateur est déjà connecté, s'il est redirigé vers la page d'accueil
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        header("location: connexionreussie.php");
+        exit;
+    }
+
+    // Définit les variables et initialise avec des valeurs vides
+    $username_us = $password_us = "";
+    $username_err = $password_err = "";
+
+    // Traite les données soumises lors de la tentative de connexion
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    echo($identifiant.$password);
+    $donnees = donnesUser($identifiant,$password);
+        // Vérifie si le nom d'utilisateur est vide
+        if(empty(trim($identifiant))){
+            throw new InvalidArgumentException('Veuillez rentrer un identifiant')
+        } else{
+            $username_us = trim($identifiant);
+        }
+
+        // Vérifie si le mot de passe est vide
+        if(empty(trim($identifiant))){
+            throw new InvalidArgumentException('Veuillez entrez votre mot de passe')
+        } else{
+            $password_us = trim($password);
+        }
+
+        // Valide les informations de connexion
+        if(empty($username_err) && empty($password_err)){
+        if ($donnees==true){
+                // Le mot de passe est correct, démarre une nouvelle session
+                session_start();
+                // Stocke les données de session
+                $_SESSION["loggedin"] = true;
+                $_SESSION["login"]=$_POST["username_get"];
+                // Redirige l'utilisateur vers la page d'accueil
+                return(true);
+            } else{
+                // Affiche un message d'erreur si le mot de passe est incorrect
+                throw new InvalidArgumentException("Le mot de passe que vous avez entré n'est pas valide.")
+            }
+        } else{
+        // Affiche un message d'erreur si le nom d'utilisateur n'existe pas
+        throw new InvalidArgumentException("Aucun compte trouvé avec ce nom d'utilisateur.");
+            }
+        }
+    }
 }
+
 
 /*Exemple d'utilisation (tu peux copier coller):
 //Inclure les fichiers nécessaires
