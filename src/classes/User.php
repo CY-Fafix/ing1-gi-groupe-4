@@ -1,118 +1,58 @@
 <?php
-class User {
-    private $id;
-    private $firstName;
-    private $lastName;
-    private $email;
-    private $phone;
-    private $password;
-    private $role; // 'admin', 'gestionnaire', 'etudiant'
-    private $activationStart; //Date d'activation du compte
-    private $activationEnd; //Date de fin du compte
-    private $class; //(L1,L2,L3,M1,M2,D) 
-    private $city; 
 
-    public function __construct($id, $firstName, $lastName, $email, $phone, $password, $role, $activationStart, $activationEnd, $class, $city) {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->password = $password;
-        $this->role = $role;
-        $this->activationStart = $activationStart;
-        $this->activationEnd = $activationEnd;
-        $this->class = $class;
-        $this->city = $city;
-    }
+class Utilisateur {
+  // Attributs communs
+  protected $nom;
+  protected $prenom;
+  protected $email;
+  protected $motDePasse;
 
-    // Getters
-    public function getId() {
-        return $this->id;
-    }
+  // Constructeur
+  public function __construct($nom, $prenom, $email, $motDePasse) {
+    $this->nom = $nom;
+    $this->prenom = $prenom;
+    $this->email = $email;
+    $this->motDePasse = $motDePasse;
+  }
 
-    public function getFirstName() {
-        return $this->firstName;
-    }
+  // Getters
+  public function getNom() {
+    return $this->nom;
+  }
 
-    public function getLastName() {
-        return $this->lastName;
-    }
+  public function getPrenom() {
+    return $this->prenom;
+  }
 
-    public function getEmail() {
-        return $this->email;
-    }
+  public function getEmail() {
+    return $this->email;
+  }
 
-    public function getPhone() {
-        return $this->phone;
-    }
+  public function getMotDePasse() {
+    return $this->motDePasse;
+  }
 
-    public function getPassword() {
-        return $this->password;
-    }
+  // Setters
+  public function setNom($nom) {
+    $this->nom = $nom;
+  }
 
-    public function getRole() {
-        return $this->role;
-    }
+  public function setPrenom($prenom) {
+    $this->prenom = $prenom;
+  }
 
-    public function getActivationStart() {
-        return $this->activationStart;
+  public function setEmail($email) {
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $this->email = $email;
+    } else {
+      throw new Exception("Email non valide");
     }
+  }
 
-    public function getActivationEnd() {
-        return $this->activationEnd;
-    }
-
-    public function getClass() {
-        return $this->class;
-    }
-    public function getCity(){
-        return $this->city;
-    }
-
-    // Setters
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setFirstName($firstName) {
-        $this->firstName = $firstName;
-    }
-
-    public function setLastName($lastName) {
-        $this->lastName = $lastName;
-    }
-
-    public function setEmail($email) {
-        $this->email = $email;
-    }
-
-    public function setPhone($phone) {
-        $this->phone = $phone;
-    }
-
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-
-    public function setRole($role) {
-        $this->role = $role;
-    }
-
-    public function setActivationStart($activationStart) {
-        $this->activationStart = $activationStart;
-    }
-
-    public function setActivationEnd($activationEnd) {
-        $this->activationEnd = $activationEnd;
-    }
-
-    public function setClass($class){
-        $this->class = $class;
-    }
-
-    public function setCity($city){
-        $this->city = $city;
-    }
+  public function setMotDePasse($motDePasse) {
+    // Assurez-vous de mettre en œuvre une certaine logique de hachage sécurisée pour le mot de passe
+    $this->motDePasse = password_hash($motDePasse, PASSWORD_DEFAULT);
+  }
 }
+
 ?>
