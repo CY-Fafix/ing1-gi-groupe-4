@@ -2,25 +2,32 @@
 
 class Utilisateur {
   // Attributs communs
+  protected $ID; // Ajouté
   protected $nom;
   protected $prenom;
   protected $email;
   protected $motDePasse;
   protected $telephone;
   protected $ville;
-  //Rajouter un role;
+  protected $role;
+
 
   // Constructeur
-  public function __construct($nom, $prenom, $email, $motDePasse, $telephone, $ville) {
+  public function __construct($ID, $nom, $prenom, $email, $motDePasse, $telephone, $ville, $role) {
+    $this->ID = $ID;
     $this->nom = $nom;
     $this->prenom = $prenom;
     $this->email = $email;
     $this->motDePasse = $motDePasse;
     $this->telephone = $telephone;
     $this->ville = $ville;
+    $this->role = $role;
   }
 
   // Getters
+  public function getID() {
+    return $this->ID;
+  }
   public function getNom() {
     return $this->nom;
   }
@@ -45,6 +52,9 @@ class Utilisateur {
     return $this->ville;
   }
 
+  public function getRole(){
+    return $this->role;
+  }
   // Setters
   public function setNom($nom) {
     $this->nom = $nom;
@@ -73,6 +83,9 @@ class Utilisateur {
 
   public function setVille($ville){
     $this->ville = $ville;
+  }
+  public function setRole($role){
+    $this->role = $role;
   }
 }
 

@@ -1,12 +1,13 @@
 <?php
+require_once 'User.php';
 
 class Etudiant extends Utilisateur {
   private $niveau;
   private $ecole;
 
   // Constructeur
-  public function __construct($nom, $prenom, $email, $motDePasse, $telephone, $ville, $niveau, $ecole) {
-    parent::__construct($nom, $prenom, $email, $motDePasse, $telephone, $ville);
+  public function __construct($id, $nom, $prenom, $email, $motDePasse, $telephone, $ville, $role, $niveau, $ecole) {
+    parent::__construct($id, $nom, $prenom, $email, $motDePasse, $telephone, $ville, $role);
     $this->niveau = $niveau;
     $this->ecole = $ecole;
   }
@@ -22,11 +23,19 @@ class Etudiant extends Utilisateur {
 
   // Setters
   public function setNiveau($niveau) {
-    $this->niveau = $niveau;
+    if (is_string($niveau)) {
+      $this->niveau = $niveau;
+    } else {
+      throw new InvalidArgumentException('Le niveau doit être une chaîne de caractères.');
+    }
   }
 
   public function setEcole($ecole) {
-    $this->ecole = $ecole;
+    if (is_string($ecole)) {
+      $this->ecole = $ecole;
+    } else {
+      throw new InvalidArgumentException('L\'école doit être une chaîne de caractères.');
+    }
   }
 
 }
