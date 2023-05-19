@@ -1,195 +1,287 @@
 <?php
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once '../classes/Database.php';
-require_once '../classes/User.php';
+require_once '../classes/Utilisateur.php';
 
-// Définition de la classe UserController
 class UserController {
-    // Variable pour se connecter à la base de données
     private $conn;
-    // Nom de la table dans la base de données
     private $table_name = "Utilisateurs";
 
-    // Constructeur de la classe
     public function __construct() {
-        // Création d'une nouvelle instance de la classe Database
         $db = new Database();
-        // Connexion à la base de données
-        $this->conn = $db->getConnection();
+        $this->conn = $db->connect();
+        if ($this->conn) {
+            echo "Database connection successful.";
+        } else {
+            echo "Database connection failed.";
+        }
     }
-
-    // Méthode pour créer un nouvel utilisateur
-    public function createUser(User $user) {
+    
+    public function createUser(Utilisateur $user) {
         try {
-            // Préparation de la requête SQL
-            $sql = "INSERT INTO " . $this->table_name . " (firstName, lastName, email, phone, password, role, activationStart, activationEnd, class, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            // Vérifier si l'utilisateur existe déjà
+            $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
             $stmt = $this->conn->prepare($sql);
-
-            // Liaison des paramètres de la requête avec les valeurs de l'objet utilisateur
-            $stmt->bindParam(1, $user->getFirstName());
-            $stmt->bindParam(2, $user->getLastName());
-            $stmt->bindParam(3, $user->getEmail());
-            $stmt->bindParam(4, $user->getPhone());
-            $stmt->bindParam(5, $user->getPassword());
-            $stmt->bindParam(6, $user->getRole());
-            $stmt->bindParam(7, $user->getActivationStart());
-            $stmt->bindParam(8, $user->getActivationEnd());
-            $stmt->bindParam(9, $user->getClass());
-            $stmt->bindParam(10, $user->getCity());
-
-            // Exécution de la requête
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $email = $user->getEmail();
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+            
+            if($stmt->num_rows > 0) {
+                // L'utilisateur existe déjà
+                return false;
+            }
+            
+            $stmt->free_result();
+            
+            // Créer l'utilisateur
+            $sql = "INSERT INTO " . $this->table_name . " (Nom, Prenom, Email, MotDePasse, Telephone, Ville, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            
+            $nom = $user->getNom();
+            $prenom = $user->getPrenom();
+            $motDePasse = $user->getMotDePasse();
+            $telephone = $user->getTelephone();
+            $ville = $user->getVille();
+            $role = $user->getRole();
+    
+            $stmt->bind_param("sssssss", $nom, $prenom, $email, $motDePasse, $telephone, $ville, $role);
+    
             if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-        } catch(PDOException $e) {
-            // En cas d'erreur, affichage du message d'erreur
+        } catch(Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
+    
 
-    // Méthode pour mettre à jour un utilisateur existant
-    public function updateUser(User $user) {
+    public function login($email, $password) {
+        // Préparez la requête SQL
+        $stmt = $this->conn->prepare("SELECT * FROM Utilisateurs WHERE Email = ?");
+
+        // Liez les paramètres
+        $stmt->bind_param("s", $email);
+
+        // Exécutez la requête
+        $stmt->execute();
+
+        // Liez le résultat à des variables
+        $stmt->bind_result($id, $nom, $prenom, $entreprise, $telephone, $email, $dateDebut, $dateFin, $hashedPassword, $role, $niveau, $ecole, $ville);
+
+        // Récupérez le premier résultat
+        $userFound = $stmt->fetch();
+
+        // Si un utilisateur avec cet email a été trouvé et que le mot de passe correspond
+        if ($userFound && password_verify($password, $hashedPassword)) {
+            // Initialisez les informations de session
+            $_SESSION['user_id'] = $id;
+            $_SESSION['role'] = $role;
+
+            // Retournez l'utilisateur pour utilisation ultérieure
+            return new Utilisateur(
+                $id,
+                $nom,
+                $prenom,
+                $email,
+                $hashedPassword,
+                $telephone,
+                $ville,
+                $role
+            );
+        }
+
+        // Si les identifiants sont incorrects, retournez null
+        return null;
+    }
+
+    //Cette méthode ne permet pas de modifier l'email d'un utilisateur !!!!
+    public function updateProfile(Utilisateur $user) {
         try {
-            // Préparation de la requête SQL
-            $sql = "UPDATE " . $this->table_name . " SET firstName = ?, lastName = ?, email = ?, phone = ?, password = ?, role = ?, activationStart = ?, activationEnd = ?, class = ?, city = ? WHERE id = ?";
+            // Vérifier si l'utilisateur existe
+            $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
             $stmt = $this->conn->prepare($sql);
-
-            // Liaison des paramètres de la requête avec les valeurs de l'objet utilisateur
-            $stmt->bindParam(1, $user->getFirstName());
-            $stmt->bindParam(2, $user->getLastName());
-            $stmt->bindParam(3, $user->getEmail());
-            $stmt->bindParam(4, $user->getPhone());
-            $stmt->bindParam(5, $user->getPassword());
-            $stmt->bindParam(6, $user->getRole());
-            $stmt->bindParam(7, $user->getActivationStart());
-            $stmt->bindParam(8, $user->getActivationEnd());
-            $stmt->bindParam(9, $user->getClass());
-            $stmt->bindParam(10, $user->getCity());
-            $stmt->bindParam(11, $user->getId());
-
-            // Exécution de la requête
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $email = $user->getEmail();
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+            
+            if($stmt->num_rows == 0) {
+                // L'utilisateur n'existe pas
+                return false;
+            }
+            
+            $stmt->free_result();
+            
+            // Mettre à jour l'utilisateur
+            $sql = "UPDATE " . $this->table_name . " SET Nom = ?, Prenom = ?, MotDePasse = ?, Telephone = ?, Ville = ?, Role = ? WHERE Email = ?";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            
+            $nom = $user->getNom();
+            $prenom = $user->getPrenom();
+            $motDePasse = $user->getMotDePasse();
+            $telephone = $user->getTelephone();
+            $ville = $user->getVille();
+            $role = $user->getRole();
+        
+            $stmt->bind_param("sssssss", $nom, $prenom, $motDePasse, $telephone, $ville, $role, $email);
+        
             if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-        } catch(PDOException $e) {
-            // En cas d'erreur, affichage du message d'erreur
+        } catch(Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
 
-    // Méthode pour supprimer un utilisateur
-    public function deleteUser($id) {
+    public function changePassword($email, $oldPassword, $newPassword) {
         try {
-            // Préparation de la requête SQL
-            $sql = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+            // Chercher l'utilisateur avec l'email donné
+            $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
             $stmt = $this->conn->prepare($sql);
-
-            // Liaison de l'ID de l'utilisateur à la requête
-            $stmt->bindParam(1, $id);
-
-            // Exécution de la requête
-            if ($stmt->execute()) {
-                return true;
-            } else {
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->bind_result($id, $nom, $prenom, $entreprise, $telephone, $email, $dateDebut, $dateFin, $hashedPassword, $role, $niveau, $ecole, $ville);
+            $userFound = $stmt->fetch();
+    
+            if (!$userFound) {
+                // Utilisateur non trouvé
                 return false;
             }
-        } catch(PDOException $e) {
-            // En cas d'erreur, affichage du message d'erreur
-            echo "Error: " . $e->getMessage();
+    
+            // Vérifier l'ancien mot de passe
+            if (!password_verify($oldPassword, $hashedPassword)) {
+                // L'ancien mot de passe est incorrect
+                return false;
+            }
+            $stmt->free_result();
+            // Hasher le nouveau mot de passe
+            $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    
+            // Mettre à jour le mot de passe dans la base de données
+            $sql = "UPDATE " . $this->table_name . " SET MotDePasse = ? WHERE Email = ?";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("ss", $newHashedPassword, $email);
+            $stmt->execute();
+    
+            // Retourner true si la mise à jour a réussi
+            if($stmt->affected_rows === 0) return false;
+            return true;
+        } catch(Exception $e) {
+            return false;
         }
     }
-    public function connectionUser($identifiant, $password){
-    // Vérifie si l'utilisateur est déjà connecté, s'il est redirigé vers la page d'accueil
-    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-        header("location: connexionreussie.php");
-        exit;
-    }
 
-    // Définit les variables et initialise avec des valeurs vides
-    $username_us = $password_us = "";
-    $username_err = $password_err = "";
-
-    // Traite les données soumises lors de la tentative de connexion
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-    echo($identifiant.$password);
-    $donnees = donnesUser($identifiant,$password);
-        // Vérifie si le nom d'utilisateur est vide
-        if(empty(trim($identifiant))){
-            throw new InvalidArgumentException('Veuillez rentrer un identifiant')
-        } else{
-            $username_us = trim($identifiant);
-        }
-
-        // Vérifie si le mot de passe est vide
-        if(empty(trim($identifiant))){
-            throw new InvalidArgumentException('Veuillez entrez votre mot de passe')
-        } else{
-            $password_us = trim($password);
-        }
-
-        // Valide les informations de connexion
-        if(empty($username_err) && empty($password_err)){
-        if ($donnees==true){
-                // Le mot de passe est correct, démarre une nouvelle session
+    
+    public function deleteAccount($email) {
+        try {
+            // Chercher l'utilisateur avec l'email donné
+            $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $userFound = $stmt->fetch();
+    
+            if (!$userFound) {
+                // Utilisateur non trouvé
+                return false;
+            }
+            $stmt->free_result();
+            // Supprimer l'utilisateur de la base de données
+            $sql = "DELETE FROM " . $this->table_name . " WHERE Email = ?";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("s", $email);
+    
+            if ($stmt->execute()) {
+                // Le compte a été supprimé avec succès
+    
+                // Terminez la session
                 session_start();
-                // Stocke les données de session
-                $_SESSION["loggedin"] = true;
-                $_SESSION["login"]=$_POST["username_get"];
-                // Redirige l'utilisateur vers la page d'accueil
-                return(true);
-            } else{
-                // Affiche un message d'erreur si le mot de passe est incorrect
-                throw new InvalidArgumentException("Le mot de passe que vous avez entré n'est pas valide.")
+                $_SESSION = array();
+                session_destroy();
+                
+                return true;
+            } else {
+                // Erreur lors de la suppression du compte
+                return false;
             }
-        } else{
-        // Affiche un message d'erreur si le nom d'utilisateur n'existe pas
-        throw new InvalidArgumentException("Aucun compte trouvé avec ce nom d'utilisateur.");
-            }
+        } catch(Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
+    
+    
+    public function connectionUser($identifiant, $password){
+        // Vérifie si l'utilisateur est déjà connecté, s'il est redirigé vers la page d'accueil
+        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+            header("location: connexionreussie.php");
+            exit;
+        }
+    }
+
+
+    public function logout() {
+        // Démarrer la session
+        session_start();
+    
+        // Unset all of the session variables
+        $_SESSION = array();
+    
+        //détruira la session, et non seulement les données de session !
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+    
+        // Enfin, détruisez la session.
+        session_destroy();
+    }
+    
 }
 
 
-/*Exemple d'utilisation (tu peux copier coller):
-//Inclure les fichiers nécessaires
-require_once '../classes/Database.php';
-require_once '../classes/User.php';
-require_once '../classes/UserController.php';
-
+/*Exemple d'utilisation de création d'utilisateur:
 // Créer une nouvelle instance de UserController
 $userController = new UserController();
 
 // Créer un nouvel utilisateur
-$newUser = new User(null, "John", "Doe", "john.doe@example.com", "123456789", "password123", "admin", date("Y-m-d H:i:s"), date("Y-m-d H:i:s", strtotime("+1 year")), "L1", "New York");
+$nouvelUtilisateur = new Utilisateur(null, "John", "Doe", "john.doe@example.com", "password123", "123456789", "Paris", "admin");
 
-if ($userController->createUser($newUser)) {
-    echo "User created successfully.";
+if ($userController->createUser($nouvelUtilisateur)) {
+    echo "Utilisateur créé avec succès.";
 } else {
-    echo "Failed to create user.";
+    echo "Échec de la création de l'utilisateur.";
 }
-
-// Mettre à jour un utilisateur existant
-// Supposons que l'utilisateur que nous voulons mettre à jour ait l'ID 1
-$existingUser = new User(1, "John", "Smith", "john.smith@example.com", "123456789", "password123", "admin", date("Y-m-d H:i:s"), date("Y-m-d H:i:s", strtotime("+1 year")), "L1", "New York");
-
-if ($userController->updateUser($existingUser)) {
-    echo "User updated successfully.";
-} else {
-    echo "Failed to update user.";
-}
-
-// Supprimer un utilisateur
-// Supposons que l'utilisateur que nous voulons supprimer ait l'ID 1
-if ($userController->deleteUser(1)) {
-    echo "User deleted successfully.";
-} else {
-    echo "Failed to delete user.";
-}
-?>
-
 */
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'User.php';
+require_once 'Utilisateur.php';
 
 class Administrateur extends Utilisateur {
 

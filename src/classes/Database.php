@@ -1,9 +1,9 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "database_name";
-    private $username = "username";
-    private $password = "password";
+    private $db_name = "datachallenge_db";
+    private $username = "cyfafix";
+    private $password = "Xx&Yd9@7deEhee";
     private $conn;
 
     public function connect() {
