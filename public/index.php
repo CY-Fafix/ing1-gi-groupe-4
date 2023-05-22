@@ -27,12 +27,15 @@
 			<div class="projet_data">
 				<a href="">
 					<img src="assets/truc.jpg" class="challenge" alt="bonbon miel">
+					<p>Projet data</p>
 				</a>
 				<a href="">
 					<img src="assets/truc.jpg" class="challenge" alt="bonbon miel">
+					<p>Projet data</p>
 				</a>
 				<a href="">
 					<img src="assets/truc.jpg" class="challenge" alt="bonbon miel">
+					<p>Projet data</p>
 				</a>
 			</div>
 		</div>
@@ -77,7 +80,7 @@
 	
 
         <!-- Button to open the modal login form -->
-        <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+        <button onclick="document.getElementById('id01').style.display='block'" class="loginbtn">Login</button>
 
         <!-- The Modal -->
         <div id="id01" class="modal">
@@ -91,21 +94,21 @@
             </div>
 
             <div class="container">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                <label for="uname" class="label"><b>Username</b></label>
+                <input type="text" class="input" placeholder="Enter Username" name="uname" required>
 
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <label for="psw"class="label"><b>Password</b></label>
+                <input type="password" class="input" placeholder="Enter Password" name="psw" required>
 
-                <button type="submit">Login</button>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                <button type="submit" class="loginbtn2">Login</button>
+                <label class="label">
+                    <input type="checkbox" checked="checked" class="input" name="remember"> Remember me
                 </label>
             </div>
 
-            <div class="container" style="background-color:#f1f1f1">
+            <div class="containerBas" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
+                <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
             </div>
         </form>
     </div>
