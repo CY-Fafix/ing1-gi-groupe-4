@@ -28,6 +28,7 @@ class EtudiantController extends UserController{
         $success = parent::createUser($user);
     
         if(!$success){
+            echo "Le succès est faux";
             return false;
         }
     
@@ -41,11 +42,13 @@ class EtudiantController extends UserController{
         $niveau = $user->getNiveau();
         $ecole = $user->getEcole();
         $email = $user->getEmail();
+        echo "Le niveau : $niveau ; lecole : $ecole; lemail : $email";
         $stmt->bind_param("sss", $niveau, $ecole, $email);
     
         if ($stmt->execute()) {
             return true;
         } else {
+            echo "lexecution est fausse";
             return false;
         }
     }

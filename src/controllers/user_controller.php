@@ -21,7 +21,6 @@ class UserController {
         try {
             // Vérifier si l'utilisateur existe déjà
             $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
-            var_dump($this->conn);
             $stmt = $this->conn->prepare($sql);
             if($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
@@ -33,6 +32,7 @@ class UserController {
             
             if($stmt->num_rows > 0) {
                 // L'utilisateur existe déjà
+                echo "L'utilisateur existe deja";
                 return false;
             }
             
@@ -42,6 +42,7 @@ class UserController {
             $sql = "INSERT INTO " . $this->table_name . " (Nom, Prenom, Email, MotDePasse, Telephone, Ville, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
             if($stmt === false) {
+                echo "Mauvais éxécution de la querry";
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
             
@@ -57,6 +58,7 @@ class UserController {
             if ($stmt->execute()) {
                 return true;
             } else {
+                echo "Mauvais éxécution de la querry";
                 return false;
             }
         } catch(Exception $e) {
