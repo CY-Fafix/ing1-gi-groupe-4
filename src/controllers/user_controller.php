@@ -4,8 +4,8 @@ require_once '../classes/Database.php';
 require_once '../classes/Utilisateur.php';
 
 class UserController {
-    private $conn;
-    private $table_name = "Utilisateurs";
+    protected $conn;
+    protected $table_name = "Utilisateurs";
 
     public function __construct() {
         $db = new Database();
@@ -21,6 +21,7 @@ class UserController {
         try {
             // Vérifier si l'utilisateur existe déjà
             $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
+            var_dump($this->conn);
             $stmt = $this->conn->prepare($sql);
             if($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));

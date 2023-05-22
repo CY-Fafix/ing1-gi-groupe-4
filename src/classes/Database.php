@@ -11,13 +11,15 @@ class Database {
         try {
             $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
             if ($this->conn->connect_error) {
-                die("Connection failed: " . $this->conn->connect_error);
+                throw new Exception("Connection failed: " . $this->conn->connect_error);
             }
         } catch(Exception $e) {
             echo 'Connection Error: ' . $e->getMessage();
+            exit(1);  // arrête l'exécution du script
         }
         return $this->conn;
     }
+    
 
     public function query($sql) {
         try {

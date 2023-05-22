@@ -1,6 +1,7 @@
 <?php
 
 class Utilisateur {
+
   // Attributs communs
   protected $ID; // Ajouté
   protected $nom;
@@ -27,10 +28,31 @@ class Utilisateur {
 }
 
 
-  // Getters
   public function getID() {
-    return $this->ID;
+    // Crée une nouvelle instance de Database
+    $db = new Database();
+
+    // Se connecte à la base de données
+    $db->connect();
+
+    // Récupère l'ID dans la BDD
+    $sql = "SELECT ID FROM Utilisateurs WHERE Email='" . $this->email . "'";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            // Ferme la connexion à la base de données
+            $db->close();
+
+            return $row["ID"];
+        }
+    } else {
+        // Ferme la connexion à la base de données
+        $db->close();
+
+        throw new Exception("Aucun utilisateur avec l'email : " . $this->email);
+    }
   }
+  
   public function getNom() {
     return $this->nom;
   }
