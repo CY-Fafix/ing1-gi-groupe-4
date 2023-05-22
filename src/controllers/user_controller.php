@@ -18,7 +18,7 @@ class UserController {
     }
     
     public function createUser(Utilisateur $user) {
-        try {   
+        try {
             // Vérifier si l'utilisateur existe déjà
             $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
             $stmt = $this->conn->prepare($sql);
@@ -130,7 +130,7 @@ class UserController {
             if($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
-
+            
             $nom = $user->getNom();
             $prenom = $user->getPrenom();
             $motDePasse = $user->getMotDePasse();
