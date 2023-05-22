@@ -130,9 +130,6 @@ class UserController {
             if($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
-            
-            $nom = $user->getNom();
-            $prenom = $user->getPrenom();
             $motDePasse = $user->getMotDePasse();
             $telephone = $user->getTelephone();
             $ville = $user->getVille();
