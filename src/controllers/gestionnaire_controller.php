@@ -28,7 +28,7 @@ class GestionnaireController extends UserController{
             }
             $Contenu = $questionnaire->getQuestions();
             $ID_Questionnaire = $questionnaire-> getId();
-            $stmt->bind_param("sssssss",$Contenu, $ID_Questionnaire);
+            $stmt->bind_param("si",$Contenu, $ID_Questionnaire);
             if ($stmt->execute()){
                 return true;
             } else {
@@ -49,7 +49,7 @@ class GestionnaireController extends UserController{
             $dateDebut = $questionnaire->getDateDebut();
             $dateFin = $questionnaire -> getDateFin();
             $ID_Gestionnaire = $id_Gest;
-            $stmt->bind_param("sssssss", $dateDebut, $dateFin,$ID_Gestionnaire);
+            $stmt->bind_param("ddi", $dateDebut, $dateFin,$ID_Gestionnaire);
             if ($stmt->execute()) {
                 $value=$this->createQuestion($questionnaire);
                 return $value;
