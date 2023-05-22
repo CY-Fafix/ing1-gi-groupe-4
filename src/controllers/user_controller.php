@@ -18,7 +18,7 @@ class UserController {
     }
     
     public function createUser(Utilisateur $user) {
-        try {
+        try {   
             // Vérifier si l'utilisateur existe déjà
             $sql = "SELECT * FROM " . $this->table_name . " WHERE Email = ?";
             $stmt = $this->conn->prepare($sql);
@@ -266,19 +266,4 @@ class UserController {
     }
     
 }
-
-
-/*Exemple d'utilisation de création d'utilisateur:
-// Créer une nouvelle instance de UserController
-$userController = new UserController();
-
-// Créer un nouvel utilisateur
-$nouvelUtilisateur = new Utilisateur(null, "John", "Doe", "john.doe@example.com", "password123", "123456789", "Paris", "admin");
-
-if ($userController->createUser($nouvelUtilisateur)) {
-    echo "Utilisateur créé avec succès.";
-} else {
-    echo "Échec de la création de l'utilisateur.";
-}
-*/
 ?>
