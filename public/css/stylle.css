@@ -50,24 +50,25 @@ header{
   align-items: center;
   color: #11a086;
   text-shadow: 3px 5px 5px white;
-  /*background-color: rgb(191, 177, 241);*/
-  /*border-top:2px solid black;
-  border-bottom: 2px solid black;*/
   background-color: linear-gradient(#11a086,blue);
-  /*background-image: linear-gradient(rgba(158, 137, 92, 0.3), rgba(158, 137, 92, 0.3)), url(https://img.freepik.com/vecteurs-libre/fond-nature-feuille-or_52683-46790.jpg?w=1380&t=st=1680161543~exp=1680162143~hmac=e04d0bcba0ddd08318c3b28a15d700396f7fb382be02192662ff8a8b99db8b5b);*/
   background-size: cover;
+  margin-top:65px;
 }
 
-ul{
+
+#top{
   list-style-type: none;
-  margin: 10px;
-  padding: 10px 10px;
+  margin: -20px;
+  padding: 10px 20px;
+  margin-top:0px;
   overflow: hidden;
   background-color: #11a086;
-  border-radius: 10px;
-  position: static;
+  /* border-radius: 10px; */
+  position: fixed;
+  width:100%;
   top:0;
   z-index:1;
+  
 
 } 
 
@@ -104,6 +105,7 @@ li a:hover {
   margin-top: 15px;
   margin-bottom: 100px;
   width:80%;
+  margin-left: 10%;
 
   /* float: right;
   place-self: center; */
@@ -123,9 +125,10 @@ li a:hover {
   display:flex;
 }
 
-img{
-  clip-path: circle(23%);
-  padding:25px;
+.avatar{
+  clip-path: circle(30%);
+  max-width: fit-content;
+  max-height: fit-content;
 }
 
  /* The Modal (background) */
@@ -189,17 +192,21 @@ img{
 }
 
 
-.loginbtn{
-  background-color: green;
+#loginbtn{
+  background-color: #11a086;
+  color:white;
   border:none;
   display:block;
   border-radius: 30px;
   font-size: 16px;
   height: 30px;
   width: 200px;
+  float:right;
+  margin-top:10px;
+  font-family: 'Aboreto';
 }
 .loginbtn2{
-  background-color: green;
+  background-color: #11a086;
   border:none;
   display:block;
   border-radius: 30px;
@@ -241,3 +248,105 @@ img{
 .input{
   margin-bottom: 25px;
 }
+
+.sujet{
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px 10px;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 10px;
+  flex-direction: row;
+  display:flex;
+
+} 
+
+.nom_projet{
+  color:black;
+}
+
+
+/* idée 1 de carte de projet data*/
+
+.card {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  color: #2e2d31;
+  /* background: #131313; */
+  overflow: hidden;
+  border-radius: 20px;
+  background-image: url(../assets/truc.jpg);
+  background-size: contain;
+}
+
+.temporary_text {
+  font-weight: bold;
+  font-size: 24px;
+  padding: 6px 12px;
+  color: #f8f8f8;
+  object-fit: cover;
+}
+
+.card_title {
+  font-weight: bold;
+}
+
+.card_content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+    /* edit the width to fit card */
+    width: 88%;
+    padding: 20px;
+    background: #f2f2f2;
+    border-top-left-radius: 20px;
+      /* edit here to change the height of the content box */
+    transform: translateY(150px);
+    transition: transform .25s;
+  }
+  
+  .card_content::before {
+    content: '';
+    position: absolute;
+    top: -47px;
+    right: -45px;
+    width: 100px;
+    height: 100px;
+    transform: rotate(-175deg);
+    border-radius: 50%;
+    box-shadow: inset 48px 48px #f2f2f2;
+  }
+  
+  .card_title {
+    color: #131313;
+    line-height: 15px;
+  }
+  
+  .card_subtitle {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-align: start;
+  }
+  
+  .card_description {
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity .5s;
+    text-align: start;
+  }
+  
+  .card:hover .card_content {
+    transform: translateY(0);
+  }
+  
+  .card:hover .card_description {
+    opacity: 1;
+    transition-delay: .25s;
+  }
+  
+  
+  
+  
+  
