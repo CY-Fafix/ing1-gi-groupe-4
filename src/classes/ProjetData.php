@@ -1,5 +1,6 @@
 <?php
 
+/*Classe qui correspond à un projet dans un Data challenge*/
 class ProjetData {
     private $id;
     private $nom;

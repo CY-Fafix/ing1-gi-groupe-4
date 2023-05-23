@@ -11,7 +11,7 @@ class Equipe {
     $this->id = $id;
     $this->nom = $nom;
     $this->membres = $membres;
-    $this->chefEquipe = $chefEquipe;
+    $this->chefEquipe = $chefEquipe; //ID DE l'étudiant
   }
 
   // Getters
@@ -24,14 +24,21 @@ class Equipe {
   }
 
   public function getMembres() {
-    return $this->membres; // Dans un contexte réel, vous chargeriez probablement les objets Utilisateur de la base de données ici.
+    return $this->membres;
   }
 
   public function getChefEquipe() {
-    return $this->chefEquipe; // Dans un contexte réel, vous chargeriez probablement l'objet Utilisateur de la base de données ici.
+    return $this->chefEquipe;
   }
 
   // Setters
+  public function setId($id) {
+    if (is_int($id)) {
+      $this->id = $id;
+    } else {
+      throw new InvalidArgumentException('L\'ID de l\'équipe doit être un entier.');
+    }
+  }
   public function setNom($nom) {
     if (is_string($nom)) {
       $this->nom = $nom;

@@ -1,5 +1,6 @@
 <?php
 
+/*Classe qui correspond à un data challenge qui peut contenir plusieurs projets */
 class DefiData {
     private $id;
     private $libelle;
