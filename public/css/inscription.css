@@ -1,0 +1,232 @@
+/* Police d'ecriture */
+
+#Title {
+	padding-top : 60px;
+	padding-bottom : 20px;
+	font-size : 30px;
+	font-style : oblique;
+}
+
+
+
+
+
+/* Position elements des formulaires */
+
+#FormatDate1 {
+	margin-left : 11px;
+}
+
+#FormatDate2 {
+	margin-left : 11px;
+}
+
+
+
+#FormatMail1 {
+	margin-left : 300px;
+}
+
+#FormatMail2 {
+	margin-left : 315px;
+}
+
+#FormatMail3 {
+	margin-left : 435px;
+}
+
+
+
+
+
+/* Contact */
+
+#ContactFormulaire {
+	font : 19px chancery, sans-serif;
+	text-align : center;
+}
+
+
+
+#Nom {
+	position : absolute;
+	top : 600px;
+	left : 800px;
+}
+
+#NomZone {
+	position : absolute;
+	left : 150px;
+}
+
+#NomZone::placeholder {
+	font-style : italic;
+}
+
+
+
+#Prenom {
+	position : absolute;
+	top : 650px;
+	left : 800px;
+}
+
+#PrenomZone {
+	position : absolute;
+	left : 150px;
+}
+
+#PrenomZone::placeholder {
+	font-style : italic;
+}
+
+
+
+#Genre {
+	position : absolute;
+	top : 700px;
+	left : 800px;
+}
+
+#GenreZone1 {
+	margin-left : 82px;
+	box-shadow : none;
+}
+
+#GenreZone2 {
+	box-shadow : none;
+}
+
+#GenreZone3 {
+	box-shadow : none;
+}
+
+
+
+#DateNaissance {
+	position : absolute;
+	top : 750px;
+	left : 800px;
+}
+
+#DateNaissanceZone {
+	margin-left : 55px;
+}
+
+
+
+#AnneeEtude {
+	position : absolute;
+	top : 800px;
+	left : 800px;
+}
+
+#AnneeEtudeZone {
+	position : absolute;
+	left : 150px;
+	padding-right : 28px;
+}
+
+
+
+#Email {
+	position : absolute;
+	top : 850px;
+	left : 800px;
+}
+
+#EmailZone {
+	position : absolute;
+	left : 150px;
+}
+
+#EmailZone::placeholder {
+	font-style : italic;
+}
+
+
+
+#Sujet {
+	position : absolute;
+	top : 900px;
+	left : 800px;
+}
+
+#SujetZone {
+	position : absolute;
+	left : 150px;
+}
+
+#SujetZone::placeholder {
+	font-style : italic;
+}
+
+
+
+#Contenu {
+	position : absolute;
+	top : 950px;
+	left : 800px;
+	text-align : start;
+}
+
+#ContenuZone {
+	position : absolute;
+	left : 150px;
+}
+
+#ContenuZone::placeholder {
+	font : 15px chancery, sans-serif;
+	font-style : italic;
+}
+
+
+
+#Ok {
+	position : absolute;
+	top : 1250px;
+	left : 950px;
+}
+
+
+
+#Reset {
+	position : absolute;
+	top : 1250px;
+	left : 990px;
+}
+
+
+
+
+
+/* Main */
+
+.Main {
+	width : 1502px;
+	height : 1000px;
+	padding : 30px;
+	float : right;
+	background-color : #999993;
+	color : #F9F9F9;
+	text-align : center;
+}
+
+
+
+
+
+/* Verification formulaires */
+
+.Verify:invalid {
+	border : 0.1px solid white;
+	box-shadow: 0 0 4px 0.1px red;
+}
+
+
+
+.Erreur {
+	font : 15px chancery, sans-serif;
+}
+
+
