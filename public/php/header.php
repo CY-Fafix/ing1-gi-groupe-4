@@ -15,7 +15,7 @@ session_start();
 		<ul id="top"> 
 			<li><a href="Acceuil.html" class="active">Accueil</a></li>
 			<li><a href="Challenges.html">Challenges</a></li>
-			<li><a href="Contacts.html">Contacts</a></li>
+			<li><a href="message.php">Contacts</a></li>
 			<li>
 				<!-- Button to open the modal login form -->
         		<button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
