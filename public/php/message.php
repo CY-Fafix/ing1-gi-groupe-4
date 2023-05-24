@@ -6,8 +6,8 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<link href="./css/stylle.css" rel="stylesheet" />
-		<link href="./css/contact.css" rel="stylesheet" />
+		<link href="../css/stylle.css" rel="stylesheet" />
+		<link href="../css/message.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Message </title>

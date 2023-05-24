@@ -20,12 +20,6 @@
 
 	<div class="body">
 		<div class="presentation">
-			<p class="hidden">
-			Lorem ipsum dolor, sit amet  expedita exercitationem recusandae aut dolor tempora aperiam itaque possimus at, cupiditate earum, quae repudiandae aspernatur? Labore minus soluta consequatur placeat.
-			</p>
-			<p class="hidden">
-			Lorem ipsum dolor, sit amet  expedita exercitationem recusandae aut dolor tempora aperiam itaque possimus at, cupiditate earum, quae repudiandae aspernatur? Labore minus soluta consequatur placeat.
-			</p>
 			<h1 class="titre">
 				De quoi s'agit-il?
 			</h1>
