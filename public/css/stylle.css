@@ -1,7 +1,3 @@
-html {
-  font-size: 10px; /* px means "pixels": the base font size is now 10 pixels high */
-  font-family: "Open Sans", sans-serif; /* this should be the rest of the output you got from Google Fonts */
-}
 
 h1 {
 font-size: 60px;
@@ -20,11 +16,11 @@ body{
   overflow-x: hidden;
   width: 100%;
   margin: 10px auto;
-  background-color: #d6eff8;
+  background-color: #ffffff;
   /*padding: 0 20px 20px 20px;*/
   display: grid;
     grid-template:
-                    /*"corner*/ "header " 380px/*0.95fr
+                    /*"corner*/ "header " 600px/*0.95fr
                     /*"sidenav*/ "main " 3.2fr
                     /*"footer*/ "footer " 240px/*0.5fr*/;
     /*grid-template-columns: 200px 7fr; */
@@ -44,15 +40,31 @@ header{
 .title{
   
   width: 100%;
-  height: 300.08px;
+  height: 600.08px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #11a086;
-  text-shadow: 3px 5px 5px white;
+  color: white;
+  text-shadow: 3px 5px 5px black;
   background-color: linear-gradient(#11a086,blue);
   background-size: cover;
-  margin-top:65px;
+  margin-top:60px;
+  background-image: url(https://images7.alphacoders.com/103/thumb-1920-1032938.jpg);
+}
+
+.titre{
+  color:black;
+  font-size: larger;
+  text-align: start;
+  margin-left: 100px;
+  padding:50px;
+}
+#jsp{
+  color:white;
+}
+
+#text_presentation{
+  margin-left:4%;
 }
 
 
@@ -97,15 +109,37 @@ li a:hover {
   
 }
 
+.presentation{
+  background-color: #ffffff;
+  clip-path: polygon(0 0,20% 15%,50% 5%,70% 20%,100% 0,100% 100%,0 100%,0 0);
+  color: black;
+  margin:-2%;
+  margin-bottom: 200px;
+  width: 102%;
+  
+}
+
+.hidden{
+  color:white;
+}
+
+.all_challenge{
+  background-color: #11a086;
+  margin:-2%;
+  padding-bottom:50px;
+
+}
 .parag1{
   background-color: #fefeff;
   margin:10px;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   margin-bottom: 100px;
   width:80%;
   margin-left: 10%;
+  /* border: #000 dashed; */
+  /* margin-top: 10%; */
 
   /* float: right;
   place-self: center; */
@@ -123,6 +157,12 @@ li a:hover {
 
 .projet_data{
   display:flex;
+}
+
+.howTo{
+  margin-top:-8px;
+  background-image: url(https://iapau.org/wp-content/uploads/2021/05/marketing-bg6.png);
+  padding-bottom: 10%;
 }
 
 .avatar{
@@ -348,5 +388,62 @@ li a:hover {
   
   
   
+  /*Footer*/
+
+  footer{
+    width:100%;
+    background-color: #a485f8;
+    height: 400px;
+    place-items: center;
+    display:flex;
+    place-content: center;
+
+  }
+
+  /* .bas{
+    display: flex;
+
+  } */
+
+  .message{
+    width: 400px;
+  }
   
-  
+  /*styliser les icons de réseaux sociaux*/
+   /* Style all font awesome icons */
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+/* Twitter */
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+  } 
+
+  .fa-instagram {
+    background: #f09433; 
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+      
+    color: white;
+  } 
