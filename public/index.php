@@ -15,7 +15,7 @@
 
     <?php
 
-    include ('../src/views/header.php');
+    include ('php/header.php');
     ?>
 
 	<div class="body">
@@ -226,7 +226,7 @@
 
 	<?php
 
-	include ('../src/views/footer.php');
+	include ('php/footer.php');
 	?>  
 
 
