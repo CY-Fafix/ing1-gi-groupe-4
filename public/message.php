@@ -10,7 +10,7 @@
 		<link href="./css/contact.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
-		<title> Création d'un nouveau compte </title>
+		<title> Message </title>
 	</head>
 	
 	
@@ -18,7 +18,7 @@
 	<body>
 		<div class="Main">
 			
-			<p id="Title"> <strong>Création d'un nouveau compte</strong> </p>
+			<p id="Title"> <strong>Envoi de message</strong> </p>
 			
 			<form id="ContactFormulaire" name="contactFormulaire" onsubmit="return verifDateFuture()" method="POST" action="">
 			<script type="text/javascript" src="./js/verificationDateFuture.js" defer> </script>
@@ -28,6 +28,8 @@
 					<span class="Erreur" id="FormatDate1" aria-live="polite"> <em>Veuillez entrer une date supérieure à celle du jour (!)</em> </span>
 				</label>
 				
+				<!-- On connait normalement deja le statut puisque la personne est connectee.
+				
 				<label id="Statut"> Statut :
 					<select id="StatutZone" name="statut">
 						<option value="admin"> Administrateur </option>
@@ -35,6 +37,7 @@
 						<option value="etudiant"> Étudiant </option>
 					</select>
 				</label>
+				-->
 				
 				<label class="Email" id="Email"> E-mail :
 					<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>

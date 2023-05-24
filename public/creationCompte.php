@@ -7,10 +7,10 @@
 		<meta charset="UTF-8">
 		
 		<link href="./css/stylle.css" rel="stylesheet" />
-		<link href="./css/contact.css" rel="stylesheet" />
+		<link href="./css/creationCompte.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
-		<title> Création d'un nouveau compte </title>
+		<title> Création compte </title>
 	</head>
 	
 	
@@ -20,7 +20,7 @@
 			
 			<p id="Title"> <strong>Création d'un nouveau compte</strong> </p>
 			
-			<form id="ContactFormulaire" name="contactFormulaire" onsubmit="return verifDateDeNaissance()" method="POST" action="">
+			<form id="CreationCompteFormulaire" name="creationCompteFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
 			<script type="text/javascript" src="./js/verificationDateDeNaissance.js" defer> </script>
 				
 				<label id="Nom"> Nom :
@@ -31,6 +31,8 @@
 					<input class="Verify" id="PrenomZone" type="text" name="prenom" placeholder="Entrez votre prénom" required>
 				</label>
 				
+				<!-- Partie retiree, cf. "inscription.php"
+				
 				<label id="Genre"> Genre :
 					<input class="Verify" id="GenreZone1" type="radio" name="genre" value="Homme" required>
 						<label> Homme </label>
@@ -39,6 +41,7 @@
 					<input class="Verify" id="GenreZone3" type="radio" name="genre" value="Non-binaire" required>
 						<label> Non-binaire </label>
 				</label>
+				-->
 				
 				<label id="DateNaissance"> Date de naissance :
 					<input class="Verify" id="DateNaissanceZone" type="date" name="dateNaissance" required>
@@ -50,6 +53,19 @@
 						<option value="admin"> Administrateur </option>
 						<option value="gestionnaire"> Gestionnaire </option>
 						<option value="etudiant"> Étudiant </option>
+					</select>
+				</label>
+				
+				<label id="AnneeEtude"> Année d'études :
+					<select id="AnneeEtudesZone" name="anneeEtudes">
+						<!-- Valeur par defaut, pour les admins et les gestionnaires -->
+						<option value="nc"> Non concerné </option>
+						<option value="l1"> L1 </option>
+						<option value="l2"> L2 </option>
+						<option value="l3"> L3 </option>
+						<option value="m1"> M1 </option>
+						<option value="m2"> M2 </option>
+						<option value="d"> D </option>
 					</select>
 				</label>
 				
