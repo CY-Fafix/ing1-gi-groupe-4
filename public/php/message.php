@@ -21,12 +21,7 @@
 			<p id="Title"> <strong>Envoi de message</strong> </p>
 			
 			<form id="ContactFormulaire" name="contactFormulaire" onsubmit="return verifDateFuture()" method="POST" action="">
-			<script type="text/javascript" src="./js/verificationDateFuture.js" defer> </script>
-				
-				<label id="DateDebut"> Date de début :
-					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" required>
-					<span class="Erreur" id="FormatDate1" aria-live="polite"> <em>Veuillez entrer une date supérieure à celle du jour (!)</em> </span>
-				</label>
+			<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script>
 				
 				<!-- On connait normalement deja le statut puisque la personne est connectee.
 				
@@ -41,7 +36,7 @@
 				
 				<label class="Email" id="Email"> E-mail :
 					<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
-					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em></span>
+					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
 				</label>
 				
 				<label id="Sujet"> Sujet :
@@ -49,7 +44,7 @@
 				</label>
 				
 				<label id="Contenu"> Contenu :
-					<textarea class="Verify" id="ContenuZone" name="objet" rows="16" cols="80" wrap=hard placeholder="Entrez votre message ici" spellcheck="False" required></textarea>
+					<textarea class="Verify" id="ContenuZone" name="objet" rows="16" cols="80" wrap=hard placeholder="Entrez votre message ici" spellcheck="False" required> </textarea>
 				</label>
 				
 				
