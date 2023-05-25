@@ -1,7 +1,7 @@
-public class Main {
+public class Fonctions {
 	
 	//Normaliser le code correspond à retirer les commentaires, les lignes vides et les virgules en fin de ligne inutiles
-	
+	/*
 	public static void main(String[] args) {
 		//Exemple de code python avec des commentaires un peu partout et des ;
 		String code =
@@ -35,7 +35,9 @@ public class Main {
 		System.out.println("Nombre de lignes de la plus grande fonction : " + nbMax(code));
 		System.out.println("Nombre de lignes moyen des fonctions : " + nbMoy(code));
 		System.out.println("Nombre d'occurrences de def : " + nbOcc(code, "def"));
-	}
+		
+		//Serveur.main(args);
+	}*/
 	
 	//------------------------------Fonctions auxiliaires------------------------------
 	

@@ -1,0 +1,18 @@
+Pour lancer le web service REST :
+
+Se déplacer dans src/java/src/
+
+Si les 3 .class ne pas créés écrire :
+$ javac Fonctions.java
+$ javac -cp .:../../jar/jackson-annotations-2.15.1.jar:../../jar/jackson-core-2.15.1.jar:../../jar/jackson-databind-2.15.1.jar Serveur.java
+
+Lancer ensuite le serveur :
+$ java -cp .:../../jar/jackson-annotations-2.15.1.jar:../../jar/jackson-core-2.15.1.jar:../../jar/jackson-databind-2.15.1.jar Serveur
+
+A partir de là un fichier java s'execute en fond pour faire tourner le web service REST
+Vous pouvez essayer d'aller sur selectFichier.php, choisir un fichier python (j'en ai mis un exemple ici) et regarder si tout marche bien, pour avoir les graphiques il faut etre connecté a un internet car ça utilise un API d'un site externe
+
+Pour terminer tuer le web service REST, ouvrir un autre terminal :
+$ ps -fC java
+Trouver le PID voulu
+$ kill -9 PID
