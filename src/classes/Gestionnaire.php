@@ -40,9 +40,9 @@ class Gestionnaire extends Utilisateur {
     }
     public function setDebut($debut) {
         // Crée une instance de DateTime à partir de la valeur fournie
-        $date = DateTime::createFromFormat('d/m/Y', $debut);
+        $date = DateTime::createFromFormat('Y-m-d', $debut);
         // Vérifie que la date a été créée correctement et que la valeur correspond au format spécifié
-        if ($date && $date->format('d/m/Y') === $debut) {
+        if ($date && $date->format('Y-m-d') === $debut) {
             // Si c'est le cas, assigne la valeur à l'attribut debut
             $this->debut = $debut;
         } else {
@@ -53,9 +53,9 @@ class Gestionnaire extends Utilisateur {
 
     public function setFin($fin) {
         // Crée une instance de DateTime à partir de la valeur fournie
-        $date = DateTime::createFromFormat('d/m/Y', $fin);
+        $date = DateTime::createFromFormat('Y-m-d', $fin);
         // Vérifie que la date a été créée correctement et que la valeur correspond au format spécifié
-        if ($date && $date->format('d/m/Y') === $fin) {
+        if ($date && $date->format('Y-m-d') === $fin) {
             // Si c'est le cas, assigne la valeur à l'attribut fin
             $this->fin = $fin;
         } else {

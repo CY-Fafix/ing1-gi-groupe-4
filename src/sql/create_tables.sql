@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS datachallenge_db;
+DROP DATABASE IF EXISTS datachallenge_db;
+CREATE DATABASE datachallenge_db;
 USE datachallenge_db;
 
 CREATE TABLE Utilisateurs (

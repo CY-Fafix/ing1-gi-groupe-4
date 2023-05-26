@@ -9,7 +9,7 @@ VALUES
 INSERT INTO DataChallenges (Libelle, DateDebut, DateFin, ID_Admin)
 VALUES
 ('Challenge1', '2023-02-01', '2023-04-30', 1),
-('Challenge2', '2023-05-01', '2023-07-31', 1);
+('Challenge2', '2023-02-01', '2023-07-30', 1);
 
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge)
 VALUES
@@ -38,8 +38,8 @@ VALUES
 
 INSERT INTO Questionnaires (DateDebut, DateFin, ID_Gestionnaire)
 VALUES
-('2023-02-01', '2023-02-28', 2),
-('2023-03-01', '2023-03-31', 2);
+('2023-02-01', '2023-04-30', 2),
+('2023-02-01', '2023-03-31', 2);
 
 INSERT INTO Questions (Contenu, ID_Questionnaire)
 VALUES

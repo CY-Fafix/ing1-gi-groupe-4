@@ -1,3 +1,5 @@
+
+
 <?php
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once '../classes/Database.php';
@@ -5,11 +7,10 @@ require_once '../classes/Utilisateur.php';
 require_once 'user_controller.php';
 
 class GestionnaireController extends UserController{
-    private $conn;
-    private $table_name = "Utilisateurs";
-    private $table_questionnaire = "Questionnaires";
-    private $table_questions = "Questions";
-    private $table_reponse = "Reponses";
+    protected $conn;
+    public $table_questionnaire = "Questionnaires";
+    public $table_questions = "Questions";
+    public $table_reponse = "Reponses";
 
     public function __construct() {
         $db = new Database();
@@ -20,42 +21,32 @@ class GestionnaireController extends UserController{
             echo "Database connection failed.";
         }
     }
-    //fonction appelée par la fonction createQuestionnaire
-    public function createQuestion(Questionnaire $questionnaire){
-        try{
-            // ajout des questions dans la base de données et les lie au questionnaire correspondant
-            $sql = "INSERT INTO " . $this->table_questions . " (Contenu, ID_Questionnaire) VALUES (?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            if($stmt === false) {
-                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
-            }
-            $Contenu = $questionnaire->getQuestions();
-            $ID_Questionnaire = $questionnaire-> getId();
-            $stmt->bind_param("si",$Contenu, $ID_Questionnaire);
-            if ($stmt->execute()){
-                return true;
-            } else {
-                return false;
-            }
-        } catch(Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-
-    }
     public function createQuestionnaire(Questionnaire $questionnaire, $id_Gest){
-        try{
-            //ajout des informations liées au questionnaire en base de données (dates, id)
+        try {
+            // Ajout des informations liées au questionnaire en base de données (dates, id)
             $sql = "INSERT INTO " . $this->table_questionnaire . " (DateDebut, DateFin, ID_Gestionnaire) VALUES (?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
-            if($stmt === false) {
+            if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
             $dateDebut = $questionnaire->getDateDebut();
-            $dateFin = $questionnaire -> getDateFin();
+            $dateFin = $questionnaire->getDateFin();
             $ID_Gestionnaire = $id_Gest;
-            $stmt->bind_param("ddi", $dateDebut, $dateFin,$ID_Gestionnaire);
+            $stmt->bind_param("ssi", $dateDebut, $dateFin, $ID_Gestionnaire);
             if ($stmt->execute()) {
-                $value=$this->createQuestion($questionnaire);
+                $stmt->bind_result($result1); // Stocker les résultats de la première requête
+                $sql2 = "SELECT ID FROM " . $this->table_questionnaire . " WHERE ID = (SELECT MAX(ID) FROM " . $this->table_questionnaire . " ) ";
+                $stmt2 = $this->conn->prepare($sql2);
+                if($stmt2 === false) {
+                    die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+                }
+                $stmt2->execute();
+                $stmt2->bind_result($result);
+                $stmt2->fetch(); // Récupérer les résultats
+                $stmt->close();
+                $stmt2->close();
+                $value = $this->createQuestion($questionnaire,$result);
+                $stmt->free_result(); // Libérer les résultats de la première requête
                 return $value;
             } else {
                 return false;
@@ -63,82 +54,124 @@ class GestionnaireController extends UserController{
         } catch(Exception $e) {
             echo "Error: " . $e->getMessage();
         }
-    }   
-    //fonction appelée par la fonction deleteQuestionnaire
-    public function deleteQuestion($ID_Questionnaire){
+    }
+    
+    public function createQuestion(Questionnaire $questionnaire, $result){
         try{
-            //suppression des questions de la base de donnée
-            $sql = "DELETE FROM". $this->table_questions. "WHERE ID_Questionnaire =". $ID_Questionnaire;
+            // ajout des questions dans la base de données et les lie au questionnaire correspondant
+            $valReturn=true;
+            $Contenu = $questionnaire->getQuestions();
+            $ID_Questionnaire = $result; // Utiliser l'ID du questionnaire récemment inséré
+    
+            foreach($Contenu as $question){
+                $sql = "INSERT INTO " . $this->table_questions . " (Contenu, ID_Questionnaire) VALUES (?, ?)";
+                $stmt3 = $this->conn->prepare($sql);
+                if($stmt3 === false) {
+                    die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+                }
+                $stmt3->bind_param("si",$question, $ID_Questionnaire);
+                if ($stmt3->execute()) {
+                } else {
+                    $valReturn=false;
+                }
+                $stmt3->close(); // Fermer la requête préparée
+                $stmt = null; // Réattribuer la variable pour préparer la prochaine requête
+            }
+            return $valReturn;
+        } catch(Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+
+    
+    //fonction appelée par la fonction deleteQuestionnaire
+    public function deleteQuestion($ID_Questionnaire) {
+        try {
+            // Suppression des questions de la base de données
+            $sql = "DELETE FROM " . $this->table_questions . " WHERE ID_Questionnaire = ?";
             $stmt = $this->conn->prepare($sql);
-            if($stmt === false) {
+            if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
-            if ($stmt->execute()){
+            $stmt->bind_param("i", $ID_Questionnaire);
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-            
         } catch(Exception $e) {
             echo "Error: " . $e->getMessage();
         }   
     }
     public function deleteQuestionnaire($ID_Questionnaire){
-        try{
-            //suppression des informations du questionnaire de la base de donnée
-            $sql = "DELETE FROM". $this->table_questionnaire. "WHERE ID =". $ID_Questionnaire;
-            $stmt = $this->conn->prepare($sql);
-            if($stmt === false) {
-                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
-            }
-            if ($stmt->execute()){
-                $value=$this->deleteQuestion($ID_Questionnaire);
-                return $value;
-            } else {
+        try {
+            // Suppression des questions liées au questionnaire
+            $value = $this->deleteQuestion($ID_Questionnaire);
+            if (!$value) {
                 return false;
             }
-              
-        } catch(Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-    public function updateScore($ID_Equipe, $ID_Question,$nouvelle_Note){
-        try{
-            //suppression des informations du questionnaire de la base de donnée
-            $sql = "UPDATE". $this->table_reponse. "SET Note=".$nouvelle_Note."WHERE ID_Equipe =". $ID_Equipe."AND WHERE ID_Question = ".$ID_Question;
+            
+            // Suppression des informations du questionnaire de la base de données
+            $sql = "DELETE FROM Questionnaires WHERE ID = ?";
             $stmt = $this->conn->prepare($sql);
-            if($stmt === false) {
+            if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
-            if ($stmt->execute()){
+            $stmt->bind_param("i", $ID_Questionnaire);
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-              
         } catch(Exception $e) {
             echo "Error: " . $e->getMessage();
+            return false;
         }
-
     }
-    public function viewResponses(){
-        try{
-            //récupération des réponses dans un tableau en sortie
-            $sql="SELECT Contenu FROM". $this->table_reponse;
-            $res = mysqli_query($this->conn, $sql) or die('Request error : '.$sql);
-            if (mysqli_num_rows($res) > 0) {
-                while($row = mysqli_fetch_assoc($res)) {
-                    $tableau[] =  $row;
-                }
-            return($tableau);
+    public function updateScore($ID_Equipe, $ID_Question, $nouvelle_Note) {
+        try {
+            // Mise à jour des informations de score dans la base de données
+            $sql = "UPDATE " . $this->table_reponse . " SET Note = " . $nouvelle_Note . " WHERE ID_Equipe = " . $ID_Equipe . " AND ID_Question = " . $ID_Question;
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            if ($stmt->execute()) {
+                return true;
             } else {
                 return false;
             }
-              
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function viewResponses($ID_Question) {
+        try {
+            // Récupération des réponses dans un tableau en sortie
+            $sql = "SELECT Contenu FROM " . $this->table_reponse . " WHERE ID_Question = ?";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $ID_Question);
+            if ($stmt->execute()) {
+                $res = $stmt->get_result();
+                $tableau = array();
+                while ($row = $res->fetch_assoc()) {
+                    $tableau[] = $row;
+                }
+                return $tableau;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    
     public function sendMessages(){
         // A FAIRE
     }
