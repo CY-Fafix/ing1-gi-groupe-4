@@ -12,12 +12,13 @@
 </head>
 
 <body>
-
+	
     <?php
 
     include ('php/header.php');
     ?>
 
+	
 	<div class="body">
 		<div class="presentation">
 			<h1 class="titre">

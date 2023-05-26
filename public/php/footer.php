@@ -4,20 +4,41 @@
 
 <footer>
     <div class="bas">
-        <div class="message">
-            <p>
-            Lorem ipsum dolor, sit amet  expedita exercitationem recusandae aut dolor tempora aperiam itaque possimus at, cupiditate earum, quae repudiandae aspernatur? Labore minus soluta consequatur placeat.
-            </p>
-
-        </div>
+        
         <div class="social">
             <!-- Add font awesome icons -->
             <a href="#" class="fa fa-facebook"></a>
             <a href="#" class="fa fa-twitter"></a>
             <a href="#" class="fa fa-instagram"></a>
+            <a href="#" class="fa fa-linkedin"></a>
         </div>
+        <div id="bottom_menu">
+            <ul class="bottom_menu"> 
+                <li><a href="../index.php" >Accueil</a></li>
+                <!-- <li><a href="Challenges.html">Challenges</a></li> -->
+                <li><a href="/php/message.php">Contacts</a></li>
+                <li><a href="/php/inscription.php">Inscription</a></li>
+                <li>
+                    <!-- Button to open the modal login form -->
+                    <button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" >Connexion</button>
+                </li>
+                <!-- <li><a href="Connexion.html" class="split"> -->
+                        <!-- <?php
+                        // if(isset($_SESSION['utilisateur_connecte'])){
+                        // 	echo('Déconnexion');
+                        // } else {
+                        // 	echo('Connexion');
+                        // }
+                    ?>  -->
+                <!-- </a></li> -->
+                
+
+
+            </ul>
+        </div>
+        <br>
         <div class="copyrights">
-            <p>© 2023 Projet_GI 
+            <p id="copy">© 2023 Projet_GI </p>
         </div>
 
 </footer>

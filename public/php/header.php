@@ -13,9 +13,10 @@ session_start();
 
 	<nav>
 		<ul id="top"> 
-			<li><a href="../index.php" class="active">Accueil</a></li>
-			<li><a href="Challenges.html">Challenges</a></li>
+			<li><a href="../index.php" >Accueil</a></li>
+			<!-- <li><a href="Challenges.html">Challenges</a></li> -->
 			<li><a href="/php/message.php">Contacts</a></li>
+			<li><a href="/php/inscription.php" class="split">Inscription</a></li>
 			<li>
 				<!-- Button to open the modal login form -->
         		<button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
@@ -45,7 +46,7 @@ session_start();
 			<!-- Modal Content -->
 			<form class="modal-content animate" action="/action_page.php">
 				<div class="imgcontainer">
-					<img src="assets/truc.jpg" alt="Avatar" class="avatar">
+					<img src="../assets/truc.jpg" alt="Avatar" class="avatar">
 				</div>
 
 				<div class="container">

@@ -45,7 +45,7 @@ header{
   flex-direction: column;
   align-items: center;
   color: white;
-  text-shadow: 3px 5px 5px black;
+  text-shadow: 3px 5px 5px rgb(54, 53, 53);
   background-color: linear-gradient(#11a086,blue);
   background-size: cover;
   margin-top:60px;
@@ -70,8 +70,8 @@ header{
 
 #top{
   list-style-type: none;
-  margin: -20px;
-  padding: 10px 40px;
+  /* margin: -20px; */
+  padding: 10px 27px;
   margin-top:0px;
   overflow: hidden;
   background-color: #11a086;
@@ -80,10 +80,14 @@ header{
   width:100%;
   top:0;
   z-index:1;
-  
-  
-
+  display:flex;
+  place-content: center;
 } 
+
+#top ul{
+  /* display: inline; */
+  text-align: center;
+}
 
 li a.split {
   float:right;
@@ -241,13 +245,19 @@ li a:hover {
   color:white;
   border:none;
   display:block;
-  border-radius: 30px;
-  font-size: 16px;
-  height: 30px;
-  width: 200px;
-  float:right;
-  margin-top:10px;
+  font-size: 18px;
+  height: 50px;
+  width: 120px;
+  
   font-family: 'Aboreto';
+}
+
+#top #loginbtn{
+  float:right;
+}
+#loginbtn:hover{
+  background-color: #38a6a2;
+  cursor: pointer;
 }
 .loginbtn2{
   background-color: #11a086;
@@ -460,3 +470,58 @@ li a:hover {
       
     color: white;
   } 
+
+  .fa-linkedin {
+    background: #0A66C2;
+    color: white;
+  } 
+
+  .bas{
+    width: 90%;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .bottom_menu{
+    display:flex;
+    
+    width: 100%;
+  }
+
+  .bottom_menu li {
+    display: inline;
+  }
+  .bottom_menu ul {
+    text-align: center;
+
+  }
+
+  .social{
+    margin-left: 50px;
+  }
+
+  .copyrights{
+    color:white;
+    margin-left: -130px;
+  }
+
+  .bottom_menu  #loginbtn{
+    background-color: #147cb4;
+    text-align: center;
+    
+  
+  }
+
+  .bottom_menu  #loginbtn:hover{
+    background-color: #38a6a2;
+    text-align: center;
+    cursor: pointer;
+  
+  }
+
+  #copy{
+    width: 200px;
+    text-align: center;
+    padding-left: 150px;
+  }
