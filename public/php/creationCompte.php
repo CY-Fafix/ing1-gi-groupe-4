@@ -6,8 +6,8 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<link href="./css/stylle.css" rel="stylesheet" />
-		<link href="./css/creationCompte.css" rel="stylesheet" />
+		<link href="../css/stylle.css" rel="stylesheet" />
+		<link href="../css/creationCompte.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Création compte </title>
@@ -21,7 +21,7 @@
 			<p id="Title"> <strong>Création d'un nouveau compte</strong> </p>
 			
 			<form id="CreationCompteFormulaire" name="creationCompteFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
-			<script type="text/javascript" src="./js/verificationDateDeNaissance.js" defer> </script>
+			<script type="text/javascript" src="../js/verificationDateDeNaissance.js" defer> </script>
 				
 				<label id="Nom"> Nom :
 					<input class="Verify" id="NomZone" type="text" name="nom" placeholder="Entrez votre nom" required>
@@ -69,9 +69,9 @@
 					</select>
 				</label>
 				
-				<label class="Email" id="Email"> E-mail :
+				<label id="Email"> E-mail :
 					<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
-					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em></span>
+					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
 				</label>
 				
 				

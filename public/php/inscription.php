@@ -6,8 +6,8 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<link href="./css/stylle.css" rel="stylesheet" />
-		<link href="./css/inscription.css" rel="stylesheet" />
+		<link href="../css/stylle.css" rel="stylesheet" />
+		<link href="../css/inscription.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Inscription </title>
@@ -21,7 +21,7 @@
 			<p id="Title"> <strong>N'hésitez plus, rejoignez-nous !</strong> </p>
 			
 			<form id="InscriptionFormulaire" name="inscriptionFormulaire" onsubmit="return verifDateDeNaissance()" method="POST" action="">
-			<script type="text/javascript" src="./js/verificationDateDeNaissance.js" defer> </script>
+			<script type="text/javascript" src="../js/verificationDateDeNaissance.js" defer> </script>
 				
 				<label id="Nom"> Nom :
 					<input class="Verify" id="NomZone" type="text" name="nom" placeholder="Entrez votre nom" required>

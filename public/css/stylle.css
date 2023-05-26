@@ -71,7 +71,7 @@ header{
 #top{
   list-style-type: none;
   margin: -20px;
-  padding: 10px 20px;
+  padding: 10px 40px;
   margin-top:0px;
   overflow: hidden;
   background-color: #11a086;
@@ -80,6 +80,7 @@ header{
   width:100%;
   top:0;
   z-index:1;
+  
   
 
 } 
@@ -116,6 +117,7 @@ li a:hover {
   margin:-2%;
   margin-bottom: 200px;
   width: 102%;
+  padding-top: 100px;
   
 }
 
@@ -124,7 +126,7 @@ li a:hover {
 }
 
 .all_challenge{
-  background-color: #11a086;
+  background: linear-gradient(#11a086,#147cb4);
   margin:-2%;
   padding-bottom:50px;
 
@@ -160,9 +162,11 @@ li a:hover {
 }
 
 .howTo{
-  margin-top:-8px;
-  background-image: url(https://iapau.org/wp-content/uploads/2021/05/marketing-bg6.png);
+  margin-top:-25px;
+  /* background-image: url(https://img.freepik.com/vecteurs-premium/modele-marbre-vecteur-fond-texture-marbre-blanc-bleu-modele-tendance_548264-362.jpg); */
   padding-bottom: 10%;
+  padding-left: 20px;
+  margin-left: -20px;
 }
 
 .avatar{
@@ -397,7 +401,16 @@ li a:hover {
     place-items: center;
     display:flex;
     place-content: center;
+    margin:-20px;
+    padding-right:20px;
 
+  }
+
+  .wave{
+    width:100%;
+    background-color: #147cb4;
+    clip-path: polygon(100% 100%, 0% 100% , 0.00% 71.10%, 2.00% 68.92%, 4.00% 66.92%, 6.00% 65.19%, 8.00% 63.82%, 10.00% 62.86%, 12.00% 62.36%, 14.00% 62.35%, 16.00% 62.81%, 18.00% 63.74%, 20.00% 65.08%, 22.00% 66.78%, 24.00% 68.77%, 26.00% 70.94%, 28.00% 73.20%, 30.00% 75.46%, 32.00% 77.60%, 34.00% 79.52%, 36.00% 81.15%, 38.00% 82.41%, 40.00% 83.23%, 42.00% 83.59%, 44.00% 83.47%, 46.00% 82.86%, 48.00% 81.81%, 50.00% 80.35%, 52.00% 78.56%, 54.00% 76.51%, 56.00% 74.30%, 58.00% 72.03%, 60.00% 69.80%, 62.00% 67.71%, 64.00% 65.87%, 66.00% 64.34%, 68.00% 63.20%, 70.00% 62.51%, 72.00% 62.30%, 74.00% 62.56%, 76.00% 63.30%, 78.00% 64.48%, 80.00% 66.04%, 82.00% 67.92%, 84.00% 70.03%, 86.00% 72.27%, 88.00% 74.54%, 90.00% 76.73%, 92.00% 78.76%, 94.00% 80.52%, 96.00% 81.94%, 98.00% 82.95%, 100.00% 83.50%);
+    margin-top:-300px;
   }
 
   /* .bas{
