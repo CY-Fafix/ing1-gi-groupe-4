@@ -50,11 +50,11 @@ session_start();
 				</div>
 
 				<div class="container">
-					<label for="uname" class="label"><b>Nom d'utilisateur</b></label>
-					<input type="text" class="input" placeholder="Enter Username" name="uname" required>
+					<label for="uname" class="label"><b>E-mail</b></label>
+					<input type="text" class="input" placeholder="Entrer votre e-mail" name="uname" required>
 
 					<label for="psw"class="label"><b>Mot de passe</b></label>
-					<input type="password" class="input" placeholder="Enter Password" name="psw" required>
+					<input type="password" class="input" placeholder="Entrer votre mot de passe" name="psw" required>
 
 					<button type="submit" class="loginbtn2">Connexion</button>
 					<label class="label">

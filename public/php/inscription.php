@@ -21,13 +21,15 @@
 			<p id="Title"> <strong>N'hésitez plus, rejoignez-nous !</strong> </p>
 			
 			<form id="InscriptionFormulaire" name="inscriptionFormulaire" onsubmit="return verifDateDeNaissance()" method="POST" action="">
-			<script type="text/javascript" src="../js/verificationDateDeNaissance.js" defer> </script>
+				<script type="text/javascript" src="../js/verificationDateDeNaissance.js" defer> </script>
+
+				<p><strong>Inscription</strong></p>
 				
-				<label id="Nom"> Nom :
+				<label id="Nom" class="element"> Nom :
 					<input class="Verify" id="NomZone" type="text" name="nom" placeholder="Entrez votre nom" required>
 				</label>
 				
-				<label id="Prenom"> Prénom :
+				<label id="Prenom" class="element"> Prénom :
 					<input class="Verify" id="PrenomZone" type="text" name="prenom" placeholder="Entrez votre prénom" required>
 				</label>
 				
@@ -44,12 +46,14 @@
 				</label>
 				-->
 				
-				<label id="DateNaissance"> Date de naissance :
+				<label id="DateNaissance" class="element"> Date de naissance :
 					<input class="Verify" id="DateNaissanceZone" type="date" name="dateNaissance" required>
+					<br>
 					<span class="Erreur" id="FormatDate1" aria-live="polite"> <em>Veuillez entrer une date inférieure à celle du jour (!)</em> </span>
+					<br>
 				</label>
 				
-				<label id="AnneeEtude"> Année d'études :
+				<label id="AnneeEtude" class="element"> Année d'études :
 					<select id="AnneeEtudesZone" name="anneeEtudes">
 						<option value="l1"> L1 </option>
 						<option value="l2"> L2 </option>
@@ -60,15 +64,20 @@
 					</select>
 				</label>
 				
-				<label class="Email" id="Email"> E-mail :
-					<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
-					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
+				<label id="Email" class="element"> E-mail :
+					<div>
+						<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
+					</div>
+					
 				</label>
+				<div>
+					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
+				</div>
 				
 				
 				
-				<input type="submit" id="Ok" name="ok" value="OK" />
-				<input type="reset" id="Reset" name="reset" value="Annuler" />
+				<input type="submit" id="valider_inscription" name="valider_inscription" value="S'INSCRIRE" />
+				
 				
 			</form>
 			
@@ -77,7 +86,9 @@
 	
 </html>
 
-
+<div class="wave">
+		
+	</div>  
 <?php include('./footer.php'); ?>
 
 
