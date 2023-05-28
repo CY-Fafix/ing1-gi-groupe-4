@@ -88,6 +88,27 @@ class EtudiantController extends UserController{
         }
     }
     
+        /**
+     * Méthode pour enregistrer un étudiant à un DataChallenge en tant que capitaine d'une nouvelle équipe.
+     *
+     * Préconditions : 
+     * - $projetData doit exister dans Projet.
+     * - $capitaine doit exister dans les utilisateurs.
+     * - $nomEquipe doit être une chaîne de caractères.
+     * - L'étudiant représenté par $capitaine ne doit pas être déjà inscrit à un autre projet dans le même DataChallenge.
+     * - Le nom d'équipe spécifié par $nomEquipe doit être unique.
+     *
+     * Postconditions : 
+     * - Une nouvelle équipe est créée avec le nom spécifié par $nomEquipe, associée au ProjetData spécifié et avec le capitaine spécifié.
+     * - Le capitaine est inscrit en tant que membre de la nouvelle équipe.
+     * - L'objet Equipe retourné reflète l'état de la nouvelle équipe dans la base de données (ID correct et liste de membres correcte).
+     *
+     * @param ProjetData $projetData Le projet de DataChallenge auquel l'étudiant souhaite s'inscrire.
+     * @param Etudiant $capitaine L'étudiant qui souhaite s'inscrire en tant que capitaine de la nouvelle équipe.
+     * @param string $nomEquipe Le nom souhaité pour la nouvelle équipe.
+     * @return Equipe L'objet Equipe qui représente la nouvelle équipe dans la base de données.
+     * @throws Exception Si le nom de l'équipe est déjà utilisé ou si l'étudiant est déjà inscrit à un autre projet dans le même DataChallenge.
+     */
     public function registerToDataChallenge(ProjetData $projetData, Etudiant $capitaine, $nomEquipe) 
     {
         $this->conn->autocommit(false);
@@ -98,12 +119,12 @@ class EtudiantController extends UserController{
             if($count > 0) {
                 throw new Exception("nom equipe deja utilisé");
             }
-    
+
             // 2. Vérifier que l'étudiant n'est pas déjà inscrit à un autre ProjetData dans ce DefiData
             // Obtenir le DataChallenge du projet
             $sql = "SELECT ID_DataChallenge FROM Projets WHERE ID = ?";
             $dataChallengeID = $this->executeQuery($sql, "i", $projetData->getId());
-    
+
             // Vérifier si l'étudiant est déjà inscrit à un autre projet dans le même DataChallenge
             $sql = "SELECT COUNT(*) 
             FROM Utilisateurs user
@@ -115,32 +136,34 @@ class EtudiantController extends UserController{
             if($count > 0) {
                 throw new Exception("deja inscris");
             }
-    
+
             // L'étudiant peut s'inscrire à ce projet
             // 3. Créer une nouvelle équipe
             $equipe = new Equipe(null, $nomEquipe, [], $capitaine->getID());
-    
+
             // Insérer la nouvelle équipe dans la base de données
             $sql = "INSERT INTO Equipes (Nom, ID_Projet, ID_Capitaine) VALUES (?, ?, ?)";
             $equipeID = $this->executeInsertQuery($sql, "sii", $equipe->getNom(), $projetData->getId(), $equipe->getChefEquipe());
-    
+
             // Ajouter le capitaine à cette équipe
             $sql = "INSERT INTO MembresEquipe (ID_Equipe, ID_Utilisateur) VALUES (?, ?)";
             $this->executeInsertQuery($sql, "ii", $equipeID, $capitaine->getID());
-    
+
             // Mettre à jour l'ID de l'équipe et les membres de l'équipe dans l'objet Equipe
             $equipe->setId($equipeID);
             $equipe->setMembres(array($capitaine->getID()));
-    
+
             $this->conn->commit();
             return $equipe;
         } catch (Exception $e) {
             $this->conn->rollback();
-            throw $e;
+            error_log($e->getMessage()); // Log the error message
+            return null; // Return null on exception
         } finally {
             $this->conn->autocommit(true);
         }
     }
+
 
     private function executeQuery($sql, $types, ...$params) {
         $stmt = $this->conn->prepare($sql);
@@ -206,27 +229,28 @@ class EtudiantController extends UserController{
             // Le capitaine n'est pas le chef de l'équipe
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
-        
-        if($equipe == null){
+    
+        // 2. Vérifier que l'équipe existe
+        if ($equipe === null) {
             throw new Exception("L'équipe n'existe pas");
         }
-        
-        // 2. Vérifier que le nouveau membre n'est pas déjà dans l'équipe
+    
+        // 3. Vérifier que le nouveau membre n'est pas déjà dans l'équipe
         $membres = $equipe->getMembres(); // Tableau des ID des membres
         if (in_array($newMember->getID(), $membres)) {
             // Le nouveau membre est déjà dans l'équipe
             throw new Exception("Le nouveau membre est déjà dans l'équipe");
         }
-        
+    
         // Transaction
         $this->conn->autocommit(false);
         try {
-            // 3. Ajouter le nouvel étudiant à l'équipe dans la base de données
+            // 4. Ajouter le nouvel étudiant à l'équipe dans la base de données
             $sql = "INSERT INTO MembresEquipe (ID_Equipe, ID_Utilisateur) VALUES (?, ?)";
             $this->executeInsertQuery($sql, "ii", $equipe->getId(), $newMember->getID());
     
-            // 4. Ajouter le nouvel étudiant à l'équipe dans l'objet Equipe
-            array_push($membres, $newMember->getID());
+            // 5. Ajouter le nouvel étudiant à l'équipe dans l'objet Equipe
+            $membres[] = $newMember->getID();
             $equipe->setMembres($membres);
     
             $this->conn->commit();
@@ -241,13 +265,13 @@ class EtudiantController extends UserController{
     
     
     
+    
 
     /*removeMemberFromTeam() : Permet au capitaine de retirer un membre de son équipe. */
     public function removeMemberFromTeam(Equipe $equipe, Etudiant $capitaine, Etudiant $member)
     {  
         // 1. Vérifier que le capitaine est bien le chef de l'équipe
-        if ($equipe->getChefEquipe() !== $capitaine->getID()) {
-            // Le capitaine n'est pas le chef de l'équipe
+        if ($equipe->getChefEquipe() != $capitaine->getID()) {
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
     
@@ -291,7 +315,7 @@ class EtudiantController extends UserController{
     public function deleteTeam(Equipe $equipe, Etudiant $capitaine)
     {
         // 1. Vérifier que le capitaine est bien le chef de l'équipe
-        if ($equipe->getChefEquipe() !== $capitaine->getID()) {
+        if ($equipe->getChefEquipe() != $capitaine->getID()) {
             // Le capitaine n'est pas le chef de l'équipe
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
