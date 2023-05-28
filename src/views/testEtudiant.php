@@ -57,14 +57,14 @@ try {
         echo "Echec du retrait de l'étudiant 2 de l'équipe !!<br>";
     }
 
-    
+    /*
     // Ajouter le nouvel étudiant à l'équipe
     $success = $controller->addMemberToTeam($equipe, $etudiant, $etudiant2);
     if($success){
         echo "Ajout du nouvel étudiant à l'équipe réussi !!<br>";
     }else{
         echo "Echec de l'ajout du nouvel étudiant à l'équipe !!<br>";
-    } 
+    } */
 
     // Ajouter le nouvel étudiant à l'équipe
     $success = $controller->deleteTeam($equipeTest, $etudiant);
