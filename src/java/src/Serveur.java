@@ -83,9 +83,9 @@ public class Serveur {
             map.put("nbMin", Fonctions.nbMin(python));
             map.put("nbMax", Fonctions.nbMax(python));
             map.put("nbMoy", Fonctions.nbMoy(python));
-            
+
             //On ajoute les nombres d'occurrence des mots demandés s'il y en a
-            if (!requestBody.equals("[]")) {
+            if (!requestBody.equals("{\"mots\":[]}")) {
 	            for (int i=0; i<requestBody.split(":")[1].split(",").length; i++) {
 	            	map2.put(requestBody.split(":")[1].split(String.valueOf('"'))[i*2+1], Fonctions.nbOcc(python, requestBody.split(":")[1].split(String.valueOf('"'))[i*2+1]));
 	            }
@@ -94,13 +94,13 @@ public class Serveur {
             map.put("mots", map2); //ajout des mots recherches
            
             String json = ""; //string qu'on va renvoyer a partir de notre map
+            
             ObjectMapper mapper = new ObjectMapper(); //permet la construction du json
             try {
                 json = mapper.writeValueAsString(map);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            
             return json;
         }
         
@@ -121,7 +121,7 @@ public class Serveur {
         private void handleResponse(HttpExchange httpExchange, String requestParamValue)  throws  IOException {
             OutputStream outputStream = httpExchange.getResponseBody();
             StringBuilder htmlBuilder = new StringBuilder();
-            htmlBuilder.append("<?php $_SESSION['valeurs'] = json_decode('" + requestParamValue + "', true); ?>"); //true permet d'avoir un objet de type array
+            htmlBuilder.append("<?php $valeurs = json_decode('" + requestParamValue + "', true); ?>"); //true permet d'avoir un objet de type array
             // encode HTML content
             String htmlResponse = htmlBuilder.toString();
             System.out.println(htmlResponse);
