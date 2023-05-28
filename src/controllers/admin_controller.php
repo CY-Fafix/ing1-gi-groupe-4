@@ -16,7 +16,7 @@ class AdminController extends GestionnaireController{
             echo "Database connection failed.";
         }
     }
-    
+
     public function createProjectForDataChallenge(ProjetData $projetData, DefiData $defiData) {
         // Vérifier si le DefiData existe dans la base de données
         $sqlCheck = "SELECT ID FROM DataChallenges WHERE ID = ?";
@@ -55,25 +55,45 @@ class AdminController extends GestionnaireController{
             throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
         }
     }
-    
+        
+        /**
+     * Supprime un projet et toutes ses données associées (équipes, membres d'équipe, messages, réponses et analyses de code).
+     * 
+     * Préconditions :
+     * - L'objet ProjetData fourni doit être valide et doit exister dans la base de données.
+     * - Les ID de projet et d'équipe dans les tables de la base de données doivent correspondre à ceux fournis dans l'objet ProjetData.
+     * 
+     * Postconditions :
+     * - Toutes les données associées au projet (équipes, membres d'équipe, messages, réponses et analyses de code) sont supprimées de la base de données.
+     * - Le projet lui-même est supprimé de la base de données.
+     * - En cas d'erreur, une exception est lancée.
+     *
+     * @param ProjetData $projetData - Les données du projet à supprimer
+     * @throws Exception - En cas d'erreur lors de la suppression des données
+     */
     public function deleteProjectForDataChallenge(ProjetData $projetData) {
         // Récupère d'abord les équipes associées au projet
         $sql = "SELECT ID FROM Equipes WHERE ID_Projet = ?";
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $projetData->getId());
+    
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
+                $stmt->close(); // Fermer le statement précédent
+    
                 while ($row = $result->fetch_assoc()) {
                     $teamId = $row['ID'];
     
-                    // Pour chaque équipe, supprime d'abord les analyses de code associées
+                    // Supprime d'abord les analyses de code associées à l'équipe
                     $sql = "DELETE FROM AnalysesCode WHERE ID_Equipe = ?";
                     if ($stmt = $this->conn->prepare($sql)) {
                         $stmt->bind_param("i", $teamId);
                         if (!$stmt->execute()) {
                             throw new Exception("Erreur lors de la suppression des analyses de code associées à l'équipe : " . $stmt->error);
                         }
+                        $stmt->close(); // Fermer le statement précédent
                     } else {
+                        echo "Erreur de préparation de la requête : " . $this->conn->error;
                         throw new Exception("Erreur lors de la préparation de la requête pour supprimer les analyses de code : " . $this->conn->error);
                     }
     
@@ -84,7 +104,9 @@ class AdminController extends GestionnaireController{
                         if (!$stmt->execute()) {
                             throw new Exception("Erreur lors de la suppression des membres de l'équipe associés à l'équipe : " . $stmt->error);
                         }
+                        $stmt->close(); // Fermer le statement précédent
                     } else {
+                        echo "Erreur de préparation de la requête : " . $this->conn->error;
                         throw new Exception("Erreur lors de la préparation de la requête pour supprimer les membres de l'équipe : " . $this->conn->error);
                     }
     
@@ -95,7 +117,9 @@ class AdminController extends GestionnaireController{
                         if (!$stmt->execute()) {
                             throw new Exception("Erreur lors de la suppression des messages associés à l'équipe : " . $stmt->error);
                         }
+                        $stmt->close(); // Fermer le statement précédent
                     } else {
+                        echo "Erreur de préparation de la requête : " . $this->conn->error;
                         throw new Exception("Erreur lors de la préparation de la requête pour supprimer les messages : " . $this->conn->error);
                     }
     
@@ -106,26 +130,32 @@ class AdminController extends GestionnaireController{
                         if (!$stmt->execute()) {
                             throw new Exception("Erreur lors de la suppression des réponses associées à l'équipe : " . $stmt->error);
                         }
+                        $stmt->close(); // Fermer le statement précédent
                     } else {
+                        echo "Erreur de préparation de la requête : " . $this->conn->error;
                         throw new Exception("Erreur lors de la préparation de la requête pour supprimer les réponses : " . $this->conn->error);
                     }
                 }
+    
+                // Supprime les équipes elles-mêmes
+                $sql = "DELETE FROM Equipes WHERE ID_Projet = ?";
+                if ($stmt = $this->conn->prepare($sql)) {
+                    $stmt->bind_param("i", $projetData->getId());
+                    if (!$stmt->execute()) {
+                        throw new Exception("Erreur lors de la suppression des équipes associées au projet : " . $stmt->error);
+                    }
+                    $stmt->close(); // Fermer le statement précédent
+                } else {
+                    echo "Erreur de préparation de la requête : " . $this->conn->error;
+                    throw new Exception("Erreur lors de la préparation de la requête pour supprimer les équipes : " . $this->conn->error);
+                }
             } else {
+                echo "Erreur de préparation de la requête : " . $this->conn->error;
                 throw new Exception("Erreur lors de la récupération des équipes associées au projet : " . $stmt->error);
             }
         } else {
+            echo "Erreur de préparation de la requête : " . $this->conn->error;
             throw new Exception("Erreur lors de la préparation de la requête pour récupérer les équipes : " . $this->conn->error);
-        }
-    
-        // Une fois toutes les équipes et leurs dépendances supprimées, supprime les équipes elles-mêmes
-        $sql = "DELETE FROM Equipes WHERE ID_Projet = ?";
-        if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("i", $projetData->getId());
-            if (!$stmt->execute()) {
-                throw new Exception("Erreur lors de la suppression des équipes associées au projet : " . $stmt->error);
-            }
-        } else {
-            throw new Exception("Erreur lors de la préparation de la requête pour supprimer les équipes : " . $this->conn->error);
         }
     
         // Enfin, supprime le projet lui-même
@@ -133,13 +163,14 @@ class AdminController extends GestionnaireController{
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $projetData->getId());
             if (!$stmt->execute()) {
-                throw new Exception("Erreur lors de l'execution de la requête : (deleteProject)" . $stmt->error);
+                throw new Exception("Erreur lors de l'exécution de la requête (deleteProject) : " . $stmt->error);
             }
+            $stmt->close(); // Fermer le statement précédent
         } else {
-            throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
+            echo "Erreur de préparation de la requête : " . $this->conn->error;
+            throw new Exception("Erreur lors de la préparation de la requête pour supprimer le projet : " . $this->conn->error);
         }
     }
-    
     
 
     public function createDataChallenge(DefiData $defiData) {
