@@ -11,6 +11,7 @@ class GestionnaireController extends UserController{
     public $table_questionnaire = "Questionnaires";
     public $table_questions = "Questions";
     public $table_reponse = "Reponses";
+    public $table_message = "Messages";
 
     public function __construct() {
         $db = new Database();
@@ -172,9 +173,75 @@ class GestionnaireController extends UserController{
     }
     
     
-    public function sendMessages(){
-        // A FAIRE
+    public function sendMessages($tousMail, $Objet, $Contenu, $ID_Gestionnaire, $dateEnvoi) {
+        try {
+            // ajout des questions dans la base de données et les lie au questionnaire correspondant
+            $valReturn = true;
+            $listemail = explode(";", $tousMail); // Utiliser l'ID du questionnaire récemment inséré
+    
+            foreach ($listemail as $mail) {
+                $sql = "SELECT ID FROM Equipes WHERE ID_Capitaine IN (SELECT ID FROM Utilisateurs WHERE Email = ?)";
+                $stmt = $this->conn->prepare($sql);
+                if ($stmt === false) {
+                    die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+                }
+                $stmt->bind_param("s", $mail);
+                $stmt->execute();
+                $stmt->bind_result($ID_User);
+                $stmt->fetch(); // Récupérer les résultats
+                $stmt->close();
+    
+                $sql2 = "INSERT INTO " . $this->table_message . "(Contenu, DateEnvoi, ID_Emetteur, ID_Equipe) VALUES (?, ?, ?, ?)";
+                $stmt2 = $this->conn->prepare($sql2);
+                if ($stmt2 === false) {
+                    die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+                }
+                $stmt2->bind_param("ssii", $Contenu, $dateEnvoi, $ID_Gestionnaire, $ID_User);
+                if ($stmt2->execute()) {
+                    $mailSent = mail($mail, $Objet, $Contenu);
+                    if ($mailSent) {
+                        echo 'A';
+                    } else {
+                        echo 'Failed to send email.';
+                    }
+                } else {
+                    $valReturn = false;
+                }
+                $stmt2->close(); // Fermer la requête préparée
+                $stmt2 = null; // Réattribuer la variable pour préparer la prochaine requête
+            }
+            return $valReturn;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
+    
+
+    public function viewMessages($mail, $ID_Gestionnaire) {
+        try {
+            // Récupération des réponses dans un tableau en sortie
+            $sql = "SELECT Contenu FROM Messages WHERE ID_Equipe IN ( SELECT ID FROM Equipes WHERE ID_Capitaine IN (SELECT ID FROM Utilisateurs WHERE Email = ?)) AND ID_Emetteur = ?";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("si", $mail, $ID_Gestionnaire);
+            if ($stmt->execute()) {
+                $res = $stmt->get_result();
+                $tableau = array();
+                while ($row = $res->fetch_assoc()) {
+                    $tableau[] = $row;
+                }
+                return $tableau;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    
 }
 
 ?>

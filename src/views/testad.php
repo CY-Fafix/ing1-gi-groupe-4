@@ -30,7 +30,8 @@ try {
     // On crée l'équipe et on ajoute l'étudiant à l'équipe
     $questionnaire = new Questionnaire(17,'questionnaire1',['Combien font 2+5','la racine de 9','qui est le président des Etats Unis'],'2023-01-01', '2023-01-01');
     $id_gest=3;
-    $success = $controller->viewResponses(2);
+    $success = $controller->sendMessages('james.brown@example.com','mail test','Bonjour à tous , ceci est un test de mail',4,'2023-05-26');
+    var_dump($success);
     if($success){
         echo "Succes d'inscription au projet data !!";
     }else{
