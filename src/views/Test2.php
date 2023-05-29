@@ -31,15 +31,21 @@
 				<label id="DateDebut"> Date de début :
 					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required>
 					<span class="Erreur" id="FormatDate1" aria-live="polite"> <em>La date ne peut pas être antérieure à celle du jour (!)</em> </span>
+					<br>
+					<br>
 				</label>
 				
 				<label id="DateFin"> Date de fin :
 					<input class="Verify" id="DateFinZone" type="date" name="dateFin" placeholder="Entrez la date de fin" required>
 					<span class="Erreur" id="FormatDate2" aria-live="polite"> <em>La date doit être ultérieure à celle du jour (!)</em> </span>
+					<br>
+					<br>
 				</label>
 				
 				<label id="TitreQuestionnaire"> Titre :
 					<input class="Verify" id="TitreZone" type="text" name="titre" placeholder="Entrez le titre du questionnaire" required>
+					<br>
+					<br>
 				</label>
 				
 				<br>

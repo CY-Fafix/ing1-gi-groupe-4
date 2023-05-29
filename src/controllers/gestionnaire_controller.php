@@ -35,7 +35,7 @@ class GestionnaireController extends UserController{
             $ID_Gestionnaire = $id_Gest;
             $stmt->bind_param("ssi", $dateDebut, $dateFin, $ID_Gestionnaire);
             if ($stmt->execute()) {
-                $stmt->bind_result($result1); // Stocker les résultats de la première requête
+                $stmt->bind_result($result); // Stocker les résultats de la première requête
                 $sql2 = "SELECT ID FROM " . $this->table_questionnaire . " WHERE ID = (SELECT MAX(ID) FROM " . $this->table_questionnaire . " ) ";
                 $stmt2 = $this->conn->prepare($sql2);
                 if($stmt2 === false) {
