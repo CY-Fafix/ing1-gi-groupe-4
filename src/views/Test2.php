@@ -1,4 +1,11 @@
-<?php include('./header.php'); ?>
+<?php
+	session_start();
+	require_once '../classes/Database.php';
+	require_once '../classes/Utilisateur.php';
+	require_once '../classes/Gestionnaire.php';
+	require_once '../classes/Questionnaire.php';
+	require_once '../controllers/gestionnaire_controller.php';
+?>
 
 
 <html lang="fr">
@@ -6,8 +13,6 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<link href="../css/stylle.css" rel="stylesheet" />
-		<link href="../css/questionnaire.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Questionnaire </title>
@@ -37,18 +42,19 @@
 					<input class="Verify" id="TitreZone" type="text" name="titre" placeholder="Entrez le titre du questionnaire" required>
 				</label>
 				
-				<!-- Ici, faire soit une boucle necessitant un nombre de questions entre precedemment par le gestionnaire,
-				soit un script permettant de generer une nouvelle question via un bouton -->
-				<label id="Question"> Question :
-					<textarea class="Verify" id="QuestionZone" name="question" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required> </textarea>
-				</label>
+				<br>
+				
 				
 				<?php
 					for ($i = 1; $i <= $_SESSION["nbQuestions"]; $i ++) {
 						echo('
 							<label id="Question"> Question n°'.$i. ' :
-								<textarea class="Verify" id="QuestionZone" name="question" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required> </textarea>
+								<br>
+								<textarea class="Verify" id="QuestionZone" name="question' .$i.'" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required> </textarea>
+								<br>
 							</label>
+							
+							<br>
 						');
 					}
 				?>
@@ -60,19 +66,25 @@
 				
 				
 				<?php
-					$dateDebut = $dateFin = $titre = $contenu = "";
+					$dateDebut = $dateFin = $titre = "";
+					$contenu = [];
+					
+					var_dump($_SERVER);
 					
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						$dateDebut = $_POST["dateDebut"];
 						$dateFin = $_POST["dateFin"];
 						$titre = $_POST["titre"];
-						for ($i = 0; $i < $_SESSION["nbQuestions"]; $i ++) {
+						for ($i = 1; $i <= $_SESSION["nbQuestions"]; $i ++) {
 							$contenu[$i] = $_POST["question$i"];
 						}
 						
-						$questionnaire = new Questionnaire(16, $dateDebut, $dateFin, $titre, $contenu);
-						var_dump($questionnaire);
-						createQuestionnaire($questionnaire, 1);
+						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
+						var_dump($_SESSION);
+						$_SESSION["questionnaire"] = $questionnaire;
+						$controller = new GestionnaireController();
+						$success = $controller->createQuestionnaire($questionnaire, 2);
+						$_SESSION["success"] = $success;
 					}
 				?>
 				
@@ -82,8 +94,5 @@
 	</body>
 	
 </html>
-
-
-<?php include('./footer.php'); ?>
 
 
