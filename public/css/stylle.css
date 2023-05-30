@@ -12,10 +12,11 @@ border: 1px solid black;*/
 
 
 body{
+  
   font-family: 'Aboreto';font-size: 22px;
   overflow-x: hidden;
   width: 100%;
-  margin: 10px auto;
+  margin: 70px auto;
   background-color: #ffffff;
   /*padding: 0 20px 20px 20px;*/
   display: grid;
@@ -40,7 +41,7 @@ header{
 .title{
   
   width: 107%;
-  height: 600.08px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,9 +49,10 @@ header{
   text-shadow: 3px 5px 5px rgb(54, 53, 53);
   background-color: linear-gradient(#11a086,blue);
   background-size: cover;
-  margin-top:60px;
+  
   background-image: url(https://images7.alphacoders.com/103/thumb-1920-1032938.jpg);
   margin-left: -25px;
+  
 }
 
 .titre{
