@@ -1,6 +1,8 @@
 
 
 <?php
+session_start();
+
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once __DIR__.'/../classes/Database.php';
 require_once __DIR__.'/../classes/Utilisateur.php';
@@ -38,9 +40,11 @@ class GestionnaireController extends UserController{
                 }
                 $stmt2->execute();
                 $stmt2->bind_result($result);
+                $_SESSION["newTest"] = $result;
                 $stmt2->fetch(); // Récupérer les résultats
                 $stmt->close();
                 $stmt2->close();
+                $_SESSION["test"] = "coucou";
                 $value = $this->createQuestion($questionnaire,$result);
                 $stmt->free_result(); // Libérer les résultats de la première requête
                 return $value;
@@ -58,8 +62,10 @@ class GestionnaireController extends UserController{
             $valReturn=true;
             $Contenu = $questionnaire->getQuestions();
             $ID_Questionnaire = $result; // Utiliser l'ID du questionnaire récemment inséré
+            $_SESSION["compteur"] = 0;
     
             foreach($Contenu as $question){
+            	$_SESSION["compteur"] = $_SESSION["compteur"]+1;
                 $sql = "INSERT INTO " . $this->table_questions . " (Contenu, ID_Questionnaire) VALUES (?, ?)";
                 $stmt3 = $this->conn->prepare($sql);
                 if($stmt3 === false) {

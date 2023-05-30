@@ -1,4 +1,7 @@
-<?php session_start() ?>
+<?php
+	/*include('./header.php');*/
+	session_start();
+?>
 
 
 <html lang="fr">
@@ -6,9 +9,11 @@
 	<head>
 		<meta charset="UTF-8">
 		
+		<link href="../css/stylle.css" rel="stylesheet" />
+		<link href="../css/questionnaire.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
-		<title> Questionnaire </title>
+		<title> Choix nombre questions </title>
 	</head>
 	
 	
@@ -36,7 +41,7 @@
 				<?php
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						$_SESSION["nbQuestions"] = $_POST["nbQuestions"];
-						header("Location:./Test2.php");
+						header("Location:./creationQuestionnaire.php");
 					}
 				?>
 				
@@ -46,5 +51,8 @@
 	</body>
 	
 </html>
+
+
+<?php include('./footer.php'); ?>
 
 
