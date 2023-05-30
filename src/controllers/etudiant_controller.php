@@ -1,12 +1,12 @@
 <?php
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
-require_once '../classes/Database.php';
-require_once '../classes/Utilisateur.php';
-require_once '../classes/Etudiant.php';
-require_once '../classes/ProjetData.php';
-require_once '../classes/Equipe.php';
-require_once '../classes/Reponse.php';
-require_once 'user_controller.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/Utilisateur.php';
+require_once __DIR__ . '/../classes/Etudiant.php';
+require_once __DIR__ .'/../classes/ProjetData.php';
+require_once __DIR__ . '/../classes/Equipe.php';
+require_once __DIR__ . '/../classes/Reponse.php';
+require_once __DIR__ .'/user_controller.php';
 
 class EtudiantController extends UserController{
     public function __construct() {

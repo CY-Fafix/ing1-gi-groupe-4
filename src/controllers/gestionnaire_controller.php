@@ -2,9 +2,9 @@
 
 <?php
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
-require_once '../classes/Database.php';
-require_once '../classes/Utilisateur.php';
-require_once 'user_controller.php';
+require_once __DIR__.'/../classes/Database.php';
+require_once __DIR__.'/../classes/Utilisateur.php';
+require_once __DIR__.'/user_controller.php';
 
 class GestionnaireController extends UserController{
     protected $conn;

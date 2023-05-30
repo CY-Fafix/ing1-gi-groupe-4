@@ -1,7 +1,25 @@
 <?php
 
 session_start();
+require_once __DIR__ . '/../../src/controllers/user_controller.php';
 
+$userController = new UserController();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Vérifier si le formulaire de connexion a été soumis
+    if (isset($_POST['uname'], $_POST['psw'])) {
+        $email = $_POST['uname'];
+        $password = $_POST['psw'];
+        $user = $userController->login($email, $password);
+        if ($user !== null) {
+            // L'utilisateur est connecté avec succès
+            $_SESSION['utilisateur_connecte'] = $user->getEmail();
+        } else {
+            // Les identifiants sont incorrects
+            echo "E-mail ou mot de passe incorrect.";
+        }
+    }
+}
 ?>
 	 
 <header>
@@ -15,8 +33,8 @@ session_start();
 		<ul id="top"> 
 			<li><a href="../index.php" >Accueil</a></li>
 			<!-- <li><a href="Challenges.html">Challenges</a></li> -->
-			<li><a href="/php/message.php">Contacts</a></li>
-			<li><a href="/php/inscription.php" class="split">Inscription</a></li>
+			<li><a href="/public/php/message.php">Contacts</a></li>
+			<li><a href="/public/php/inscription.php" class="split">Inscription</a></li>
 			<li>
 				<!-- Button to open the modal login form -->
         		<button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
@@ -46,7 +64,7 @@ session_start();
 			<!-- Modal Content -->
 			<form class="modal-content animate" action="/action_page.php">
 				<div class="imgcontainer">
-					<img src="../assets/truc.jpg" alt="Avatar" class="avatar">
+					<img src="/public/assets/truc.jpg" alt="Avatar" class="avatar">
 				</div>
 
 				<div class="container">
