@@ -43,21 +43,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </li>
             <?php endif; ?>
 
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'etudiant'): ?>
-                <li><a href="/public/php/challenges.php">Challenges</a></li>
-                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Etudiant'): ?>
+                <li><a href="/public/php/challenges.php">Challenges</a></li> <!-- Voir les challenges ou il est inscrit -->
+                <li><a href="/public/php/equipe.php">Equipe</a></li> <!-- Voir son équipe si pas d'équipe, peut créer-->
+                <li><a href="/public/php/update_profile.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
+                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'gestionnaire'): ?>
-                <li><a href="/public/php/projets.php">Projets</a></li>
-                <li><a href="/public/php/questionnaire.php">Questionnaire</a></li>
-                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Gestionnaire'): ?>
+                <li><a href="/public/php/projets.php">Projets</a></li> <!-- Le gestionnaire voit tous les projets -->
+                <li><a href="/public/php/creationQuestionnaire.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
+                <li><a href="/public/php/voirQuestionnaire.php">Voir Questionnaire</a></li><!-- Permet de voir les réponses -->
+                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                <li><a href="/public/php/challenges.php">Data Challenges</a></li>
-                <li><a href="/public/php/projets.php">Tous les projets</a></li>
-                <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'): ?>
+                <li><a href="/public/php/challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
+                <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
+                <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Permet de voir/modifier tous les utilisateurs -->
+                <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de voir/modifier toutes les ressources -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
             <?php endif; ?>
 

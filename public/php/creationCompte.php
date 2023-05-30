@@ -1,34 +1,4 @@
 <?php include('./header.php'); ?>
-<?php 
-include('./header.php'); 
-require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
-
-$etudiantController = new EtudiantController();
-$error = "";
-
-try {
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $motDePasse = $_POST['motDePasse'];
-        $telephone = $_POST['telephone'];
-        $ville = $_POST['ville'];
-        $ecole = $_POST['ecole'];
-        $anneeEtudes = $_POST['anneeEtudes'];
-        $email = $_POST['email'];
-
-        $etudiant = new Etudiant(null, $nom, $prenom, $email, $motDePasse, $telephone, $ville, "Etudiant", $anneeEtudes, $ecole);
-        $success = $etudiantController->createUser($etudiant);
-        
-        if(!$success){
-            $error = "Erreur lors de la création de l'utilisateur. Veuillez réessayer.";
-        }
-    }
-} catch (Exception $e) {
-    $error = "Une erreur est survenue : " . $e->getMessage();
-}
-?>
-
 
 <html lang="fr">
 	
