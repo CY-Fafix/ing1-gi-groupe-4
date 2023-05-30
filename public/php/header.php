@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+session_start();    
 require_once __DIR__ . '/../../src/controllers/user_controller.php';
 
 $userController = new UserController();
@@ -25,12 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 <header>
-	<!-- <div class="title">
-		<h1><em>Projet hackathon</em></h1> 
-		<h4>Venez challenger vos données</h4>
-	</div> -->
-	
-
     <nav>
         <ul id="top"> 
             <li><a href="/public/index.php" >Accueil</a></li>
@@ -46,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Etudiant'): ?>
                 <li><a href="/public/php/challenges.php">Challenges</a></li> <!-- Voir les challenges ou il est inscrit -->
                 <li><a href="/public/php/equipe.php">Equipe</a></li> <!-- Voir son équipe si pas d'équipe, peut créer-->
-                <li><a href="/public/php/update_profile.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
+                <li><a href="/public/php/update_profile.php">Profile</a></li> <!-- Anaé : Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
@@ -61,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/public/php/challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
                 <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
                 <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Permet de voir/modifier tous les utilisateurs -->
-                <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de voir/modifier toutes les ressources -->
+                <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
             <?php endif; ?>
 
@@ -88,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" class="input" placeholder="Entrer votre mot de passe" name="psw" required>
 
         <button type="submit" class="loginbtn2">Connexion</button>
-        <!-- <label class="label">
+        <label class="label">
             <input type="checkbox" checked="checked" class="input" name="remember"> Se rappeler de moi
-        </label> -->
+        </label>
 
         <?php if (!empty($error)): ?>
             <div id="loginError" style="display: none;"><?php echo $error; ?></div>
