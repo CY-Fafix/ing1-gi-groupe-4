@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Etudiant'): ?>
                 <li><a href="/public/php/challenges.php">Challenges</a></li> <!-- Voir les challenges ou il est inscrit -->
                 <li><a href="/public/php/equipe.php">Equipe</a></li> <!-- Voir son équipe si pas d'équipe, peut créer-->
-                <li><a href="/public/php/update_profile.php">Profile</a></li> <!-- Anaé : Voir son profil/modifier infos -->
+                <li><a href="/public/php/profile.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php endif; ?>
     </div>
 
-    <div class="containerBas" style="background-color:#f1f1f1">
+    <div class="containerBas" style="background-color:white">
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Annuler</button>
     </div>
 </form>
