@@ -12,7 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password = $_POST['psw'];
         $user = $userController->login($email, $password);
         if ($user !== null) {
-            $_SESSION['utilisateur_connecte'] = $user->getEmail();
+			//connexion bien effectuée.
+			/*
+				Les données de session sont : 
+				$_SESSION['user_id'];
+            	$_SESSION['role'];
+			*/
         } else {
             $error = "E-mail ou mot de passe incorrect.";
         }
@@ -26,30 +31,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	</div>
 	
 
-	<nav>
-		<ul id="top"> 
-			<li><a href="/public/index.php" >Accueil</a></li>
-			<!-- <li><a href="Challenges.html">Challenges</a></li> -->
-			<li><a href="/public/php/message.php">Contacts</a></li>
-			<li><a href="/public/php/inscription.php" class="split">Inscription</a></li>
-			<li>
-				<!-- Button to open the modal login form -->
-        		<button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
-			</li>
-			<!-- <li><a href="Connexion.html" class="split"> -->
-					<!-- <?php
-					// if(isset($_SESSION['utilisateur_connecte'])){
-					// 	echo('Déconnexion');
-					// } else {
-					// 	echo('Connexion');
-					// }
-				?>  -->
-			<!-- </a></li> -->
-			
+    <nav>
+        <ul id="top"> 
+            <li><a href="/public/index.php" >Accueil</a></li>
 
+            <?php if (!isset($_SESSION['role'])): ?>
+                <li><a href="/public/php/inscription.php" class="split">Inscription</a></li>
+                <li>
+                    <!-- Button to open the modal login form -->
+                    <button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
+                </li>
+            <?php endif; ?>
 
-		</ul>
-	</nav>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'etudiant'): ?>
+                <li><a href="/public/php/challenges.php">Challenges</a></li>
+                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'gestionnaire'): ?>
+                <li><a href="/public/php/projets.php">Projets</a></li>
+                <li><a href="/public/php/questionnaire.php">Questionnaire</a></li>
+                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                <li><a href="/public/php/challenges.php">Data Challenges</a></li>
+                <li><a href="/public/php/projets.php">Tous les projets</a></li>
+                <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li>
+                <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
+            <?php endif; ?>
+
+            <li><a href="/public/php/message.php">Contacts</a></li>
+        </ul>
+    </nav>
 
 </header>
 <!-- The Modal -->

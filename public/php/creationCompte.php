@@ -1,4 +1,33 @@
 <?php include('./header.php'); ?>
+<?php 
+include('./header.php'); 
+require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
+
+$etudiantController = new EtudiantController();
+$error = "";
+
+try {
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $motDePasse = $_POST['motDePasse'];
+        $telephone = $_POST['telephone'];
+        $ville = $_POST['ville'];
+        $ecole = $_POST['ecole'];
+        $anneeEtudes = $_POST['anneeEtudes'];
+        $email = $_POST['email'];
+
+        $etudiant = new Etudiant(null, $nom, $prenom, $email, $motDePasse, $telephone, $ville, "Etudiant", $anneeEtudes, $ecole);
+        $success = $etudiantController->createUser($etudiant);
+        
+        if(!$success){
+            $error = "Erreur lors de la création de l'utilisateur. Veuillez réessayer.";
+        }
+    }
+} catch (Exception $e) {
+    $error = "Une erreur est survenue : " . $e->getMessage();
+}
+?>
 
 
 <html lang="fr">
@@ -11,6 +40,11 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Création compte </title>
+		<style>
+    .error-message {
+      color: red;
+    }
+  </style>
 	</head>
 	
 	
@@ -72,10 +106,12 @@
 				<label id="Email"> E-mail :
 					<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
 					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
-				</label>
-				
-				
-				
+				</label>				
+					<?php if(!empty($error)): ?>
+					<p class="error-message">
+						<?php echo $error; ?>
+					</p>
+					<?php endif; ?>
 				<input type="submit" id="Ok" name="ok" value="OK" />
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 				
