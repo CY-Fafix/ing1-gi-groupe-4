@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			class="close" title="Close Modal">&times;</span>
 
 			<!-- Modal Content -->
-			<form class="modal-content animate" action="/action_page.php">
+			<form class="modal-content animate" action="">
 				<div class="imgcontainer">
 					<img src="/public/assets/truc.jpg" alt="Avatar" class="avatar">
 				</div>

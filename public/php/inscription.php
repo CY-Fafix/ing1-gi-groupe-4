@@ -1,5 +1,4 @@
 <?php 
-include('./header.php'); 
 require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
 
 $etudiantController = new EtudiantController();
