@@ -111,7 +111,7 @@ try {
 					<p class="error-message">
 						<?php echo $error; ?>
 					</p>
-					<?php endif; ?>
+					<?php endif; ?>	
 				<input type="submit" id="Ok" name="ok" value="OK" />
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 				
