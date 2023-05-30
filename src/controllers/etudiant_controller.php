@@ -244,7 +244,7 @@ class EtudiantController extends UserController{
     public function addMemberToTeam(Equipe $equipe, Etudiant $capitaine, Etudiant $newMember)
     {
         // 1. Vérifier que le capitaine est bien le chef de l'équipe
-        if ($equipe->getChefEquipe() !== $capitaine->getID()) {
+        if ($equipe->getChefEquipe() != $capitaine->getID()) {
             // Le capitaine n'est pas le chef de l'équipe
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
@@ -300,6 +300,7 @@ class EtudiantController extends UserController{
     
         // 2. Vérifier que le membre est dans l'équipe
         $membres = $equipe->getMembres(); // Tableau des ID des membres
+        
         if (!in_array($member->getID(), $membres)) {
             // Le membre n'est pas dans l'équipe
             throw new Exception("Le membre n'est pas dans l'équipe");
@@ -552,6 +553,52 @@ public function submitAnalyse(AnalyseurCode $analyse) {
     $stmt2->close();
 
     return $valReturn;
+}
+
+public function getTeamsByStudentId($etudiant_id) {
+    $db = new Database();
+    $db->connect();
+    $equipes = [];
+
+    // Récupérer les équipes de l'étudiant
+    $sql = "SELECT * FROM MembresEquipe WHERE ID_Utilisateur = " . $etudiant_id;
+    $result = $db->query($sql);
+
+    // Parcourir les équipes et créer un objet Equipe pour chaque
+    while ($row = $result->fetch_assoc()) {
+        $equipe_id = $row['ID_Equipe'];
+
+        // Récupérer les détails de l'équipe
+        $sql = "SELECT * FROM Equipes WHERE ID = " . $equipe_id;
+        $equipeResult = $db->query($sql);
+
+        if ($equipeRow = $equipeResult->fetch_assoc()) {
+            $nom = $equipeRow['Nom'];
+            $chefEquipe = $equipeRow['ID_Capitaine'];
+
+            // Récupérer les membres de l'équipe
+            $sql = "SELECT Utilisateurs.ID, Utilisateurs.Nom, Utilisateurs.Prenom FROM MembresEquipe JOIN Utilisateurs ON MembresEquipe.ID_Utilisateur = Utilisateurs.ID WHERE MembresEquipe.ID_Equipe = " . $equipe_id;
+            $membreResult = $db->query($sql);
+            $membres = [];
+            while ($membreRow = $membreResult->fetch_assoc()) {
+                $membres[] = [
+                    'id' => $membreRow['ID'],
+                    'nom' => $membreRow['Nom'],
+                    'prenom' => $membreRow['Prenom']
+                ];
+            }
+
+            // Créer l'objet Equipe
+            $equipe = new Equipe($equipe_id, $nom, $membres, $chefEquipe);
+
+            // Ajouter l'équipe à la liste
+            $equipes[] = $equipe;
+        }
+    }
+
+    $db->close();
+
+    return $equipes;
 }
     
     /*viewDataChallenges() : Permet à l'étudiant de voir une liste de tous les défis de données disponibles. */

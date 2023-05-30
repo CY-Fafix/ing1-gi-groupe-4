@@ -24,13 +24,14 @@ class Database {
     
 
     public function query($sql) {
-        try {
-            $result = $this->conn->query($sql);
-            return $result;
-        } catch(Exception $e) {
-            echo 'Query Error: ' . $e->getMessage();
+        $result = $this->conn->query($sql);
+        if ($this->conn->error) {
+            echo 'Erreur SQL: ' . $this->conn->error . '<br>';
+            echo 'Requête: ' . $sql;
         }
+        return $result;
     }
+    
 
     public function close() {
         $this->conn->close();
