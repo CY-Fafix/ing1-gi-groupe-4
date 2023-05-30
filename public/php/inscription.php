@@ -1,3 +1,32 @@
+<?php 
+include('./header.php'); 
+require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
+
+$etudiantController = new EtudiantController();
+$error = "";
+
+try {
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $motDePasse = $_POST['motDePasse'];
+        $telephone = $_POST['telephone'];
+        $ville = $_POST['ville'];
+        $ecole = $_POST['ecole'];
+        $anneeEtudes = $_POST['anneeEtudes'];
+        $email = $_POST['email'];
+
+        $etudiant = new Etudiant(null, $nom, $prenom, $email, $motDePasse, $telephone, $ville, "Etudiant", $anneeEtudes, $ecole);
+        $success = $etudiantController->createUser($etudiant);
+        
+        if(!$success){
+            $error = "Erreur lors de la création de l'utilisateur. Veuillez réessayer.";
+        }
+    }
+} catch (Exception $e) {
+    $error = "Une erreur est survenue : " . $e->getMessage();
+}
+?>
 <?php include('./header.php'); ?>
 
 
@@ -6,8 +35,8 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<link href="../css/stylle.css" rel="stylesheet" />
-		<link href="../css/inscription.css" rel="stylesheet" />
+		<link href="/public/css/stylle.css" rel="stylesheet" />
+		<link href="/public/css/inscription.css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 	
 		<title> Inscription </title>
@@ -21,7 +50,7 @@
 			<p id="Title"> <strong>N'hésitez plus, rejoignez-nous !</strong> </p>
 			
 			<form id="InscriptionFormulaire" name="inscriptionFormulaire" onsubmit="return verifDateDeNaissance()" method="POST" action="">
-				<script type="text/javascript" src="../js/verificationDateDeNaissance.js" defer> </script>
+				<script type="text/javascript" src="/public/js/verificationDateDeNaissance.js" defer> </script>
 
 				<p><strong>Inscription</strong></p>
 				
@@ -69,9 +98,12 @@
 				<div>
 					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
 				</div>
-				
+				<?php if(!empty($error)): ?>
+			<div class="alert alert-danger">
+			<?php echo $error; ?>
+			</div>
+			<?php endif; ?>
 				<input type="submit" id="valider_inscription" name="valider_inscription" value="S'INSCRIRE" />
-				
 				
 			</form>
 			
