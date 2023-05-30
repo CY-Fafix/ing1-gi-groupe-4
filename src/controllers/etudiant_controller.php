@@ -475,6 +475,45 @@ class EtudiantController extends UserController{
 
 
     }
+
+    public function showDateDebut($id_Questionnaire){
+        try{
+        $sql= "SELECT DateDebut FROM Questionnaires WHERE ID = ?";
+        $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+
+        $stmt->bind_param("i",$id_Questionnaire);;
+        if ($stmt->execute()) {
+            $res = $stmt->get_result();
+            return $res;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+    public function showDateFin($id_Questionnaire){
+        try{
+        $sql= "SELECT DateFin FROM Questionnaires WHERE ID = ?";
+        $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+
+        $stmt->bind_param("i",$id_Questionnaire);;
+        if ($stmt->execute()) {
+            $res = $stmt->get_result();
+            return $res;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
     
     
     
