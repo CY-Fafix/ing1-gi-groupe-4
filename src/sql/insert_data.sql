@@ -13,8 +13,8 @@ VALUES
 
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge)
 VALUES
-('Projet1', 'Description du Projet1', 'http://example.com/image1.jpg', 1),
-('Projet2', 'Description du Projet2', 'http://example.com/image2.jpg', 2);
+('Projet1', 'Description du Projet1', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
+('Projet2', 'Description du Projet2', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
 
 INSERT INTO Ressources (URL, Type, ID_Projet)
 VALUES

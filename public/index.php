@@ -1,7 +1,3 @@
-<?php
-
-require_once '../src/controllers/user_controller.php';
-?>
 <!DOCTYPE html >
 <html xml:lang="fr" lang="fr">
 <meta charset="UTF-8">
