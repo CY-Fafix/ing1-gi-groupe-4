@@ -9,12 +9,12 @@
 	require_once '../../src/controllers/gestionnaire_controller.php';
 	
 	
-	
-	if (isset($_SESSION["login"]) != 1) {
-		include("header.php");
-	} else {
-		include("headerConnexion.php");
+	if !(isset($_SESSION["role"])) {
+		header("Location:./connexion.php");
 	}
+	
+	
+	$etudiantController = new EtudiantController();
 ?>
 
 
@@ -46,19 +46,31 @@
 					<br>
 				</label>
 				
+				<?php
+					$dateDebut = $etudiantController->showDateDebut($id_Questionnaire);
+					
+					echo('
+						<p> Date de début : ' .$dateDebut. ' </p>
+						<br>
+					');
+				?>
+				
+				
 				<label id="DateFin"> Date de fin :
 					<!-- <input class="Verify" id="DateFinZone" type="date" name="dateFin" placeholder="Entrez la date de fin" required> -->
 					<br>
 					<br>
 				</label>
 				
-				<label id="TitreQuestionnaire"> Titre :
-					<!-- <input class="Verify" id="TitreZone" type="text" name="titre" placeholder="Entrez le titre du questionnaire" required> -->
-					<br>
-					<br>
-				</label>
 				
-				<br>
+				<?php
+					$dateFin = $etudiantController->showDateFin($id_Questionnaire);
+					
+					echo('
+						<p> Date de fin : ' .$dateFin. ' </p>
+						<br>
+					');
+				?>
 				
 			</form>
 			
@@ -68,15 +80,17 @@
 				<tbody>
 					
 					<?php
+						$tabQuestions = $etudiantController->showQuestionnaire($id_Questionnaire);
+						$i = 1;
 						
-						foreach ($tabQuestions as $indice => $produit) {
+						foreach ($tabQuestions as $contenuQuestion) {
 							echo('
-								<tr>
-									Question n° ' .$indice. '
-									<br>
-									' .$contenu. '
-								</tr>
+								<p> Question n° ' .$i. ' </p>
+								<br>
+								<p> ' .$contenuQuestion. ' </p>
 							');
+							
+							$i += 1;
 						}
 						
 					?>

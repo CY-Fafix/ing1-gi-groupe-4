@@ -46,11 +46,6 @@
 					<br>
 				</label>
 				
-				<label id="TitreQuestionnaire"> Titre :
-					<input class="Verify" id="TitreZone" type="text" name="titre" placeholder="Entrez le titre du questionnaire" required>
-					<br>
-					<br>
-				</label>
 				
 				<br>
 				
