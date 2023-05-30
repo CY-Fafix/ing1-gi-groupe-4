@@ -32,38 +32,34 @@
 				<label id="Prenom" class="element"> Prénom :
 					<input class="Verify" id="PrenomZone" type="text" name="prenom" placeholder="Entrez votre prénom" required>
 				</label>
-				
-				<!-- Partie retiree car non pertinent que pour la partie creation de compte par un administrateur,
-				celui-ci puisse choisir le genre de la personne concernee.
-				
-				<label id="Genre"> Genre :
-					<input class="Verify" id="GenreZone1" type="radio" name="genre" value="Homme" required>
-						<label> Homme </label>
-					<input class="Verify" id="GenreZone2" type="radio" name="genre" value="Femme" required>
-						<label> Femme </label>
-					<input class="Verify" id="GenreZone3" type="radio" name="genre" value="Non-binaire" required>
-						<label> Non-binaire </label>
-				</label>
-				-->
-				
-				<label id="DateNaissance" class="element"> Date de naissance :
-					<input class="Verify" id="DateNaissanceZone" type="date" name="dateNaissance" required>
-					<br>
-					<span class="Erreur" id="FormatDate1" aria-live="polite"> <em>Veuillez entrer une date inférieure à celle du jour (!)</em> </span>
-					<br>
-				</label>
+
+                <label id="MotDePasse" class="element"> Mot de passe :
+                    <input class="Verify" id="MotDePasseZone" type="password" name="motDePasse" placeholder="Entrez votre mot de passe" required>
+                </label>
+
+                <label id="Telephone" class="element"> Téléphone :
+                    <input class="Verify" id="TelephoneZone" type="tel" name="telephone" placeholder="Entrez votre numéro de téléphone" required>
+                </label>
+
+                <label id="Ville" class="element"> Ville :
+                    <input class="Verify" id="VilleZone" type="text" name="ville" placeholder="Entrez votre ville" required>
+                </label>
+
+                <label id="Ecole" class="element"> École :
+                    <input class="Verify" id="EcoleZone" type="text" name="ecole" placeholder="Entrez le nom de votre école" required>
+                </label>
 				
 				<label id="AnneeEtude" class="element"> Année d'études :
 					<select id="AnneeEtudesZone" name="anneeEtudes">
-						<option value="l1"> L1 </option>
-						<option value="l2"> L2 </option>
-						<option value="l3"> L3 </option>
-						<option value="m1"> M1 </option>
-						<option value="m2"> M2 </option>
-						<option value="d"> D </option>
+						<option value="L1"> L1 </option>
+						<option value="L2"> L2 </option>
+						<option value="L3"> L3 </option>
+						<option value="M1"> M1 </option>
+						<option value="M2"> M2 </option>
+						<option value="D"> D </option>
 					</select>
 				</label>
-				
+
 				<label id="Email" class="element"> E-mail :
 					<div>
 						<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
@@ -73,8 +69,6 @@
 				<div>
 					<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
 				</div>
-				
-				
 				
 				<input type="submit" id="valider_inscription" name="valider_inscription" value="S'INSCRIRE" />
 				
@@ -90,5 +84,3 @@
 		
 	</div>  
 <?php include('./footer.php'); ?>
-
-
