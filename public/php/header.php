@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['utilisateur_connecte'] = $user->getEmail();
         } else {
             // Les identifiants sont incorrects
-            echo "E-mail ou mot de passe incorrect.";
+            //echo "E-mail ou mot de passe incorrect.";
         }
     }
 }

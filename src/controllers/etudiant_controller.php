@@ -12,11 +12,6 @@ class EtudiantController extends UserController{
     public function __construct() {
         $db = new Database();
         $this->conn = $db->connect();
-        if ($this->conn) {
-            echo "Database connection successful.";
-        } else {
-            echo "Database connection failed.";
-        }
     }
     
     public function createUser(Utilisateur $user) {
