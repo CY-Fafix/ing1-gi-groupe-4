@@ -78,8 +78,9 @@ class UserController {
         // Récupérez le premier résultat
         $userFound = $stmt->fetch();
 
+        //if ($userFound && password_verify($password, $hashedPassword)) {
         // Si un utilisateur avec cet email a été trouvé et que le mot de passe correspond
-        if ($userFound && password_verify($password, $hashedPassword)) {
+        if ($userFound && $password == $hashedPassword) {
             // Initialisez les informations de session
             $_SESSION['user_id'] = $id;
             $_SESSION['role'] = $role;
