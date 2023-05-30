@@ -39,7 +39,7 @@ header{
 
 .title{
   
-  width: 100%;
+  width: 107%;
   height: 600.08px;
   display: flex;
   flex-direction: column;
@@ -50,6 +50,7 @@ header{
   background-size: cover;
   margin-top:60px;
   background-image: url(https://images7.alphacoders.com/103/thumb-1920-1032938.jpg);
+  margin-left: -25px;
 }
 
 .titre{

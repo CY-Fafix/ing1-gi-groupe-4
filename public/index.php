@@ -24,6 +24,10 @@ require_once '../src/controllers/user_controller.php';
 
 	
 	<div class="body">
+		<div class="title">
+			<h1><em>Projet hackathon</em></h1> 
+			<h4>Venez challenger vos données</h4>
+		</div>
 		<div class="presentation">
 			<h1 class="titre">
 				De quoi s'agit-il?
