@@ -2,7 +2,6 @@
 
 class Questionnaire {
     private $id;
-    private $nom;
     private $questions; // Un tableau d'objets Question
     private $dateDebut;
     private $dateFin;
@@ -10,7 +9,6 @@ class Questionnaire {
     // Constructeur
     public function __construct($id, $nom, $questions, $dateDebut, $dateFin) {
         $this->id = $id;
-        $this->nom = $nom;
         $this->questions = $questions;
         $this->dateDebut = $dateDebut;
         $this->dateFin = $dateFin;
@@ -21,9 +19,6 @@ class Questionnaire {
         return $this->id;
     }
 
-    public function getNom() {
-        return $this->nom;
-    }
 
     public function getQuestions() {
         return $this->questions;
@@ -42,9 +37,6 @@ class Questionnaire {
         $this->id = $id;
     }
 
-    public function setNom($nom) {
-        $this->nom = $nom;
-    }
 
     public function setQuestions($questions) {
         if (is_array($questions)) {

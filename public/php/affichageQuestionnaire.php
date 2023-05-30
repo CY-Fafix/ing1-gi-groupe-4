@@ -62,6 +62,27 @@
 				
 			</form>
 			
+			
+			
+			<table>
+				<tbody>
+					
+					<?php
+						
+						foreach ($tabQuestions as $indice => $produit) {
+							echo('
+								<tr>
+									Question n° ' .$indice. '
+									<br>
+									' .$contenu. '
+								</tr>
+							');
+						}
+						
+					?>
+				
+				</tbody>
+			</table>
 		</div>
 	</body>
 	
