@@ -111,7 +111,5 @@ try {
 	
 </html>
 
-<div class="wave">
-		
-	</div>  
+
 <?php include('./footer.php'); ?>

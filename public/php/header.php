@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 <header>
-	<div class="title">
+	<!-- <div class="title">
 		<h1><em>Projet hackathon</em></h1> 
 		<h4>Venez challenger vos données</h4>
-	</div>
+	</div> -->
 	
 
     <nav>
@@ -88,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" class="input" placeholder="Entrer votre mot de passe" name="psw" required>
 
         <button type="submit" class="loginbtn2">Connexion</button>
-        <label class="label">
+        <!-- <label class="label">
             <input type="checkbox" checked="checked" class="input" name="remember"> Se rappeler de moi
-        </label>
+        </label> -->
 
         <?php if (!empty($error)): ?>
             <div id="loginError" style="display: none;"><?php echo $error; ?></div>
