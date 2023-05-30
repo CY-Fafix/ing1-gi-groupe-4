@@ -1,7 +1,7 @@
 /* Police d'ecriture */
 
 #Title {
-	padding-top : 60px;
+	padding-top : 35px;
 	padding-bottom : 20px;
 	font-size : 30px;
 	font-style : oblique;
@@ -66,7 +66,7 @@
 .contact_fiche{
 	background-color: white;
 	border-radius: 30px;
-	height: 75%;
+	height: 70%;
 	width: 50%;
 	float: right;
 	margin-right: 50px;
