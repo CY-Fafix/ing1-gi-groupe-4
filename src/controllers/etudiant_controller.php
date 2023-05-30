@@ -515,7 +515,44 @@ class EtudiantController extends UserController{
     }
 }
     
+//Enregistre les analyses du code dans la base de donnée
+public function submitAnalyse(AnalyseurCode $analyse) {
+    $valReturn = true;
     
+    $nbLignes = $analyse->getNbLignes();
+    $nbFonc = $analyse->getNbFonc();
+    $nbMin = $analyse->getNbMin();
+    $nbMax = $analyse->getNbMax();
+    $nbMoy = $analyse->getNbMoy();
+    $idEquipe = $analyse->getIdEquipe();
+
+    $sql1 = "DELETE FROM AnalysesCode WHERE ID_Equipe = ".$idEquipe;
+    $stmt1 = $this->conn->prepare($sql1);
+    if ($stmt1 === false) {
+        throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+    }
+    if (!$stmt1->execute()) {
+        $valReturn = false;
+    }
+    $stmt1->close();
+
+    $sql2 = "INSERT INTO AnalysesCode (NombreLignes, NombreFonctions, LignesMinFonction, LignesMaxFonction, LignesMoyennesFonction, ID_Equipe)
+     VALUES (?, ?, ?, ?, ?, ?)";
+   
+    $stmt2 = $this->conn->prepare($sql2);
+    if ($stmt2 === false) {
+        throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+    }
+
+    
+    $stmt2->bind_param("iiiidi", $nbLignes, $nbFonc, $nbMin, $nbMax, $nbMoy, $idEquipe);
+    if (!$stmt2->execute()) {
+        $valReturn = false;
+    }
+    $stmt2->close();
+
+    return $valReturn;
+}
     
     /*viewDataChallenges() : Permet à l'étudiant de voir une liste de tous les défis de données disponibles. */
 

@@ -1,5 +1,8 @@
     <?php
-    include('./header.php');
+    //include('./header.php');
+    session_start();
+    require_once("../../src/classes/AnalyseurCode.php");
+    require_once("../../src/controllers/etudiant_controller.php");
 
     if (isset($_SESSION['user_id'])) { //----------CODE DANS LE CAS OU L'UTILISATEUR EST CONNECTE---------- ?>
 
@@ -7,9 +10,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        
         <link href="../css/stylle.css" rel="stylesheet" />
-        <link href="../css/inscription.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
         
         <title>  </title>
@@ -81,6 +82,10 @@
                     echo "Nombre de lignes de la plus grande fonction : ".$valeurs['nbMax']."<br>";
                     echo "Nombre de lignes moyen des fonctions : ".$valeurs['nbMoy']."<br>";
 
+                    $analyse = new AnalyseurCode(0, $valeurs['nbLignes'], $valeurs['nbFonc'],$valeurs['nbMin'], $valeurs['nbMax'],$valeurs['nbMoy'], 1); //A changer
+                    $controller = new EtudiantController();
+                    $controller->submitAnalyse($analyse);
+
                     //Création de l'affichage des valeurs
                     $dataPoints = array();
 
@@ -135,8 +140,8 @@
         </div>
     </body>
     </html>
-    <div class="wave"></div>  
-    <?php include('./footer.php'); ?>
+    <!--<div class="wave"></div>  -->
+    <?php //include('./footer.php'); ?>
     
 
     <?php } else { //----------CODE DANS LE CAS OU L'UTILISATEUR N'EST PAS CONNECTE----------?>
@@ -146,7 +151,6 @@
         <meta charset="UTF-8">
         
         <link href="../css/stylle.css" rel="stylesheet" />
-        <link href="../css/inscription.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
     
         <title>  </title>
@@ -158,6 +162,6 @@
         </div>
     </body>
     </html>
-    <div class="wave"></div>  
-    <?php include('./footer.php'); ?>
+    <!--<div class="wave"></div>-->
+    <?php //include('./footer.php'); ?>
     <?php } ?>

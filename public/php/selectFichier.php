@@ -1,5 +1,7 @@
     <?php
-    include('./header.php');
+    //include('./header.php');
+
+    session_start();
     $_SESSION['user_id'] = 2; //--------TEMPORAIRE--------
 
     if (isset($_SESSION['user_id'])) { //----------CODE DANS LE CAS OU L'UTILISATEUR EST CONNECTE---------- ?>
@@ -8,9 +10,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        
         <link href="../css/stylle.css" rel="stylesheet" />
-        <link href="../css/inscription.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
     
         <title>  </title>
@@ -28,8 +28,8 @@
         </div>
     </body>
     </html>
-    <div class="wave"></div>  
-    <?php include('./footer.php'); ?>
+    <!--<div class="wave"></div>-->
+    <?php //include('./footer.php'); ?>
 
     <?php } else { //----------CODE DANS LE CAS OU L'UTILISATEUR N'EST PAS CONNECTE---------- ?> 
 
@@ -39,7 +39,6 @@
             <meta charset="UTF-8">
             
             <link href="../css/stylle.css" rel="stylesheet" />
-            <link href="../css/inscription.css" rel="stylesheet" />
             <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
         
             <title>  </title>
@@ -51,6 +50,6 @@
             </div>
     </body>
     </html>
-    <div class="wave"></div>  
+    <div class="wave"></div>
     <?php include('./footer.php'); ?>
     <?php } ?>
