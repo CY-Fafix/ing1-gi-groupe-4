@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Gestionnaire'): ?>
                 <li><a href="/public/php/projets.php">Projets</a></li> <!-- Le gestionnaire voit tous les projets -->
-                <li><a href="/public/php/creationQuestionnaire.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
+                <li><a href="/public/php/choixNbQuestions.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
                 <li><a href="/public/php/voirQuestionnaire.php">Voir Questionnaire</a></li><!-- Permet de voir les réponses -->
                 <li><a href="/public/php/profile_gestionnaire.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'): ?>
-                <li><a href="/public/php/challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
+                <li><a href="/public/php/update_challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
                 <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
                 <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Permet de voir/modifier tous les utilisateurs -->
                 <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
