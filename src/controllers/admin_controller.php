@@ -165,7 +165,92 @@ class AdminController extends GestionnaireController{
             throw new Exception("Erreur lors de la préparation de la requête pour supprimer le projet : " . $this->conn->error);
         }
     }
+    public function getAllDataChallenges() {
+        $dataChallenges = array();
     
+        try {
+            $sql = "SELECT * FROM DataChallenges";
+            $result = $this->conn->query($sql);
+    
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $id = $row['ID'];
+                    $libelle = $row['Libelle'];
+                    $dateDebut = $row['DateDebut'];
+                    $dateFin = $row['DateFin'];
+                    $idAdmin = $row['ID_Admin'];
+    
+                    // Récupérer les projets associés au Data Challenge
+                    $projets = $this->getProjectsByDataChallengeId($id);
+    
+                    // Créer l'objet DefiData
+                    $defiData = new DefiData($id, $libelle, $dateDebut, $dateFin, $idAdmin, $projets);
+    
+                    // Ajouter le DefiData à la liste
+                    $dataChallenges[] = $defiData;
+                }
+            }
+        } catch (Exception $e) {
+            // Gérer l'erreur ici, par exemple en affichant un message d'erreur ou en journalisant l'erreur
+            echo "Erreur lors de la récupération des Data Challenges : " . $e->getMessage();
+        }
+    
+        return $dataChallenges;
+    }
+    
+    /**
+     * Récupère les projets associés à un Data Challenge donné.
+     *
+     * @param int $dataChallengeId - ID du Data Challenge
+     * @return array - Liste des projets associés
+     */
+    private function getProjectsByDataChallengeId($dataChallengeId) {
+        $projets = array();
+    
+        $sql = "SELECT * FROM Projets WHERE ID_DataChallenge = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $dataChallengeId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $id = $row['ID'];
+                $nom = $row['Libelle'];
+                $description = $row['Description'];
+                $imageURL = $row['ImageURL'];
+    
+                // Créer l'objet ProjetData
+                $projetData = new ProjetData($id, $nom, $description, $imageURL, null, null);
+    
+                // Ajouter le ProjetData à la liste
+                $projets[] = $projetData;
+            }
+        } else {
+            // Ajouter une instruction de débogage pour vérifier s'il y a des erreurs dans la requête
+            echo "Erreur dans la requête : " . $this->conn->error;
+        }
+    
+        return $projets;
+    }
+    
+    public function getDataChallengeIdForProject($projetId) {
+        // Récupérer l'ID du Data Challenge associé au projet en exécutant une requête
+        $sql = "SELECT ID_DataChallenge FROM Projets WHERE ID = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $projetId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['ID_DataChallenge'];
+        }
+    
+        return null; // Retourne null si le projet n'est pas trouvé ou si l'ID du Data Challenge n'est pas trouvé
+    }
+    
+
 
     //Méthode qui permet de créer un data challenge
     public function createDataChallenge(DefiData $defiData) {

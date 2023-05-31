@@ -8,6 +8,7 @@ class ProjetData {
     private $image; // Chemin de l'image
     private $contacts; // Tableau d'objets Contact
     private $ressources; // Tableau d'objets Ressource
+    private $defiData; // DefiData lié
 
     // Constructeur
     public function __construct($id, $nom, $description, $image, $contacts, $ressources) {
@@ -42,6 +43,19 @@ class ProjetData {
 
     public function getRessources() {
         return $this->ressources;
+    }
+
+    public function getDefiData() {
+        return $this->defiData;
+    }
+
+    // Setter pour defiData
+    public function setDefiData($defiData) {
+        if($defiData instanceof DefiData) {
+            $this->defiData = $defiData;
+        } else {
+            throw new InvalidArgumentException('defiData doit être une instance de DefiData.');
+        }
     }
 
     // Setters
