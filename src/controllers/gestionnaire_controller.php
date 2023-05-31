@@ -173,12 +173,21 @@ class GestionnaireController extends UserController{
         }
     }
     
-    
     public function sendMessages($tousMail, $Objet, $Contenu, $ID_Gestionnaire, $dateEnvoi) {
         try {
             // ajout des questions dans la base de données et les lie au questionnaire correspondant
             $valReturn = true;
             $listemail = explode(";", $tousMail); // Utiliser l'ID du questionnaire récemment inséré
+            $sql0 = "SELECT Email FROM Utilisateurs WHERE ID = ?";
+            $stmt0 = $this->conn->prepare($sql0);
+            if ($stmt0 === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt0->bind_param("i", $ID_Gestionnaire);
+            $stmt0->execute();
+            $stmt0->bind_result($mail_gest);
+            $stmt0->fetch();
+            $stmt0->close();
     
             foreach ($listemail as $mail) {
                 $sql = "SELECT ID FROM Equipes WHERE ID_Capitaine IN (SELECT ID FROM Utilisateurs WHERE Email = ?)";
@@ -189,8 +198,9 @@ class GestionnaireController extends UserController{
                 $stmt->bind_param("s", $mail);
                 $stmt->execute();
                 $stmt->bind_result($ID_User);
-                $stmt->fetch(); // Récupérer les résultats
+                $stmt->fetch();
                 $stmt->close();
+                $headers = "From: " . $mail_gest . "\r\n";
     
                 $sql2 = "INSERT INTO " . $this->table_message . "(Contenu, DateEnvoi, ID_Emetteur, ID_Equipe) VALUES (?, ?, ?, ?)";
                 $stmt2 = $this->conn->prepare($sql2);
@@ -199,23 +209,25 @@ class GestionnaireController extends UserController{
                 }
                 $stmt2->bind_param("ssii", $Contenu, $dateEnvoi, $ID_Gestionnaire, $ID_User);
                 if ($stmt2->execute()) {
-                    $mailSent = mail($mail, $Objet, $Contenu);
+                    $mailSent = mail($mail, $Objet, $Contenu, $headers);
                     if ($mailSent) {
-                        echo 'A';
+                        echo 'Envoyé!';
                     } else {
-                        echo 'Failed to send email.';
+                        echo 'Échec de l\'envoi de l\'e-mail.';
                     }
                 } else {
                     $valReturn = false;
                 }
-                $stmt2->close(); // Fermer la requête préparée
-                $stmt2 = null; // Réattribuer la variable pour préparer la prochaine requête
+                $stmt2->close();
+                $stmt2 = null;
             }
             return $valReturn;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
+    
+    
     
 
     public function viewMessages($mail, $ID_Gestionnaire) {
