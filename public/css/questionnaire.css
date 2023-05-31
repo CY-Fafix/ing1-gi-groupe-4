@@ -83,7 +83,7 @@
 
 /* Main */
 body{
-	background-image: URL("https://i.pinimg.com/originals/91/aa/0b/91aa0b21c0a3c6ed5ad648227b7c52ae.gif");
+	background-image: URL("https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg");
 	background-size: cover;
 }
 
@@ -107,10 +107,11 @@ body{
 }
 
 label{
-
+	place-self: center;
 }
 
 input{
+	place-self: center;
 
 }
 
