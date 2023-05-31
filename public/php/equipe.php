@@ -65,6 +65,14 @@ $equipes = $etudiantController->getTeamsByStudentId($_SESSION['user_id']);
                     </select>
                     <button type="submit">Supprimer un membre</button>
                 </form>
+                <form method="POST" action="selectFichier.php">
+                    <input type="hidden" name="team_id" value="<?= $equipe->getId() ?>">
+                    <button type="submit">Analyser du code</button>
+                </form>
+                <form method="POST" action="voirAnalyse.php">
+                    <input type="hidden" name="team_id" value="<?= $equipe->getId() ?>">
+                    <button type="submit">Visualiser les analyses</button>
+                </form>
                 <form method="POST" action="delete_team.php">
                     <input type="hidden" name="team_id" value="<?= $equipe->getId() ?>">
                     <button type="submit">Supprimer l'équipe</button>

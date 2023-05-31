@@ -1,15 +1,11 @@
 <?php
     include('./header.php');
 
-    //$_SESSION['user_id'] = 2; //--------TEMPORAIRE--------
-
     //Si l'utilisateur n'est pas connecté on ne va pas sur cette page
-    if (!isset($_SESSION['user_id'])){
-        if ($_SESSION['role'] != 'Etudiant'){  
-            echo  
-            header('Location: ../index.php');
-            exit;
-        }
+    if (!isset($_SESSION['user_id']) || !isset($_POST['team_id'])){
+        echo header('Location: ../index.php');
+        exit;
+        
     }
 ?>
 
@@ -29,6 +25,7 @@
         <div class="cadre">
             <form enctype="multipart/form-data" action="analyseFichier.php" method="POST">
             <input type="hidden" name="MAX_FILE_SIZE" value="50000" />
+            <input type="hidden" name="team_id" value="<?php echo $_POST['team_id'] ?>">
             Choisir le fichier: <input name="userfile" type="file" />
             <br><br>Entrez les mots donc vous souhaitez connaitre le nombre d'occurrences<br>
             <?php foreach(range(0, 9) as $valeur) { echo '<input type=text size=10 value="" name='.$valeur.' ><br>'; } ?><br>
@@ -38,4 +35,3 @@
     </div>
 </body>
 </html>
-<?php include('./footer.php'); ?>

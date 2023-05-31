@@ -4,12 +4,9 @@
     require_once("../../src/controllers/etudiant_controller.php");
 
     //Si l'utilisateur n'est pas connecté on ne va pas sur cette page
-    if (!isset($_SESSION['user_id'])){
-        if ($_SESSION['role'] != 'Etudiant'){  
-            echo  
-            header('Location: ../index.php');
-            exit;
-        }
+    if (!isset($_SESSION['user_id']) || !isset($_POST['team_id'])){
+        echo header('Location: ../index.php');
+        exit;
     }
 ?>
 
@@ -93,7 +90,7 @@
         </div>
         <div class="cadre">
                 <?php
-                    $analyse = new AnalyseurCode(0, $valeurs['nbLignes'], $valeurs['nbFonc'],$valeurs['nbMin'], $valeurs['nbMax'],$valeurs['nbMoy'], 1); //A changer
+                    $analyse = new AnalyseurCode(0, $valeurs['nbLignes'], $valeurs['nbFonc'],$valeurs['nbMin'], $valeurs['nbMax'],$valeurs['nbMoy'], $_POST['team_id']); //A changer
                     $controller = new EtudiantController();
                     $controller->submitAnalyse($analyse);
 
@@ -152,4 +149,3 @@
     </div>
 </body>
 </html>
-<?php include('./footer.php'); ?>

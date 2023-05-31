@@ -655,6 +655,29 @@ public function submitAnalyse(AnalyseurCode $analyse) {
     return $valReturn;
 }
 
+//Récupère les analyses du code dans la bdd
+public function getAnalyses($idEquipe) {
+    $valRetour = true;
+
+    //On récupère les id des projets
+    $valeurs = array();
+    $sql = "SELECT NombreLignes, NombreFonctions, LignesMinFonction, LignesMaxFonction, LignesMoyennesFonction FROM AnalysesCode WHERE ID_Equipe = ".$idEquipe;
+    $stmt = $this->conn->prepare($sql);
+    if ($stmt === false) {
+        throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+    }
+    if (!$stmt->execute()) {
+        $valReturn = false;
+    }
+    $stmt->bind_result($a,$b,$c,$d,$e);
+
+    $stmt->fetch();
+    array_push($valeurs, $a, $b, $c, $d, $e);
+    $stmt->close();
+
+    return $valeurs;
+}
+
 //Méthode qui permet de récupérer toutes les équipes d'un étudiant
 public function getTeamsByStudentId($etudiant_id) {
     $db = new Database();
