@@ -143,11 +143,11 @@
         <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
         <!--Affichage des diagrammes-->
-        <div class="cadre"><div id="chartLignes" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadre"><div id="chartLignes" style="height: 300px; width: 90%; margin: auto;"></div></div>
         <br><br><br>
-        <div class="cadre"><div id="chartFonc" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadre"><div id="chartFonc" style="height: 300px; width: 90%; margin: auto;"></div></div>
         <br><br><br>
-        <div class="cadrefinal"><div id="chartLongueur" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadrefinal"><div id="chartLongueur" style="height: 300px; width: 90%; margin: auto;"></div></div>
     </div>
 </body>
 </html>

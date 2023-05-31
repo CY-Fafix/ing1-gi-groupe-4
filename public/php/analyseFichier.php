@@ -111,7 +111,7 @@
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
                     title:{
-                        text: "Nombre d'occurences des mots recherchés"
+                        text: "Nombre d'occurrences des mots recherchés"
                     },
                     axisY: {
                         title: "Nombre d'occurrences",
