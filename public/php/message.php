@@ -48,14 +48,14 @@
 						
 						<br>
 						<label id="Sujet" class="element"> Sujet :
-							<input class="Verify" id="SujetZone" type="text" name="objet" placeholder="Objet de votre demande" required>
+							<input class="Verify" id="SujetZone" type="text" name="SujetZone" placeholder="Objet de votre demande" required>
 						</label>
 
 						<br>
 						
 						<label id="Contenu" class="element"> Contenu :
 							<br>
-							<textarea class="Verify" id="ContenuZone" name="objet" rows="16" cols="80" wrap=hard placeholder="Entrez votre message ici" spellcheck="False" required> </textarea>
+							<textarea class="Verify" id="ContenuZone" name="ContenuZone" rows="16" cols="80" wrap=hard placeholder="Entrez votre message ici" spellcheck="False" required> </textarea>
 						</label>
 						
 						<br>
@@ -74,6 +74,18 @@
 </html>
 
 
-<?php include('./footer.php'); ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$email = $_POST["email"];
+	$objet = $_POST["SujetZone"];
+	$contenu = $_POST["ContenuZone"];
+	$_SESSION['contenu']=$contenu;
+	$_SESSION['emailpls']=$email;
+	
+	$controller = new userController();
+	$controller->contact($email,$objet,$contenu);
+
+}
+ include('./footer.php'); ?>
 
 
