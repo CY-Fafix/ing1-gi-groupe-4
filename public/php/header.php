@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'): ?>
-                <li><a href="/public/php/challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
+                <li><a href="/public/php/update_challenges.php">Data Challenges</a></li> <!-- Permet de voir/modifier tous les DataChallenges -->
                 <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
                 <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Permet de voir/modifier tous les utilisateurs -->
                 <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
