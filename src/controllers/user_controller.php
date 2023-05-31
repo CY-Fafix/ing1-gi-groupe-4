@@ -120,7 +120,6 @@ class UserController {
                 // L'utilisateur n'existe pas
                 return false;
             }
-            
             $stmt->free_result();
             
             // Mettre à jour l'utilisateur
@@ -136,9 +135,8 @@ class UserController {
             $telephone = $user->getTelephone();
             $ville = $user->getVille();
             $role = $user->getRole();
-        
             $stmt->bind_param("sssssss", $nom, $prenom, $motDePasse, $telephone, $ville, $role, $email);
-        
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             if ($stmt->execute()) {
                 return true;
             } else {

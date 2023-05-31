@@ -103,7 +103,7 @@ class Utilisateur {
 
   public function setMotDePasse($motDePasse) {
     // Assurez-vous de mettre en œuvre une certaine logique de hachage sécurisée pour le mot de passe
-    $this->motDePasse = password_hash($motDePasse, PASSWORD_DEFAULT);
+    $this->motDePasse = $motDePasse;
   }
 
   public function setTelephone($telephone){

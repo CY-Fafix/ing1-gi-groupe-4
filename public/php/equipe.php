@@ -25,19 +25,25 @@ $equipes = $etudiantController->getTeamsByStudentId($_SESSION['user_id']);
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Mes Équipes</title>
+<meta charset="UTF-8">
+    <title>Mes équipes</title>
+    <link href="/public/css/equipe.css" rel="stylesheet">
+    <link href="/public/css/header.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
-    <!-- !!! Inclure le header ici -->
+    <header class="custom-header">
+        <?php include('./header.php'); ?>
+    </header>
 
     <main>
         <h1>Mes Équipes</h1>
 
         <?php if (empty($equipes)) : ?>
-            <p>Vous n'avez aucune équipe. <a href="create_team.php">Créer une équipe</a></p>
+            <p>Vous n'avez aucune équipe. <a href="equipe.php">Créer une équipe</a></p>
         <?php else : ?>
             <?php foreach ($equipes as $equipe) : ?>
+                <div class="team-card">
                 <h2>Nom de l'équipe: <?= $equipe->getNom() ?></h2>
                 <p>Membres de l'équipe: </p>
                 <ul>
@@ -63,6 +69,7 @@ $equipes = $etudiantController->getTeamsByStudentId($_SESSION['user_id']);
                     <input type="hidden" name="team_id" value="<?= $equipe->getId() ?>">
                     <button type="submit">Supprimer l'équipe</button>
                 </form>
+                </div>
             <?php endforeach; ?>
         <?php endif; ?>
     </main>

@@ -123,10 +123,10 @@
                 $etudiant->setVille($ville);
                 $etudiant->setNiveau($niveau);
                 $etudiant->setEmail($email);
-                $id = $etudiant->getID();
+                $etudiant->setRole("Etudiant");
+                $etudiant->setMotDePasse($mdp);
                 // Mettre à jour le profil de l'étudiant
-                $valide=$controller->updateProfile($etudiant);
-                
+                $valide = $controller->updateProfile($etudiant);
                 if ($valide) {
                     header('Location: profile.php');
                     exit;
