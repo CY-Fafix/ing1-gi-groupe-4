@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Gestionnaire'): ?>
                 <li><a href="/public/php/projets.php">Projets</a></li> <!-- Le gestionnaire voit tous les projets -->
-                <li><a href="/public/php/creationQuestionnaire.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
+                <li><a href="/public/php/choixNbQuestions.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
                 <li><a href="/public/php/voirQuestionnaire.php">Voir Questionnaire</a></li><!-- Permet de voir les réponses -->
                 <li><a href="/public/php/profile_gestionnaire.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
