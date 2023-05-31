@@ -17,25 +17,48 @@
     <div class="Main">
     
         <?php
+            //On récupère les analyses de code resneignées dans la base de données
             $controller = new EtudiantController();
             $analyses = $controller->recuperData($id_dc);
             echo "<br>";
-            
-            //Diagramme sur le nombre de lignes écrites
+
+            //Données sur le nombre de lignes écrites
             $nbLignes = [];
             foreach($analyses as $analyse) {
                 array_push($nbLignes, array("y" => $analyse[0], "indexLabel" => $analyse[5]));
             }
-            $titre = "Répartition du nombre de lignes écrites par projet";
+            
+            //Données sur le nombre de fonctions écrites
+            $nbFonc = [];
+            foreach($analyses as $analyse) {
+                array_push($nbFonc, array("y" => $analyse[1], "indexLabel" => $analyse[5]));
+            }
 
+            //Données sur le nombre min de lignes
+            $nbMin = [];
+            foreach($analyses as $analyse) {
+                array_push($nbMin, array("y" => $analyse[2], "label" => $analyse[5]));
+            }
+
+            //Données sur le nombre max de lignes
+            $nbMax = [];
+            foreach($analyses as $analyse) {
+                array_push($nbMax, array("y" => $analyse[3], "label" => $analyse[5]));
+            }
+
+            //Données sur le nombre moy de lignes
+            $nbMoy = [];
+            foreach($analyses as $analyse) {
+                array_push($nbMoy, array("y" => $analyse[4], "label" => $analyse[5]));
+            }
         ?>
         <script type="text/javascript">
         window.onload = function () {
-            var chartData = <?php echo json_encode($nbLignes); ?>;
-            var chart = new CanvasJS.Chart("chartContainer",
+            //Script pour le diagramme sur le nombre de lignes écrites
+            var chartLignes = new CanvasJS.Chart("chartLignes",
             {
                 title:{
-                    text: "<?php echo $titre; ?>" 
+                    text: "Répartition du nombre de lignes écrites par équipe" 
                 },
                 legend: {
                     maxWidth: 350,
@@ -46,15 +69,76 @@
                     type: "pie",
                     showInLegend: true,
                     legendText: "{indexLabel}",
-                    dataPoints: chartData
+                    dataPoints: <?php echo json_encode($nbLignes); ?>
                 }
+                ]
+            });
+            chartLignes.render();
+            
+            //Script pour le diagramme sur le nombre de fonctions écrites
+            var chartFonc = new CanvasJS.Chart("chartFonc",
+            {
+                title:{
+                    text: "Répartition du nombre de fonctions écrites par équipe" 
+                },
+                legend: {
+                    maxWidth: 350,
+                    itemWidth: 120
+                },
+                data: [
+                {
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{indexLabel}",
+                    dataPoints: <?php echo json_encode($nbFonc); ?>
+                }
+                ]
+            });
+            chartFonc.render();
+
+            var chart = new CanvasJS.Chart("chartLongueur",
+            {
+                title:{
+                    text: "Longueur des fonctions écrites par les équipes"
+                },
+                axisY: {
+                    title: "Nombre de lignes"
+                },
+                data: [
+                    {
+                        type: "bar",
+                        showInLegend: true,
+                        legendText: "Plus petite fonction",
+                        color: "yellow",
+                        dataPoints: <?php echo json_encode($nbMin); ?>
+                    },
+                    {
+                        type: "bar",
+                        showInLegend: true,
+                        legendText: "Fonction moyenne",
+                        color: "orange",
+                        dataPoints: <?php echo json_encode($nbMoy); ?>
+                    },
+                    {
+                        type: "bar",
+                        showInLegend: true,
+                        legendText: "Plus grande fonction",
+                        color: "red",
+                        dataPoints: <?php echo json_encode($nbMax); ?>
+                    }
                 ]
             });
             chart.render();
         }
         </script>
         <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+        <!--Affichage des diagrammes-->
+        <div id="chartLignes" style="height: 300px; width: 80%; margin: auto;"></div>
+        <br><br><br>
+        <div id="chartFonc" style="height: 300px; width: 80%; margin: auto;"></div>
+        <br><br><br>
+        <div id="chartLongueur" style="height: 300px; width: 80%; margin: auto;"></div>
     </div>
 </body>
 </html>

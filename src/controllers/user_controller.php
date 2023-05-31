@@ -321,11 +321,10 @@ class UserController {
             }
             $stmt3->bind_result($a,$b,$c,$d,$e,$f);
              while($stmt3->fetch()) {
-                 array_push($analyses, array($a,$b,$c,$d,$e,$f));
+                array_push($analyses, array($a,$b,$c,$d,$e,$f));
              }
             $stmt3->close();
         }
-        
         return $analyses;
     }
     
