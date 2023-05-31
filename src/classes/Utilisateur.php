@@ -85,6 +85,10 @@ class Utilisateur {
     $this->nom = $nom;
   }
 
+  public function setID($id) {
+    $this->ID = $id;
+  }
+
   public function setPrenom($prenom) {
     $this->prenom = $prenom;
   }
