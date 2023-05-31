@@ -3,6 +3,7 @@
 require_once __DIR__. '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Utilisateur.php';
 
+/*Fichier qui contient toutes les méthodes liés à un Utilisateur */
 class UserController {
     protected $conn;
     protected $table_name = "Utilisateurs";
@@ -12,6 +13,7 @@ class UserController {
         $this->conn = $db->connect();
     }
     
+    //Méthode qui permet de créer un utilisateur (pas de HASH !)
     public function createUser(Utilisateur $user) {
         try {
             // Vérifier si l'utilisateur existe déjà
@@ -61,7 +63,8 @@ class UserController {
         }
     }
     
-
+    //Méthode qui permet de login un utilisateur (!Pas de Hash)
+    //Postcondition : retourne les sessions de l'utilisateur Login !
     public function login($email, $password) {
         // Préparez la requête SQL
         $stmt = $this->conn->prepare("SELECT * FROM Utilisateurs WHERE Email = ?");
@@ -102,7 +105,8 @@ class UserController {
         return null;
     }
 
-    //Cette méthode ne permet pas de modifier l'email d'un utilisateur !!!!
+    //Méthode qui permet d'update le profile d'un utilisateur
+    //Attention : Cette méthode ne permet pas de modifier l'email d'un utilisateur !!!!
     public function updateProfile(Utilisateur $user) {
         try {
             // Vérifier si l'utilisateur existe
@@ -147,6 +151,7 @@ class UserController {
         }
     }
 
+    //Cette méthode permet à n'importe qui avec un email inscrit de pouvoir changer son mdp
     public function changePassword($email, $oldPassword, $newPassword) {
         try {
             // Chercher l'utilisateur avec l'email donné
@@ -191,7 +196,7 @@ class UserController {
         }
     }
 
-    
+    //Permet de supprimer un compte en donnant son adresse email
     public function deleteAccount($email) {
         try {
             // Chercher l'utilisateur avec l'email donné
@@ -245,6 +250,7 @@ class UserController {
     }
 
 
+    //Permet de logout un utilisateur en supprimant touts ses cookies de sessino
     public function logout() {
         // Démarrer la session
         session_start();
@@ -333,7 +339,6 @@ class UserController {
             $contenu .= "\r\nFrom: " . $email;
             $mailSent = mail($email_admin, $objet, $contenu);
             if ($mailSent) {
-                echo 'Envoyé!';
             } else {
                 echo 'Échec de l\'envoi de l\'e-mail.';
             }

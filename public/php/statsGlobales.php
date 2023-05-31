@@ -1,8 +1,14 @@
 <?php
     include('./header.php');
     require_once("../../src/controllers/etudiant_controller.php");
-    //Normalement on a un id de data challenge en paremetre GET
-    $id_dc = 1; 
+    
+    if (isset($_GET['id'])) {
+        $id_dc = $_GET['id'];
+    } else {
+        echo  
+            header('Location: ../index.php');
+            exit;
+    }
 
 ?>
 
@@ -137,11 +143,11 @@
         <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
         <!--Affichage des diagrammes-->
-        <div class="cadre"><div id="chartLignes" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadre"><div id="chartLignes" style="height: 300px; width: 90%; margin: auto;"></div></div>
         <br><br><br>
-        <div class="cadre"><div id="chartFonc" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadre"><div id="chartFonc" style="height: 300px; width: 90%; margin: auto;"></div></div>
         <br><br><br>
-        <div class="cadrefinal"><div id="chartLongueur" style="height: 300px; width: 80%; margin: auto;"></div></div>
+        <div class="cadrefinal"><div id="chartLongueur" style="height: 300px; width: 90%; margin: auto;"></div></div>
     </div>
 </body>
 </html>

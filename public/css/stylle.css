@@ -14,7 +14,7 @@ border: 1px solid black;*/
 body{
   
   font-family: 'Aboreto';font-size: 22px;
-  overflow-x: hidden;
+  
   width: 100%;
   margin: 70px auto;
   background-color: #ffffff;
@@ -138,6 +138,11 @@ li a:hover {
   padding-bottom:50px;
 
 }
+
+.lienStats {
+  
+}
+
 .parag1{
   background-color: #fefeff;
   margin:10px;
