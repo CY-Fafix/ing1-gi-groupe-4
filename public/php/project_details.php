@@ -9,16 +9,17 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
-
-    <<header class="custom-header">
+    <header class="custom-header">
         <?php include('./header.php'); ?>
     </header>
-
 
     <div class="project-details-container">
         <?php
         require_once __DIR__ . '/../../src/classes/Database.php';
         require_once __DIR__ . '/../../src/classes/ProjetData.php';
+        require_once __DIR__ . '/../../src/classes/Equipe.php';
+        require_once __DIR__ . '/../../src/classes/Etudiant.php';
+        require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
 
         $db = new Database();
         $conn = $db->connect();
@@ -103,6 +104,41 @@
                     <p>Aucune ressource spécifique au projet trouvée</p>
                     <?php
                 }
+                if (isset($_SESSION['role']) && $_SESSION['role'] === 'Etudiant') {
+                    $etudiantController = new EtudiantController();
+                    $userId = $_SESSION['user_id'];
+                    $etudiant = new Etudiant($userId, "", "", "", "", "", "", "", "", "");
+                
+                    // Vérifier si l'étudiant est déjà inscrit à un projet dans le même Data Challenge
+                    $dataChallengeId = $projectData['ID_DataChallenge'];
+                    $isRegistered = $etudiantController->isStudentRegisteredInDataBattle($userId, $dataChallengeId);
+                
+                    if ($isRegistered) {
+                        // L'étudiant est déjà inscrit à un projet dans ce Data Challenge
+                        ?>
+                        <p>Vous êtes déjà inscrit à un projet dans cette DataBattle.</p>
+                        <?php
+                    } else {
+                        // L'étudiant n'est pas encore inscrit à un projet dans ce Data Challenge
+                        $equipe = $etudiantController->getTeamByProjectId($userId, $projectId);
+                
+                        if ($equipe === null) {
+                            // L'utilisateur n'est pas inscrit à ce projet, afficher le bouton d'inscription
+                            ?>
+                            <form method="POST" action="register_team.php">
+                                <input type="hidden" name="project_id" value="<?= $projectId ?>">
+                                <button type="submit">S'inscrire à la DataBattle</button>
+                            </form>
+                            <?php
+                        } else {
+                            // L'utilisateur est déjà inscrit à ce projet
+                            ?>
+                            <p>Vous êtes déjà inscrit à ce ProjetData.</p>
+                            <?php
+                        }
+                    }
+                }
+                
             } else {
                 ?>
                 <p>Projet non trouvé</p>

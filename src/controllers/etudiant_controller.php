@@ -198,6 +198,47 @@ class EtudiantController extends UserController{
             $this->conn->autocommit(true);
         }
     }
+            /**
+         * Méthode pour obtenir un objet Etudiant à partir de son ID.
+         *
+         * @param int $id L'ID de l'étudiant.
+         * @return Etudiant|null L'objet Etudiant correspondant à l'ID, ou null si l'étudiant n'est pas trouvé.
+         */
+        public function getEtudiantById($id)
+        {
+            $sql = "SELECT * FROM Utilisateurs WHERE ID = ? AND Role = 'Etudiant'";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+        
+            if ($result->num_rows > 0) {
+                $etudiantData = $result->fetch_assoc();
+                $etudiant = new Etudiant(
+                    $etudiantData['ID'],
+                    $etudiantData['Nom'],
+                    $etudiantData['Prenom'],
+                    $etudiantData['Email'],
+                    $etudiantData['MotDePasse'],
+                    $etudiantData['Telephone'],
+                    $etudiantData['Ville'],
+                    $etudiantData['Role'],
+                    $etudiantData['Niveau'],
+                    $etudiantData['Ecole']
+                );
+                return $etudiant;
+            } else {
+                return null;
+            }
+        }
+        
+        
+        
+
     
     private function executeInsertQuery($sql, $types, ...$params) {
         $stmt = $this->conn->prepare($sql);
@@ -240,7 +281,60 @@ class EtudiantController extends UserController{
             $this->conn->autocommit(true);
         }
     }
+
+
+    public function getTeamByProjectId($etudiantId, $projectId)
+    {
+        $sql = "SELECT e.*, t.ID AS equipe_id, t.Nom AS equipe_nom, t.ID_Capitaine AS equipe_chef
+                FROM Utilisateurs AS e
+                LEFT JOIN Equipes AS t ON e.ID = t.ID_Capitaine
+                WHERE e.ID = ? AND t.ID_Projet = ?";
     
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+    
+        $stmt->bind_param("ii", $etudiantId, $projectId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+    
+            $equipe = new Equipe(
+                $row['equipe_id'],
+                $row['equipe_nom'],
+                [],
+                $row['equipe_chef']
+            );
+    
+            return $equipe;
+        }
+    
+        return null;
+    }
+    
+    public function isStudentRegisteredInDataBattle($etudiantId, $dataChallengeId) {
+        $sql = "SELECT COUNT(*) FROM Projets WHERE ID_DataChallenge = ? AND ID IN (
+            SELECT ID_Projet FROM Equipes WHERE ID IN (
+                SELECT ID_Equipe FROM MembresEquipe WHERE ID_Utilisateur = ?
+            )
+        )";
+    
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+    
+        $stmt->bind_param("ii", $dataChallengeId, $etudiantId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $count = $result->fetch_row()[0];
+        $stmt->close();
+    
+        return $count > 0;
+    }
     
 
     public function addMemberToTeam(Equipe $equipe, Etudiant $capitaine, Etudiant $newMember)
