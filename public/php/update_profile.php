@@ -266,7 +266,14 @@
             ?>
             <div class="row">
                 <label>Niveau d'étude :</label>
-                <input type="text" placeholder="Niveau" name="niveau" value="<?php if(isset($niveau)){ echo $niveau; }else{ echo $afficher_profil['niveau'];}?>" required>
+                <select placeholder="Niveau" name="niveau" value="<?php if(isset($niveau)){ echo $niveau; }else{ echo $afficher_profil['niveau'];}?>" required>>
+                            <option value="L1"> L1 </option>
+                            <option value="L2"> L2 </option>
+                            <option value="L3"> L3 </option>
+                            <option value="M1"> M1 </option>
+                            <option value="M2"> M2 </option>
+                            <option value="D"> D </option>
+                </select>
             </div>
 
             <?php
