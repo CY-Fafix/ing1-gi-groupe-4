@@ -71,13 +71,35 @@
         <h2>Utilisateurs</h2>
 
         <div id="main">
-            <?php
-                
-                foreach($data as $ap){
+        <?php
+            $sortedData = array();
+            foreach ($data as $ap) {
+                $role = $ap['Role'];
+                if (!isset($sortedData[$role])) {
+                    $sortedData[$role] = array();
+                }
+                $sortedData[$role][] = $ap;
+            }
 
-            ?>
+            ksort($sortedData);
+
+            $currentRole = null;
+
+            foreach ($sortedData as $role => $users) {
+                foreach ($users as $ap) {
+                    if ($currentRole !== $ap['Role']) {
+                        if ($currentRole !== null) {
+                            echo '</div>'; // Fermer la ligne précédente
+                        }
+                        echo '<p class="role">'.$ap['Role'].'</p>';
+                        echo '<div class="user-row">'; // Nouvelle ligne
+                        $currentRole = $ap['Role'];
+                    }
+        ?>
+            
 
             <div class="user">
+
                 <h3 id="identite"> <?= $ap['Nom'].' '.$ap['Prenom'] ?></h3>
 
                 <!-- <div id="info">Informations :</div> -->
@@ -172,9 +194,15 @@
 
 
             <?php
+    }
+}
 
-            }
-            ?>
+if ($currentRole !== null) {
+    echo '</div>'; // Fermer la dernière ligne
+}
+?>
+
+<button onclick="window.location.href = 'add_user.php';" id="update">Ajouter un nouvel utilisateur</button>
 
         </div>
 

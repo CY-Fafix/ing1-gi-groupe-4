@@ -20,7 +20,7 @@ body{
 }
 
 #main{
-    display:flex;
+    display:grid;
     margin-right: 20px;
     max-width: max-content;
 }
@@ -81,4 +81,13 @@ footer{
 h2{
     
     place-self: center;
+}
+
+.user-row{
+    display:flex;
+    width:1860px;
+}
+
+.role{
+    margin-left:40px;
 }
