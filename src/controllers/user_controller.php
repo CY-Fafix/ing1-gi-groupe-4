@@ -327,6 +327,21 @@ class UserController {
         }
         return $analyses;
     }
+    public function contact($email, $objet, $contenu){
+        try {
+            $email_admin = "projeting1pafa@gmail.com";
+            $contenu .= "\r\nFrom: " . $email;
+            $mailSent = mail($email_admin, $objet, $contenu);
+            if ($mailSent) {
+                echo 'Envoyé!';
+            } else {
+                echo 'Échec de l\'envoi de l\'e-mail.';
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
     
 }
+    
 ?>
