@@ -83,9 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$_SESSION['emailpls']=$email;
 	
 	$controller = new userController();
-	$success = $controller->contact($email,$objet,$contenu);
-	$_SESSION["success"] = $success;
-	var_dump($_SESSION);
+	$controller->contact($email,$objet,$contenu);
+
 }
  include('./footer.php'); ?>
 

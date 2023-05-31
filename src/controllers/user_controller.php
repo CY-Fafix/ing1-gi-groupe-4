@@ -333,7 +333,6 @@ class UserController {
             $contenu .= "\r\nFrom: " . $email;
             $mailSent = mail($email_admin, $objet, $contenu);
             if ($mailSent) {
-                echo 'Envoyé!';
             } else {
                 echo 'Échec de l\'envoi de l\'e-mail.';
             }
