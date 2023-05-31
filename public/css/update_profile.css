@@ -1,0 +1,58 @@
+body{
+	background-image: url(https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg);
+    background-size: cover;
+}
+
+form{
+    background-color: #fbfbfb;
+    border-radius: 30px;
+    width: 50%;
+    place-self: center;
+    place-content: center;
+    padding-top: 20px;
+    display:grid;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding-bottom: 20px;
+}
+
+#Modif{
+    display:grid;
+    place-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+.row{
+    display:flex;
+    margin-bottom: 30px;
+}
+
+label{
+    margin-right: 50px;
+    border-bottom: solid 2px black;
+    margin-bottom: 15px;
+}
+
+input{
+    border: none;
+    margin-top: -15px;
+}
+
+
+#update{
+    height: 50px;
+    border:none;
+    display:block;
+    color: white;
+    background-color: #147cb4;
+    width: 100px;
+    margin-top: 30px;
+    place-self: center;
+    
+}
+
+footer{
+    margin-top:20px;
+    margin-bottom:-500px;
+}
