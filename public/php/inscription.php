@@ -86,7 +86,7 @@
                     </label>
                     
                     <label id="AnneeEtude" class="element"> Année d'études :
-                        <select id="AnneeEtudesZone" name="anneeEtudes">
+                        <select class="Verify" id="AnneeEtudesZone" name="anneeEtudes">
                             <option value="L1"> L1 </option>
                             <option value="L2"> L2 </option>
                             <option value="L3"> L3 </option>
@@ -105,7 +105,7 @@
                     <div>
                         <span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
                     </div>
-                    <input type="submit" id="valider_inscription" name="valider_inscription" value="S'INSCRIRE" />
+                    <input type="submit" class="Verify" id="valider_inscription" name="valider_inscription" value="S'INSCRIRE" />
 					<?php if ($error_register !== "") echo $error_register;?>
                 </form>
                 

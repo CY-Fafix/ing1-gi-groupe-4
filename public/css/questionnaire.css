@@ -13,17 +13,17 @@
 
 /* Position elements des formulaires */
 
-#FormatDate1 {
+/* #FormatDate1 {
 	margin-left : 11px;
 }
 
 #FormatDate2 {
 	margin-left : 11px;
-}
+} */
 
 
 
-#FormatMail1 {
+/* #FormatMail1 {
 	margin-left : 300px;
 }
 
@@ -35,131 +35,6 @@
 	margin-left : 435px;
 }
 
-
-
-
-
-/* Contact */
-
-#ContactFormulaire {
-	font : 19px chancery, sans-serif;
-	text-align : center;
-}
-
-
-
-#Nom {
-	position : absolute;
-	top : 600px;
-	left : 800px;
-}
-
-#NomZone {
-	position : absolute;
-	left : 150px;
-}
-
-#NomZone::placeholder {
-	font-style : italic;
-}
-
-
-
-#Prenom {
-	position : absolute;
-	top : 650px;
-	left : 800px;
-}
-
-#PrenomZone {
-	position : absolute;
-	left : 150px;
-}
-
-#PrenomZone::placeholder {
-	font-style : italic;
-}
-
-
-
-#Genre {
-	position : absolute;
-	top : 700px;
-	left : 800px;
-}
-
-#GenreZone1 {
-	margin-left : 82px;
-	box-shadow : none;
-}
-
-#GenreZone2 {
-	box-shadow : none;
-}
-
-#GenreZone3 {
-	box-shadow : none;
-}
-
-
-
-#DateNaissance {
-	position : absolute;
-	top : 750px;
-	left : 800px;
-}
-
-#DateNaissanceZone {
-	margin-left : 55px;
-}
-
-
-
-#Statut {
-	position : absolute;
-	top : 800px;
-	left : 800px;
-}
-
-#StatutZone {
-	position : absolute;
-	left : 150px;
-	padding-right : 28px;
-}
-
-
-
-#Email {
-	position : absolute;
-	top : 850px;
-	left : 800px;
-}
-
-#EmailZone {
-	position : absolute;
-	left : 150px;
-}
-
-#EmailZone::placeholder {
-	font-style : italic;
-}
-
-
-
-#Sujet {
-	position : absolute;
-	top : 900px;
-	left : 800px;
-}
-
-#SujetZone {
-	position : absolute;
-	left : 150px;
-}
-
-#SujetZone::placeholder {
-	font-style : italic;
-}
 
 
 
@@ -178,22 +53,28 @@
 #ContenuZone::placeholder {
 	font : 15px chancery, sans-serif;
 	font-style : italic;
-}
+} */
 
 
 
 #Ok {
-	position : absolute;
-	top : 1250px;
-	left : 950px;
+	place-self: center;
+	font-size: large;
+	display:block;
+	border:none;
+	background-color: aliceblue;
 }
 
 
 
+
+
 #Reset {
-	position : absolute;
-	top : 1250px;
-	left : 990px;
+	place-self: center;
+	font-size: large;
+	display:block;
+	border:none;
+	background-color: aliceblue;
 }
 
 
@@ -201,20 +82,38 @@
 
 
 /* Main */
+body{
+	background-image: URL("https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg");
+	background-size: cover;
+}
 
 .Main {
-	width : 1502px;
-	height : 1000px;
+	width : 60%;
+	
 	padding : 30px;
 	float : right;
-	background-color : #999993;
-	color : #F9F9F9;
+	background-color : #ffffff;
+	color : #000000;
 	text-align : center;
+	border-radius: 30px;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	place-self: center;
 }
 
 
+#QuestionnaireFormulaire{
+	color:black;
 
+}
 
+label{
+	place-self: center;
+}
+
+input{
+	place-self: center;
+
+}
 
 /* Verification formulaires */
 

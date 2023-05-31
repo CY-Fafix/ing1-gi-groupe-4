@@ -119,7 +119,7 @@
 
         </div>
 
-        <button onclick="window.location.href = 'update_profile.php';" id="update">Modifier le profil</button>
+        <button onclick="window.location.href = 'update_gestionnaire.php';" id="update">Modifier le profil</button>
     </div>
 
     <?php

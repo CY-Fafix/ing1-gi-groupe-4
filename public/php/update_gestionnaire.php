@@ -4,14 +4,14 @@
     include('header.php');
     // include('../../src/classes/Etudiant.php');
     require_once __DIR__ . '/../../src/classes/Database.php';
-    require_once __DIR__ . '/../../src/classes/Etudiant.php';
-    require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
+    require_once __DIR__ . '/../../src/classes/Gestionnaire.php';
+    require_once __DIR__ . '/../../src/controllers/gestionnaire_controller.php';
     require_once __DIR__ . '/../../src/controllers/user_controller.php';
 
 
     //Si l'utilisateur n'est pas connecté on ne va pas sur cette page
     if (!isset($_SESSION['user_id'])){
-        if ($_SESSION['role']!= 'Etudiant'){  
+        if ($_SESSION['role']!= 'Gestionnaire'){  
             echo  
             header('Location: ../index.php');
             exit;
@@ -20,7 +20,7 @@
 
     // Créer une nouvelle instance de Database
     $db = new Database();
-    $controller = new EtudiantController();
+    $controller = new GestionnaireController();
 
     // Se connecter à la base de données
     $con = $db->connect();
@@ -49,9 +49,9 @@
             $email = htmlentities(strtolower(trim($email)));
             $telephone = htmlentities(trim($telephone));
             $mdp = htmlentities(trim($mdp));
-            $niveau = htmlentities(trim($niveau));
-            $ecole = htmlentities(trim($ecole));
+            $entreprise = htmlentities(trim($entreprise));
             $ville = htmlentities(trim($ville));
+            
             
     
             if (empty($nom)) {
@@ -83,15 +83,12 @@
                 $er_mdp = "Il faut mettre un mot de passe";
             }
             
-            if(empty($niveau)){
+            if(empty($entreprise)){
                 $valid = false;
-                $er_niveau = "Il faut mettre un niveau";
+                $er_entreprise = "Il faut mettre un entreprise";
             }
             
-            if(empty($ecole)){
-                $valid = false;
-                $er_ecole = "Il faut mettre une école";
-            }
+            
             
             if(empty($ville)){
                 $valid = false;
@@ -121,21 +118,20 @@
             // }
             if ($valid) {
                 // Créer une instance de l'étudiant avec les nouvelles données
-                $etudiant = new Etudiant($nom, $prenom, $entreprise, $telephone, $email, $dateDebut, $dateFin, $mdp, $role, $niveau, $ecole, $ville);
-                $etudiant->setID($_SESSION['user_id']);
-                $etudiant->setNom($nom);
-                $etudiant->setPrenom($prenom);
-                $etudiant->setTelephone($telephone);
-                $etudiant->setEcole($ecole);
-                $etudiant->setVille($ville);
-                $etudiant->setNiveau($niveau);
-                $etudiant->setEmail($email);
-                $etudiant->setRole("Etudiant");
-                $etudiant->setMotDePasse($mdp);
+                $gestionnaire = new Gestionnaire($nom, $prenom, $entreprise, $telephone, $email, $dateDebut, $dateFin, $mdp, $role, $niveau, $ecole, $ville);
+                $gestionnaire->setID($_SESSION['user_id']);
+                $gestionnaire->setNom($nom);
+                $gestionnaire->setPrenom($prenom);
+                $gestionnaire->setTelephone($telephone);
+                $gestionnaire->setEntreprise($entreprise);
+                $gestionnaire->setVille($ville);
+                $gestionnaire->setEmail($email);
+                $gestionnaire->setRole("Gestionnaire");
+                $gestionnaire->setMotDePasse($mdp);
                 // Mettre à jour le profil de l'étudiant
-                $valide = $controller->updateProfile($etudiant);
+                $valide = $controller->updateProfile($gestionnaire);
                 if ($valide) {
-                    header('Location: profile.php');
+                    header('Location: profile_gestionnaire.php');
                     exit;
                 }
             }
@@ -164,7 +160,7 @@
 
         <h2 id="Modif">Modification</h2>
 
-        <form action="update_profile.php" method="post">
+        <form action="update_gestionnaire.php" method="post">
 
             <?php
 
@@ -181,7 +177,7 @@
             ?>
             <div class="row">
                 <label>Nom :</label>
-                <input type="text" placeholder="Votre nom" name="nom" value="<?php if(isset($nom)){ echo $nom; }else{ echo $afficher_profil['nom'];}?>" required>   
+                <input type="text" placeholder="Votre nom" name="nom" value="<?php if(isset($nom)){ echo $nom; }else{ echo $stmt['nom'];}?>" required>   
             </div>
             <?php
 
@@ -198,7 +194,7 @@
             ?>
             <div class="row">
                 <label>Prénom :</label>
-                <input type="text" placeholder="Votre prénom" name="prenom" value="<?php if(isset($prenom)){ echo $prenom; }else{ echo $afficher_profil['prenom'];}?>" required> 
+                <input type="text" placeholder="Votre prénom" name="prenom" value="<?php if(isset($prenom)){ echo $prenom; }else{ echo $stmt['prenom'];}?>" required> 
             </div>
             
             <?php
@@ -210,7 +206,7 @@
             ?>
             <div class="row">
                 <label>E-mail :</label>
-                <input type="email" placeholder="Adresse mail" name="email" value="<?php if(isset($email)){ echo $email; }else{ echo $afficher_profil['mail'];}?>" required>
+                <input type="email" placeholder="Adresse mail" name="email" value="<?php if(isset($email)){ echo $email; }else{ echo $stmt['mail'];}?>" required>
             </div>
           
 
@@ -230,7 +226,7 @@
             ?>
             <div class="row">
                 <label>Numéro de téléphone :</label>
-                <input type="text" placeholder="Téléphone" name="telephone" value="<?php if(isset($telephone)){ echo $telephone; }else{ echo $afficher_profil['telephone'];}?>" required>
+                <input type="text" placeholder="Téléphone" name="telephone" value="<?php if(isset($telephone)){ echo $telephone; }else{ echo $stmt['telephone'];}?>" required>
             </div>
 
             <?php
@@ -248,16 +244,17 @@
             ?>
             <div class="row">
                 <label>Mot de passe :</label>
-                <input type="password" placeholder="Mot de passe" name="mdp" value="<?php if(isset($mdp)){ echo $mdp; }else{ echo $afficher_profil['mdp'];}?>" required>
+                <input type="password" placeholder="Mot de passe" name="mdp" value="<?php if(isset($mdp)){ echo $mdp; }else{ echo $stmt['mdp'];}?>" required>
             </div>
+
 
             <?php
 
-                if (isset($er_niveau)){
+                if (isset($er_entreprise)){
 
                 ?>
 
-                    <div><?= $er_niveau ?></div>
+                    <div><?= $er_entreprise?></div>
 
                 <?php   
 
@@ -265,26 +262,8 @@
 
             ?>
             <div class="row">
-                <label>Niveau d'étude :</label>
-                <input type="text" placeholder="Niveau" name="niveau" value="<?php if(isset($niveau)){ echo $niveau; }else{ echo $afficher_profil['niveau'];}?>" required>
-            </div>
-
-            <?php
-
-                if (isset($er_ecole)){
-
-                ?>
-
-                    <div><?= $er_ecole?></div>
-
-                <?php   
-
-                }
-
-            ?>
-            <div class="row">
-                <label>École :</label>
-                <input type="text" placeholder="École" name="ecole" value="<?php if(isset($ecole)){ echo $ecole; }else{ echo $afficher_profil['ecole'];}?>" required>
+                <label>Entreprise :</label>
+                <input type="text" placeholder="Entreprise" name="entreprise" value="<?php if(isset($entreprise)){ echo $entreprise; }else{ echo $stmt['entreprise'];}?>" required>
             </div>
 
             <?php
@@ -302,10 +281,16 @@
             ?>
             <div class="row">
                 <label>Ville :</label>
-                <input type="text" placeholder="Ville" name="ville" value="<?php if(isset($ville)){ echo $ville; }else{ echo $afficher_profil['ville'];}?>" required>
+                <?php 
+                if (isset($ville)){
+                    echo('<input type="text" placeholder="Ville" name="ville" value='. $ville.' required>');
+
+                }else{
+                    echo('<input type="text" placeholder="Ville" name="ville" value="Entrer une ville" required>');
+                }?>
             </div>
 
-            <button onclick="window.location.href = 'profile.php';" type="submit" name="modification" id="update">Modifier</button>
+            <button onclick="window.location.href = 'profile_gestionnaire.php';" type="submit" name="modification" id="update">Modifier</button>
 
         </form>
 
