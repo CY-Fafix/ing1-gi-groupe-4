@@ -1,6 +1,7 @@
 <?php
+	ob_start();
 	include('header.php');
-	// session_start();
+	 session_start();
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
@@ -74,8 +75,6 @@
 					$dateDebut = $dateFin = $titre = "";
 					$contenu = [];
 					
-					var_dump($_SERVER);
-					
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						$dateDebut = $_POST["dateDebut"];
 						$dateFin = $_POST["dateFin"];
@@ -87,11 +86,9 @@
 						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
 						$_SESSION["questionnaire"] = $questionnaire;
 						
-						var_dump($_SESSION);
-						
 						$controller = new GestionnaireController();
-						$success = $controller->createQuestionnaire($questionnaire, 2);
-						$_SESSION["success"] = $success;
+						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
+						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);
 					}
 				?>
 				
@@ -103,6 +100,8 @@
 </html>
 
 
-<?php include('./footer.php'); ?>
+<?php include('./footer.php'); 
+ob_end_flush();
+?>
 
 

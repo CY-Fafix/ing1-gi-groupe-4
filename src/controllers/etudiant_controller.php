@@ -550,31 +550,30 @@ class EtudiantController extends UserController{
     }
 
     // Permet d'afficher le questionnaire sur la page qui y est liée
-    public function showQuestionnaire($id_Questionnaire){
-        try{
-        $sql= "SELECT Contenu FROM Questions WHERE id_Questionnaire = ?";
-        $stmt = $this->conn->prepare($sql);
+    public function showQuestionnaire($id_Questionnaire) {
+        try {
+            $sql = "SELECT Contenu FROM Questions WHERE id_Questionnaire = ?";
+            $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
-
-        $stmt->bind_param("i",$id_Questionnaire);;
-        if ($stmt->execute()) {
-            $res = $stmt->get_result();
-            $tableau = array();
-            while ($row = $res->fetch_assoc()) {
-                $tableau[] = $row;
+    
+            $stmt->bind_param("i", $id_Questionnaire);
+            if ($stmt->execute()) {
+                $res = $stmt->get_result();
+                $tableau = array();
+                while ($row = $res->fetch_assoc()) {
+                    $tableau[] = $row['Contenu'];
+                }
+                return $tableau;
+            } else {
+                return false;
             }
-            return $tableau;
-        } else {
-            return false;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
     }
-
-
-    }
+    
 
     public function showDateDebut($id_Questionnaire){
         try{
@@ -586,7 +585,8 @@ class EtudiantController extends UserController{
 
         $stmt->bind_param("i",$id_Questionnaire);;
         if ($stmt->execute()) {
-            $res = $stmt->get_result();
+            $stmt->bind_result($res);
+            $stmt->fetch();
             return $res;
         } else {
             return false;
@@ -605,7 +605,8 @@ class EtudiantController extends UserController{
 
         $stmt->bind_param("i",$id_Questionnaire);;
         if ($stmt->execute()) {
-            $res = $stmt->get_result();
+            $stmt->bind_result($res);
+            $stmt->fetch();
             return $res;
         } else {
             return false;

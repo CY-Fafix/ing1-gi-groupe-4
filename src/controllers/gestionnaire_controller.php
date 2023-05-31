@@ -47,7 +47,7 @@ class GestionnaireController extends UserController{
                 $_SESSION["test"] = "coucou";
                 $value = $this->createQuestion($questionnaire,$result);
                 $stmt->free_result(); // Libérer les résultats de la première requête
-                return $value;
+                return $result;
             } else {
                 return false;
             }
@@ -65,7 +65,6 @@ class GestionnaireController extends UserController{
             $_SESSION["compteur"] = 0;
     
             foreach($Contenu as $question){
-            	$_SESSION["compteur"] = $_SESSION["compteur"]+1;
                 $sql = "INSERT INTO " . $this->table_questions . " (Contenu, ID_Questionnaire) VALUES (?, ?)";
                 $stmt3 = $this->conn->prepare($sql);
                 if($stmt3 === false) {
@@ -84,8 +83,6 @@ class GestionnaireController extends UserController{
             echo "Error: " . $e->getMessage();
         }
     }
-    
-
     
     //fonction appelée par la fonction deleteQuestionnaire
     public function deleteQuestion($ID_Questionnaire) {

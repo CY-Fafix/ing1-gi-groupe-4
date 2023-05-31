@@ -1,19 +1,20 @@
 <?php
-	/*include('./header.php');*/
-	session_start();
+	ob_start();
+	include('./header.php');
+	//session_start();
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
 	require_once '../../src/classes/Gestionnaire.php';
 	require_once '../../src/classes/Questionnaire.php';
-	require_once '../../src/controllers/gestionnaire_controller.php';
+	require_once '../../src/controllers/etudiant_controller.php';
 	
 	
-	if !(isset($_SESSION["role"])) {
+	if (!isset($_SESSION["role"])) {
 		header("Location:./connexion.php");
 	}
 	
-	
+	$id_Questionnaire=$_GET['id'];
 	$etudiantController = new EtudiantController();
 ?>
 
@@ -40,30 +41,14 @@
 			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
 			<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script>
 				
-				<label id="DateDebut"> Date de début :
-					<!-- <input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required> -->
-					<br>
-					<br>
-				</label>
 				
 				<?php
 					$dateDebut = $etudiantController->showDateDebut($id_Questionnaire);
-					
 					echo('
 						<p> Date de début : ' .$dateDebut. ' </p>
 						<br>
 					');
-				?>
-				
-				
-				<label id="DateFin"> Date de fin :
-					<!-- <input class="Verify" id="DateFinZone" type="date" name="dateFin" placeholder="Entrez la date de fin" required> -->
-					<br>
-					<br>
-				</label>
-				
-				
-				<?php
+
 					$dateFin = $etudiantController->showDateFin($id_Questionnaire);
 					
 					echo('
@@ -71,32 +56,55 @@
 						<br>
 					');
 				?>
-				
-			</form>
 			
 			
 			
-			<table>
-				<tbody>
-					
-					<?php
-						$tabQuestions = $etudiantController->showQuestionnaire($id_Questionnaire);
-						$i = 1;
+				<table>
+					<tbody>
 						
-						foreach ($tabQuestions as $contenuQuestion) {
+						<?php
+							$tabQuestions = $etudiantController->showQuestionnaire($id_Questionnaire);
+							$i = 1;
+							foreach ($tabQuestions as $contenuQuestion) {
 							echo('
-								<p> Question n° ' .$i. ' </p>
+								<label id="Question"> Question n° ' .$i. ' :
+								<p> ' .$contenuQuestion. ' </p>								
+									<textarea class="Verify" id="QuestionZone" name="question' .$i.'" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required> </textarea>
+									<br>
+								</label>
+								
 								<br>
-								<p> ' .$contenuQuestion. ' </p>
 							');
+								
+								$i += 1;
+							}
 							
-							$i += 1;
+						?>
+					
+					</tbody>
+				</table>
+				<input type="submit" id="Ok" name="ok" value="OK" />
+				<input type="reset" id="Reset" name="reset" value="Annuler" />
+
+				<?php
+					
+					if ($_SERVER["REQUEST_METHOD"] == "POST") {
+						$dateDebut = $_POST["dateDebut"];
+						$dateFin = $_POST["dateFin"];
+						$titre = $_POST["titre"];
+						for ($i = 1; $i <= $_SESSION["nbQuestions"]; $i ++) {
+							$contenu[$i] = $_POST["question$i"];
 						}
 						
-					?>
-				
-				</tbody>
-			</table>
+						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
+						$_SESSION["questionnaire"] = $questionnaire;
+						
+						$controller = new GestionnaireController();
+						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
+						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);
+					}
+				?>
+			</form>
 		</div>
 	</body>
 	

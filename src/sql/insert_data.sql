@@ -3,7 +3,7 @@ USE datachallenge_db;
 INSERT INTO Utilisateurs (Nom, Prenom, Entreprise, Telephone, Email, DateDebut, DateFin, MotDePasse, Role, Niveau, Ecole, Ville)
 VALUES
 ('Doe', 'John', 'Company1', '0123456789', 'john.doe@example.com', '2023-01-01', '2023-12-31', 'password1', 'Admin', NULL, NULL, NULL),
-('Smith', 'Jane', 'Company2', '0234567891', 'projeting1pafa@gmail.com, '2023-01-01', '2023-12-31', 'password2', 'Gestionnaire', NULL, NULL, NULL),
+('Smith', 'Jane', 'Company2', '0234567891', 'projeting1pafa@gmail.com', '2023-01-01', '2023-12-31', 'password2', 'Gestionnaire', NULL, NULL, NULL),
 ('Brown', 'James', NULL, '0345678912', 'james.brown@example.com', '2023-01-01', '2023-12-31', 'password3', 'Etudiant', 'M2', 'Ecole1', 'Ville1');
 
 INSERT INTO DataChallenges (Libelle, DateDebut, DateFin, ID_Admin)
