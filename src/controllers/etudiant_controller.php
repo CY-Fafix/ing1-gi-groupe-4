@@ -1,4 +1,8 @@
 <?php
+
+/*Classe qui contient toutes les méthodes nécessaires pour un Etudiant */
+
+
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Utilisateur.php';
@@ -14,21 +18,21 @@ class EtudiantController extends UserController{
         $this->conn = $db->connect();
     }
     
+    //Méthode qui permet de créer un utilisateur, l'ajoute à la BDD
     public function createUser(Utilisateur $user) {
         // Vérifier que l'utilisateur est un Etudiant
         if (!($user instanceof Etudiant)) {
-            // Levez une exception ou retournez une erreur ici
             throw new InvalidArgumentException('Un Objet Etudiant est Attendu');
         }
     
-        //On crée un utilisateur
+        //On crée un utilisateur en appellant la classe mère 
         $success = parent::createUser($user);
     
         if(!$success){
             return false;
         }
-    
-        // Ajouter des informations supplémentaires spécifiques aux étudiants dans la base de données
+        
+        //on actualise les infos dans la BDD
         $sql = "UPDATE " . $this->table_name . " SET Niveau = ?, Ecole = ? WHERE Email = ?";
         $stmt = $this->conn->prepare($sql);
         if($stmt === false) {
@@ -49,14 +53,14 @@ class EtudiantController extends UserController{
     }
     
 
+    //Méthode qui permet d'actualise le profil d'un utilisateur dans la BDD
     public function updateProfile(Utilisateur $user) {
-        // Vérifier que l'utilisateur est un Etudiant
+        // On check que l'utilisateur est un étudiant
         if (!($user instanceof Etudiant)) {
-            // Levez une exception ou retournez une erreur ici
             throw new InvalidArgumentException('Un Objet Etudiant est Attendu');
         }
         
-        // Mise à jour de l'utilisateur
+        // On met à jour l'utilisateur
         $success = parent::updateProfile($user);
         if(!$success){
             echo("Probleme du parent");
@@ -85,14 +89,14 @@ class EtudiantController extends UserController{
     }
     
         /**
-     * Méthode pour enregistrer un étudiant à un DataChallenge en tant que capitaine d'une nouvelle équipe.
+     * Permet d'enregistre un étudiant à un Projet en tant que chef d'équipe
      *
      * Préconditions : 
-     * - $projetData doit exister dans Projet.
-     * - $capitaine doit exister dans les utilisateurs.
-     * - $nomEquipe doit être une chaîne de caractères.
-     * - L'étudiant représenté par $capitaine ne doit pas être déjà inscrit à un autre projet dans le même DataChallenge.
-     * - Le nom d'équipe spécifié par $nomEquipe doit être unique.
+     * - $projetData doit exister dans la BDD.
+     * - $capitaine doit exister dans la BDD.
+     * - $nomEquipe doit être un STRING.
+     * - L'étudiant ($capitaine) ne doit pas être inscrit à un autre projet dans le même DataChallenge.
+     * - Le nom d'équipe doit etre unique !!.
      *
      * Postconditions : 
      * - Une nouvelle équipe est créée avec le nom spécifié par $nomEquipe, associée au ProjetData spécifié et avec le capitaine spécifié.
@@ -198,12 +202,7 @@ class EtudiantController extends UserController{
             $this->conn->autocommit(true);
         }
     }
-            /**
-         * Méthode pour obtenir un objet Etudiant à partir de son ID.
-         *
-         * @param int $id L'ID de l'étudiant.
-         * @return Etudiant|null L'objet Etudiant correspondant à l'ID, ou null si l'étudiant n'est pas trouvé.
-         */
+         // Méthode pour récupèrer un objet étudiant en utilisant son ID
         public function getEtudiantById($id)
         {
             $sql = "SELECT * FROM Utilisateurs WHERE ID = ? AND Role = 'Etudiant'";
@@ -239,7 +238,7 @@ class EtudiantController extends UserController{
         
         
 
-    
+    //Permet d'effectuer une requete SQL Simplement
     private function executeInsertQuery($sql, $types, ...$params) {
         $stmt = $this->conn->prepare($sql);
         if($stmt === false) {
@@ -252,24 +251,22 @@ class EtudiantController extends UserController{
         return $result;
     }
 
-    /* viewProjectDetails() : Permet à l'étudiant de voir les détails du projet de défi de données auquel il est inscrit.*/
-
-    /*createTeam() : Permet à l'étudiant (en tant que capitaine) de créer une équipe pour le défi de données. */
+    /*createTeam() : Permet à l'étudiant ($capitaine) de créer une équipe pour le défi de données. */
     public function createTeam(Etudiant $capitaine, ProjetData $projet, $nomEquipe) 
     {
         $this->conn->autocommit(false);
         try {
-            // 1. Créer une nouvelle équipe pour ce défi de données.
+            // On va créer la nouvelle équipe
             $equipe = new Equipe(null, $nomEquipe, [], $capitaine->getID());
     
-            // 2. Insérer la nouvelle équipe dans la base de données
+            // On ajoute la nouvelle equipe a la BDD
             $sql = "INSERT INTO Equipes (Nom, ID_Projet, ID_Capitaine) VALUES (?, ?, ?)";
             $equipeID = $this->executeInsertQuery($sql, "sii", $equipe->getNom(), $projet->getId(), $equipe->getChefEquipe());
     
-            // 3. Mettre à jour l'ID de l'équipe dans l'objet Equipe
+            // On met à jout l'id de l'équipe
             $equipe->setId($equipeID);
     
-            // 4. Ajouter le capitaine à l'équipe
+            // ensuite on ajoute son capitaine
             $this->addMemberToTeam($equipe, $capitaine, $capitaine);
     
             $this->conn->commit();
@@ -282,7 +279,7 @@ class EtudiantController extends UserController{
         }
     }
 
-
+    //Méthode qui permet de récupérer les informations d'un équipe associée à un projet 
     public function getTeamByProjectId($etudiantId, $projectId)
     {
         $sql = "SELECT e.*, t.ID AS equipe_id, t.Nom AS equipe_nom, t.ID_Capitaine AS equipe_chef
@@ -315,6 +312,7 @@ class EtudiantController extends UserController{
         return null;
     }
     
+    //Méthode qui permet de vérifier si un étudiant est inscrit ou non à une Data Battle 
     public function isStudentRegisteredInDataBattle($etudiantId, $dataChallengeId) {
         $sql = "SELECT COUNT(*) FROM Projets WHERE ID_DataChallenge = ? AND ID IN (
             SELECT ID_Projet FROM Equipes WHERE ID IN (
@@ -339,18 +337,18 @@ class EtudiantController extends UserController{
 
     public function addMemberToTeam(Equipe $equipe, Etudiant $capitaine, Etudiant $newMember)
     {
-        // 1. Vérifier que le capitaine est bien le chef de l'équipe
+        //On check si le capitaine est bien le chef d'équipe
         if ($equipe->getChefEquipe() != $capitaine->getID()) {
             // Le capitaine n'est pas le chef de l'équipe
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
     
-        // 2. Vérifier que l'équipe existe
+        // On check si la variable equipe existe
         if ($equipe === null) {
             throw new Exception("L'équipe n'existe pas");
         }
     
-        // 3. Vérifier que le nouveau membre n'est pas déjà dans l'équipe
+        // On check si le nouveau membre est pas deja dans l'équipe
         $membres = $equipe->getMembres(); // Tableau des ID des membres
         if (in_array($newMember->getID(), $membres)) {
             // Le nouveau membre est déjà dans l'équipe
@@ -360,11 +358,11 @@ class EtudiantController extends UserController{
         // Transaction
         $this->conn->autocommit(false);
         try {
-            // 4. Ajouter le nouvel étudiant à l'équipe dans la base de données
+            // On ajoute le nouvel étudiant à l'équipe dans la BDD
             $sql = "INSERT INTO MembresEquipe (ID_Equipe, ID_Utilisateur) VALUES (?, ?)";
             $this->executeInsertQuery($sql, "ii", $equipe->getId(), $newMember->getID());
     
-            // 5. Ajouter le nouvel étudiant à l'équipe dans l'objet Equipe
+            // ON l'ajoute également dans l'objet équipe
             $membres[] = $newMember->getID();
             $equipe->setMembres($membres);
     
@@ -385,7 +383,7 @@ class EtudiantController extends UserController{
     /*removeMemberFromTeam() : Permet au capitaine de retirer un membre de son équipe. */
     public function removeMemberFromTeam(Equipe $equipe, Etudiant $capitaine, Etudiant $member)
     {
-        // 1. Vérifier que le capitaine est bien le chef de l'équipe
+        //On check si le capitaine est bine le chef d'équipe
         if ($equipe->getChefEquipe() != $capitaine->getID()) {
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
         }
@@ -394,7 +392,7 @@ class EtudiantController extends UserController{
             throw new Exception("L'équipe n'existe pas");
         }
     
-        // 2. Vérifier que le membre est dans l'équipe
+        // On check si le membre est bien dans l'équipe
         $membres = $equipe->getMembres(); // Tableau des ID des membres
         
         if (!in_array($member->getID(), $membres)) {
@@ -405,7 +403,7 @@ class EtudiantController extends UserController{
         // Transaction
         $this->conn->autocommit(false);
         try {
-            // 3. Retirer l'étudiant de l'équipe dans la base de données
+            // On retire l'étudiant de l'équipe
             $sql = "DELETE FROM MembresEquipe WHERE ID_Equipe = ? AND ID_Utilisateur = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
@@ -434,6 +432,8 @@ class EtudiantController extends UserController{
         }
     }
     
+    /*Permet à un capitaine de supprimer son équipe
+    Précondition : seulement un capitaine ou un admin doit pouvoir appeler cette méhtode */
     public function deleteTeam(Equipe $equipe, Etudiant $capitaine)
     {
         //Partie à corriger !!
@@ -485,11 +485,11 @@ class EtudiantController extends UserController{
     
     
 
-    /*answerQuestionnaire() : Permet au capitaine de répondre à un questionnaire pour le défi de données. */
+    /* Méthode qui permet au capitaine de répondre à un questionnaire pour le défi de données. */
     /*On gère les transactions*/
     public function answerQuestionnaire(Equipe $equipe, Questionnaire $questionnaire, array $reponses)
     {
-        // 1. Vérifier que le questionnaire est ouvert
+        // 1. Vérifier la date du questionnaire (il doit etre ouvert)
         $currentDate = date('Y-m-d');
         if ($questionnaire->getDateDebut() > $currentDate || $questionnaire->getDateFin() < $currentDate) {
             // Le questionnaire n'est pas ouvert
@@ -504,7 +504,7 @@ class EtudiantController extends UserController{
         $this->conn->autocommit(false);
     
         try {
-            // 2. Pour chaque réponse, insérer une ligne dans la table Reponses
+            //Pour chaque réponse, insérer une ligne dans la table Reponses
             $sql = "INSERT INTO Reponses (Contenu, Note, ID_Question, ID_Equipe) VALUES (?, ?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
@@ -654,20 +654,21 @@ public function submitAnalyse(AnalyseurCode $analyse) {
     return $valReturn;
 }
 
+//Méthode qui permet de récupérer toutes les équipes d'un étudiant
 public function getTeamsByStudentId($etudiant_id) {
     $db = new Database();
     $db->connect();
     $equipes = [];
 
-    // Récupérer les équipes de l'étudiant
+    // On récup les équipes de l'étudiant
     $sql = "SELECT * FROM MembresEquipe WHERE ID_Utilisateur = " . $etudiant_id;
     $result = $db->query($sql);
 
-    // Parcourir les équipes et créer un objet Equipe pour chaque
+    // On creer une Equipe a chaque parcours 
     while ($row = $result->fetch_assoc()) {
         $equipe_id = $row['ID_Equipe'];
 
-        // Récupérer les détails de l'équipe
+        // On recup les details de l'équipe
         $sql = "SELECT * FROM Equipes WHERE ID = " . $equipe_id;
         $equipeResult = $db->query($sql);
 
@@ -675,7 +676,7 @@ public function getTeamsByStudentId($etudiant_id) {
             $nom = $equipeRow['Nom'];
             $chefEquipe = $equipeRow['ID_Capitaine'];
 
-            // Récupérer les membres de l'équipe
+            // On recup les membres de l'équipe
             $sql = "SELECT Utilisateurs.ID, Utilisateurs.Nom, Utilisateurs.Prenom FROM MembresEquipe JOIN Utilisateurs ON MembresEquipe.ID_Utilisateur = Utilisateurs.ID WHERE MembresEquipe.ID_Equipe = " . $equipe_id;
             $membreResult = $db->query($sql);
             $membres = [];
@@ -687,10 +688,10 @@ public function getTeamsByStudentId($etudiant_id) {
                 ];
             }
 
-            // Créer l'objet Equipe
+            // Enfin on créée Equipe
             $equipe = new Equipe($equipe_id, $nom, $membres, $chefEquipe);
 
-            // Ajouter l'équipe à la liste
+            // on ajoute l'équipe à la liste
             $equipes[] = $equipe;
         }
     }
@@ -700,7 +701,6 @@ public function getTeamsByStudentId($etudiant_id) {
     return $equipes;
 }
     
-    /*viewDataChallenges() : Permet à l'étudiant de voir une liste de tous les défis de données disponibles. */
 
 }
 ?>
