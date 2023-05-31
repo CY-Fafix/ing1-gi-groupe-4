@@ -59,6 +59,7 @@ class EtudiantController extends UserController{
         // Mise à jour de l'utilisateur
         $success = parent::updateProfile($user);
         if(!$success){
+            echo("Probleme du parent");
             return false;
         }
         
@@ -78,6 +79,7 @@ class EtudiantController extends UserController{
         if ($stmt->execute()) {
             return true;
         } else {
+
             return false;
         }
     }

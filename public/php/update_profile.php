@@ -6,6 +6,8 @@
     require_once __DIR__ . '/../../src/classes/Database.php';
     require_once __DIR__ . '/../../src/classes/Etudiant.php';
     require_once __DIR__ . '/../../src/controllers/etudiant_controller.php';
+    require_once __DIR__ . '/../../src/controllers/user_controller.php';
+
 
     //Si l'utilisateur n'est pas connecté on ne va pas sur cette page
     if (!isset($_SESSION['user_id'])){
@@ -18,7 +20,7 @@
 
     // Créer une nouvelle instance de Database
     $db = new Database();
-
+    $controller = new EtudiantController();
 
     // Se connecter à la base de données
     $con = $db->connect();
@@ -39,8 +41,9 @@
     if (!empty($_POST)) {
         extract($_POST);
         $valid = true;
-    
+
         if (isset($_POST['modification'])) {
+            echo("set");
             $nom = htmlentities(trim($nom));
             $prenom = htmlentities(trim($prenom));
             $email = htmlentities(strtolower(trim($email)));
@@ -49,6 +52,9 @@
             $niveau = htmlentities(trim($niveau));
             $ecole = htmlentities(trim($ecole));
             $ville = htmlentities(trim($ville));
+            echo("$nom");
+            echo("$ecole");
+            echo("$telephone");
     
             if (empty($nom)) {
                 $valid = false;
@@ -106,7 +112,6 @@
     
             //     $req_mail->close(); // Fermer le résultat de la requête
             // }
-    
             if ($valid) {
                 // Créer une instance de l'étudiant avec les nouvelles données
                 $etudiant = new Etudiant($nom, $prenom, $entreprise, $telephone, $email, $dateDebut, $dateFin, $mdp, $role, $niveau, $ecole, $ville);
@@ -118,16 +123,17 @@
                 $etudiant->setVille($ville);
                 $etudiant->setNiveau($niveau);
                 $etudiant->setEmail($email);
-                
-    
+                $id = $etudiant->getID();
                 // Mettre à jour le profil de l'étudiant
-                $valide=$etudiant->updateProfile($etudiant);
+                $valide=$controller->updateProfile($etudiant);
+                
                 if ($valide) {
-    
                     header('Location: profile.php');
                     exit;
                 }
             }
+        } else{
+            echo("not set");
         }
     }
 
@@ -149,9 +155,9 @@
 
     <body>      
 
-        <div id="Modif">Modification</div>
+        <h2 id="Modif">Modification</h2>
 
-        <form method="post">
+        <form action="update_profile.php" method="post">
 
             <?php
 
@@ -197,7 +203,7 @@
             ?>
             <div class="row">
                 <label>E-mail :</label>
-                <input type="email" placeholder="Adresse mail" name="mail" value="<?php if(isset($email)){ echo $email; }else{ echo $afficher_profil['mail'];}?>" required>
+                <input type="email" placeholder="Adresse mail" name="email" value="<?php if(isset($email)){ echo $email; }else{ echo $afficher_profil['mail'];}?>" required>
             </div>
           
 
