@@ -1,8 +1,14 @@
 <?php
     include('./header.php');
     require_once("../../src/controllers/etudiant_controller.php");
-    //Normalement on a un id de data challenge en paremetre GET
-    $id_dc = 1; 
+    
+    if (isset($_GET['id'])) {
+        $id_dc = $_GET['id'];
+    } else {
+        echo  
+            header('Location: ../index.php');
+            exit;
+    }
 
 ?>
 

@@ -78,7 +78,7 @@ if ($resultChallenges->num_rows > 0) {
                 foreach ($defisData as $defi) {
                     echo '<div class="parag1">';
                     echo '<a href="" class=""> <B>'.$defi->getLibelle().'</B></a>';
-
+                    echo '<div><a href="php/statsGlobales.php?id='.$defi->getId().'">Voir statistiques</a></div>';
                     echo '<div class="projet_data">';
                     echo '<ul class="sujet">';
 
