@@ -13,13 +13,13 @@ VALUES
 
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge)
 VALUES
-('Projet1', 'Description du Projet1', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
-('Projet2', 'Description du Projet2', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
+('Projet1', 'Ce projet vise à développer des techniques danalyse des schémas de communication dans les données de la Direction générale de la sécurité extérieure (DGSE), le service de renseignement français', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
+('Projet2', 'Ce projet a pour objectif danalyser les données des missions spatiales de la NASA afin de détecter des tendances et des modèles significatifs', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
 
 INSERT INTO Ressources (URL, Type, ID_Projet)
 VALUES
-('http://example.com/resource1', 'PDF', 1),
-('http://example.com/resource2', 'Notebook', 2);
+('https://www.emse.fr/~picard/cours/ai/chapter01.pdf', 'PDF', 1),
+('https://www.youtube.com/watch?v=CsQNF9s78Nc', 'Video', 2);
 
 INSERT INTO Equipes (Nom, ID_Projet, ID_Capitaine)
 VALUES

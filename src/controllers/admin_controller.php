@@ -2,6 +2,8 @@
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Utilisateur.php';
+require_once __DIR__ . '/../classes/ProjetData.php';
+
 require_once __DIR__ . '/user_controller.php';
 require_once __DIR__ .'/gestionnaire_controller.php';
 
@@ -358,6 +360,53 @@ class AdminController extends GestionnaireController{
             throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
         }
     }
+
+    public function getAllResources() {
+        $sql = "SELECT * FROM Ressources";
+        $result = $this->conn->query($sql);
+    
+        if ($result === false) {
+            throw new Exception("Erreur lors de l'execution de la requête : " . $this->conn->error);
+        }
+    
+        $ressources = [];
+        while ($row = $result->fetch_assoc()) {
+            $ressources[] = new Ressource($row['ID'], $row['URL'], $row['Type'], '', '');
+        }
+    
+        return $ressources;
+    }
+    
+    public function getProjectById($id) {
+        $sql = "SELECT * FROM Projets WHERE ID = ?";
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                throw new Exception("Erreur lors de l'execution de la requête : " . $stmt->error);
+            }
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], [], []);
+        } else {
+            throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
+        }
+    }
+    
+    public function getResourceById($id) {
+        $sql = "SELECT * FROM Ressources WHERE ID = ?";
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("i", $id);
+            if (!$stmt->execute()) {
+                throw new Exception("Erreur lors de l'execution de la requête : " . $stmt->error);
+            }
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return new Ressource($row['ID'], $row['URL'], $row['Type'], '', '');
+        } else {
+            throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
+        }
+    }
+    
     
 }
 ?>

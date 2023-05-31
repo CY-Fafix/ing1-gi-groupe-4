@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/public/php/update_challenges.php">Data Challenges</a></li> <!--Adrien Permet de voir/modifier tous les DataChallenges -->
                 <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
                 <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Ana Permet de voir/modifier tous les utilisateurs -->
-                <li><a href="/public/php/creerRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
+                <li><a href="/public/php/modifRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
             <?php endif; ?>
 
