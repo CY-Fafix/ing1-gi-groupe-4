@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <link href="../css/stylle.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="../css/statsGlobales.css" rel="stylesheet" />
 </head>
 <body>
     <div class="Main">
@@ -52,6 +53,8 @@
                 array_push($nbMoy, array("y" => $analyse[4], "label" => $analyse[5]));
             }
         ?>
+
+        <!--Tous les script de création de diagramme sont là-->
         <script type="text/javascript">
         window.onload = function () {
             //Script pour le diagramme sur le nombre de lignes écrites
@@ -66,7 +69,7 @@
                 },
                 data: [
                 {
-                    type: "pie",
+                    type: "doughnut",
                     showInLegend: true,
                     legendText: "{indexLabel}",
                     dataPoints: <?php echo json_encode($nbLignes); ?>
@@ -87,7 +90,7 @@
                 },
                 data: [
                 {
-                    type: "pie",
+                    type: "doughnut",
                     showInLegend: true,
                     legendText: "{indexLabel}",
                     dataPoints: <?php echo json_encode($nbFonc); ?>
@@ -134,11 +137,11 @@
         <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
         <!--Affichage des diagrammes-->
-        <div id="chartLignes" style="height: 300px; width: 80%; margin: auto;"></div>
+        <div class="cadre"><div id="chartLignes" style="height: 300px; width: 80%; margin: auto;"></div></div>
         <br><br><br>
-        <div id="chartFonc" style="height: 300px; width: 80%; margin: auto;"></div>
+        <div class="cadre"><div id="chartFonc" style="height: 300px; width: 80%; margin: auto;"></div></div>
         <br><br><br>
-        <div id="chartLongueur" style="height: 300px; width: 80%; margin: auto;"></div>
+        <div class="cadrefinal"><div id="chartLongueur" style="height: 300px; width: 80%; margin: auto;"></div></div>
     </div>
 </body>
 </html>

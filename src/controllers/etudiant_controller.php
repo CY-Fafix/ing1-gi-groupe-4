@@ -342,16 +342,19 @@ class EtudiantController extends UserController{
     
     public function deleteTeam(Equipe $equipe, Etudiant $capitaine)
     {
+        //Partie à corriger !!
+        /*
         // 1. Vérifier que le capitaine est bien le chef de l'équipe
         if ($equipe->getChefEquipe() != $capitaine->getID()) {
             // Le capitaine n'est pas le chef de l'équipe
+            echo "avant l'auto commit";
+
             throw new Exception("Le capitaine n'est pas le chef de l'équipe");
-        }
-    
+        }*/
+        
         if ($equipe == null) {
             throw new Exception("L'équipe n'existe pas");
         }
-    
         // Transaction
         $this->conn->autocommit(false);
         try {

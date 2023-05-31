@@ -1,22 +1,30 @@
-    <?php
-    //include('./header.php');
-    session_start();
+<?php
+    include('./header.php');
     require_once("../../src/classes/AnalyseurCode.php");
     require_once("../../src/controllers/etudiant_controller.php");
 
-    if (isset($_SESSION['user_id'])) { //----------CODE DANS LE CAS OU L'UTILISATEUR EST CONNECTE---------- ?>
+    //Si l'utilisateur n'est pas connecté on ne va pas sur cette page
+    if (!isset($_SESSION['user_id'])){
+        if ($_SESSION['role'] != 'Etudiant'){  
+            echo  
+            header('Location: ../index.php');
+            exit;
+        }
+    }
+?>
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <link href="../css/stylle.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-        
-        <title>  </title>
-    </head>
-    <body>
-        <div class="Main">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/stylle.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="../css/selectFichier.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div class="Main">
+        <div class="cadre">
             <?php
             if (isset($_FILES['userfile']['name'])) {
                 $file = basename($_FILES['userfile']['name']);
@@ -81,7 +89,10 @@
                     echo "Nombre de lignes de la plus petite fonction : ".$valeurs['nbMin']."<br>";
                     echo "Nombre de lignes de la plus grande fonction : ".$valeurs['nbMax']."<br>";
                     echo "Nombre de lignes moyen des fonctions : ".$valeurs['nbMoy']."<br>";
-
+                ?>
+        </div>
+        <div class="cadre">
+                <?php
                     $analyse = new AnalyseurCode(0, $valeurs['nbLignes'], $valeurs['nbFonc'],$valeurs['nbMin'], $valeurs['nbMax'],$valeurs['nbMoy'], 1); //A changer
                     $controller = new EtudiantController();
                     $controller->submitAnalyse($analyse);
@@ -121,8 +132,8 @@
                 });
                 chart.render(); }
                 </script>
-                <div id="chartContainer" style="height: 370px; width: 90%; margin:auto;"></div>
                 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                <div id="chartContainer" style="height: 370px; width: 90%; margin:auto;"></div>
 
                 <?php } else {
                     echo "Impossible de télécharger le fichier<br>";
@@ -138,30 +149,7 @@
 
             <?php } else { echo "Aucun fichier a analyser renseigné<br>"; } ?>
         </div>
-    </body>
-    </html>
-    <!--<div class="wave"></div>  -->
-    <?php //include('./footer.php'); ?>
-    
-
-    <?php } else { //----------CODE DANS LE CAS OU L'UTILISATEUR N'EST PAS CONNECTE----------?>
-    <!DOCTYPE HTML>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        
-        <link href="../css/stylle.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-    
-        <title>  </title>
-    </head>
-    <body>
-
-        <div class="Main">
-                Veuillez vous connecter pour accéder à cette page
-        </div>
-    </body>
-    </html>
-    <!--<div class="wave"></div>-->
-    <?php //include('./footer.php'); ?>
-    <?php } ?>
+    </div>
+</body>
+</html>
+<?php include('./footer.php'); ?>
