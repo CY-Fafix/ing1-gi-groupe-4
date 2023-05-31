@@ -40,7 +40,7 @@ $equipes = $etudiantController->getTeamsByStudentId($_SESSION['user_id']);
         <h1>Mes Équipes</h1>
 
         <?php if (empty($equipes)) : ?>
-            <p>Vous n'avez aucune équipe. <a href="equipe.php">Créer une équipe</a></p>
+            <p>Vous n'avez aucune équipe. <a href="/public/index.php">S'inscrire à un projet pour créer une équipe</a></p>
         <?php else : ?>
             <?php foreach ($equipes as $equipe) : ?>
                 <div class="team-card">
