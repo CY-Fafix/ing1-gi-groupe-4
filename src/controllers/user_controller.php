@@ -264,6 +264,70 @@ class UserController {
         // Enfin, détruisez la session.
         session_destroy();
     }
+
+    public function recuperData($idDc) {
+        $valRetour = true;
+
+        //On récupère les id des projets
+        $idProjets = array();
+        $sql1 = "SELECT ID FROM Projets WHERE ID_DataChallenge = ".$idDc;
+        $stmt1 = $this->conn->prepare($sql1);
+        if ($stmt1 === false) {
+            throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+        if (!$stmt1->execute()) {
+            $valReturn = false;
+        }
+        $stmt1->bind_result($result);
+
+        while($stmt1->fetch()) {
+            array_push($idProjets, $result);
+        }
+        $stmt1->close();
+
+        //On récupère les id des équipes à partir de l'id de projet
+        $idEquipes = array();
+        foreach($idProjets as $idProjet) {
+            $sql2 = "SELECT ID FROM Equipes WHERE ID_Projet = ".$idProjet;
+            $stmt2 = $this->conn->prepare($sql2);
+            if ($stmt2 === false) {
+                throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            if (!$stmt2->execute()) {
+                $valReturn = false;
+            }
+            $stmt2->bind_result($idEquipe);
+            while($stmt2->fetch()) {
+
+                array_push($idEquipes, $idEquipe);
+            }
+            $stmt2->close();
+        }
+
+        
+
+        //On récupère les analyses à partir de l'id de projet
+        $analyses = array();
+        foreach($idEquipes as $idEquipe) {
+            $sql3 = "SELECT NombreLignes, NombreFonctions, LignesMinFonction, LignesMaxFonction, LignesMoyennesFonction, Nom FROM AnalysesCode
+             JOIN Equipes ON AnalysesCode.ID_Equipe = Equipes.ID
+             WHERE ID_Equipe = ".$idEquipe;
+            $stmt3 = $this->conn->prepare($sql3);
+            if ($stmt3 === false) {
+                throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            if (!$stmt3->execute()) {
+                $valReturn = false;
+            }
+            $stmt3->bind_result($a,$b,$c,$d,$e,$f);
+             while($stmt3->fetch()) {
+                 array_push($analyses, array($a,$b,$c,$d,$e,$f));
+             }
+            $stmt3->close();
+        }
+        
+        return $analyses;
+    }
     
 }
 ?>
