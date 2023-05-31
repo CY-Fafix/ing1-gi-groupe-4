@@ -1,7 +1,7 @@
 
 
 <?php
-session_start();
+
 
 // Inclusion des fichiers nécessaires pour accéder à la base de données et gérer les utilisateurs
 require_once __DIR__.'/../classes/Database.php';

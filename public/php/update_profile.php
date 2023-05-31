@@ -52,9 +52,7 @@
             $niveau = htmlentities(trim($niveau));
             $ecole = htmlentities(trim($ecole));
             $ville = htmlentities(trim($ville));
-            echo("$nom");
-            echo("$ecole");
-            echo("$telephone");
+            
     
             if (empty($nom)) {
                 $valid = false;
@@ -70,6 +68,15 @@
                 $valid = false;
                 $er_telephone = "Il faut mettre un numéro de téléphone";
             }
+
+            // $numbers = array("1","2","3","4","5","6","7","8","9","0");
+            // $num = explode("",$telephone);
+            // foreach($num as $n){
+            //     if(!in_array($n,$numbers)){
+            //         $valid = false;
+            //         $er_telephone = "Numéro de téléphone non valide";
+            //     }
+            // }
             
             if(empty($mdp)){
                 $valid = false;
