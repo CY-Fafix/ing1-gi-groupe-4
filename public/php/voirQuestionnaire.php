@@ -57,7 +57,6 @@
 			</form>
 			<?php
 				if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-					var_dump($_POST);
 					$i = 1;
 					foreach ($questions_Id as $id_Question) {
 						foreach ($tableau_reponse as $reponse) {
