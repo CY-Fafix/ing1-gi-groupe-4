@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/public/php/choixNbQuestions.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
                 <li><a href="/public/php/voirQuestionnaire.php">Voir Reponses</a></li><!-- Permet de voir les réponses -->
                 <li><a href="/public/php/profile_gestionnaire.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
+                <li><a href="/public/php/view_message.php">Voir les messages</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
 
@@ -58,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/public/php/projets.php">Tous les projets</a></li> <!-- Permet de voir/modifier tous les projets -->
                 <li><a href="/public/php/utilisateurs.php">Tous les utilisateurs</a></li> <!-- Ana Permet de voir/modifier tous les utilisateurs -->
                 <li><a href="/public/php/modifRessource.php">Ajouter Ressource</a></li> <!-- Permet de void/modifier les resosurces -->
+                <li><a href="/public/php/view_message.php">Voir les messages</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li>
             <?php endif; ?>
 
