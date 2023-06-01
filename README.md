@@ -13,10 +13,10 @@ Avant de pouvoir lancer le site web, assurez-vous de disposer des éléments sui
 
 Pour configurer la base de données MySQL, suivez ces étapes :
 1. Ouvrez l'invite de commande.
-2. Naviguez en ligne de commande vers le dossier `Data_Challenge/`.
+2. Naviguez en ligne de commande vers le dossier `ing1-gi-groupe-4/`.
 3. Assurez-vous que vous êtes dans le même dossier que les dossiers `public` et `src`
-4. Modifiez le fichier `Database.php` situé dans `Data_Challenge/src/classes/Database.php` : vous pouvez modifier la valeur des variables $username et $password pour les remplacer par vos identifiants MySQL. 
-5. Naviguez en ligne de commande vers le dossier situé dans  `Data_Challenge/src/sql/`.
+4. Modifiez le fichier `Database.php` situé dans `ing1-gi-groupe-4/src/classes/Database.php` : vous pouvez modifier la valeur des variables $username et $password pour les remplacer par vos identifiants MySQL. 
+5. Naviguez en ligne de commande vers le dossier situé dans  `ing1-gi-groupe-4/src/sql/`.
 6. Assurez-vous que vous êtes dans le même dossier que les fichiers `create_tables.sql` et `insert_data.sql`
 4. Connectez-vous à votre serveur MySQL en utilisant la commande suivante :
 
@@ -108,7 +108,7 @@ Pour lancer le web service REST :
 ## Lancement du site web
 
 1. Ouvrez l'invite de commande.
-2. Naviguez en ligne de commande vers le dossier `Data_Challenge/`.
+2. Naviguez en ligne de commande vers le dossier `ing1-gi-groupe-4/`.
 3. Assurez-vous que vous êtes dans le même dossier que les dossiers `public` et `src`
 4. Entrez la commande suivante dans la ligne de commande :
 `php -S localhost:8080`
