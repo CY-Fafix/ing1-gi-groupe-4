@@ -20,7 +20,7 @@ if ($resultChallenges->num_rows > 0) {
         $projetsData = array();
         if ($resultProjets->num_rows > 0) {
             while($projectRow = $resultProjets->fetch_assoc()) {
-                $projetData = new ProjetData($projectRow['ID'], $projectRow['Libelle'], $projectRow['Description'], $projectRow['ImageURL'], array(), array());
+                $projetData = new ProjetData($projectRow['ID'], $projectRow['Libelle'], $projectRow['Description'], $projectRow['ImageURL'], array(), array(), $projectRow['ID_Gestionnaire']);
                 array_push($projetsData, $projetData);
             }
         }
