@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	include('header.php');
-	
+	session_start();
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
@@ -31,7 +31,7 @@
 			<p id="Title"> <strong>Nouveau questionnaire</strong> </p>
 			
 			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
-			<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script>
+			<!--<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script> --> ;
 				
 				<label id="DateDebut"> Date de début :
 					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required>
@@ -86,7 +86,7 @@
 						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
 						$controller = new GestionnaireController();
 						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
-						header("Location: ./affichageQuestionnaire.php?id=$id_questionnaire");
+						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);
 					}
 				?>
 				

@@ -19,6 +19,40 @@ class GestionnaireController extends UserController{
         $db = new Database();
         $this->conn = $db->connect();
     }
+    
+    public function createUser(Utilisateur $user) {
+        // Vérifier que l'utilisateur est un Gestionnaire
+        if (!($user instanceof Gestionnaire)) {
+            throw new InvalidArgumentException('Un Objet gestionnaire est Attendu');
+        }
+    
+        //On crée un utilisateur en appellant la classe mère 
+        $success = parent::createUser($user);
+    
+        if(!$success){
+            return false;
+        }
+        
+        //on actualise les infos dans la BDD
+        $sql = "UPDATE Utilisateurs SET Entreprise = ?, DateDebut = ?, DateFin = ? WHERE Email = ?";
+        $stmt = $this->conn->prepare($sql);
+        if($stmt === false) {
+            die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+    
+        $entreprise = $user->getEntreprise();
+        $debut = $user->getDebut();
+        $fin = $user->getFin();
+        $email = $user->getEmail();
+        $stmt->bind_param("ssss", $entreprise, $debut, $fin, $email);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "lexecution est fausse";
+            return false;
+        }
+    }
     public function createQuestionnaire(Questionnaire $questionnaire, $id_Gest){
         try {
             // Ajout des informations liées au questionnaire en base de données (dates, id)
@@ -131,11 +165,12 @@ class GestionnaireController extends UserController{
     public function updateScore($ID_Equipe, $ID_Question, $nouvelle_Note) {
         try {
             // Mise à jour des informations de score dans la base de données
-            $sql = "UPDATE " . $this->table_reponse . " SET Note = " . $nouvelle_Note . " WHERE ID_Equipe = " . $ID_Equipe . " AND ID_Question = " . $ID_Question;
+            $sql = "UPDATE " . $this->table_reponse . " SET Note = ? WHERE ID_Equipe = ? AND ID_Question = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
+            $stmt->bind_param("iii", $nouvelle_Note, $ID_Equipe, $ID_Question);
             if ($stmt->execute()) {
                 return true;
             } else {
@@ -145,6 +180,7 @@ class GestionnaireController extends UserController{
             echo "Error: " . $e->getMessage();
         }
     }
+    
 
     public function viewResponses($ID_Question) {
         try {

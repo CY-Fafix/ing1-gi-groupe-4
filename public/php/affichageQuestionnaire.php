@@ -69,7 +69,7 @@
 							echo('
 								<label id="Question"> Question n° ' .$i. ' :
 								<p> ' .$contenuQuestion. ' </p>								
-									<textarea class="Verify" id="QuestionZone" name="question' .$i.'" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required> </textarea>
+									<textarea class="Verify" id="QuestionZone" name="question' .$i.'" rows="16" cols="80" wrap=hard placeholder="Entrez la question ici" spellcheck="False" required></textarea>
 									<br>
 								</label>
 								
