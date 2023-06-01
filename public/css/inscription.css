@@ -12,7 +12,9 @@
 }
 
 
-
+body  {
+	background-color: #147cb4;
+}
 
 /* Contact */
 
@@ -30,13 +32,13 @@
 
 .Main {
 	width : 100%;
-	height: 800px;
-	background-image: url(https://iapau.org/wp-content/uploads/2021/05/marketing-bg6.png);
+	height: 900px;
 	color : black;
 	text-align : center;
 	/* clip-path: polygon(0 0,70% 20%,100% 0,100% 100%,0 100%,0 0); */
 	display:flex;
 	flex-direction: row;
+	background: linear-gradient(#11a086,#147cb4);
 
 }
 
@@ -48,7 +50,7 @@
 	margin-top:5%;
 	place-content:center;
 	float: right;
-	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	display:grid;
 	margin-top:75px;
 }

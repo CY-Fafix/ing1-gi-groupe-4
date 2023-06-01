@@ -9,10 +9,10 @@ class Database {
 =======
     
     
-    /*
+    
     private $username = "Anae";
     private $password = "Mdp2@n@e";
-    */
+    
     
     /*
     private $username = "Pacpac";
@@ -24,10 +24,15 @@ class Database {
     private $password = "adjariP2732!";
     
     
+<<<<<<< HEAD
     /*
     private $username = "guillaume.bergadieu";
     private $password = "motdepasse";
     */
+=======
+    // private $username = "guillaume.bergadieu";
+    // private $password = "motdepasse";
+>>>>>>> 675aca2 (harmonisation css)
     
 >>>>>>> c7929b8a710c454be5eb5a7b375e029795f33567
     private $conn;

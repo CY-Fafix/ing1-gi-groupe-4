@@ -1,7 +1,6 @@
 /* equipe.css */
 body {
-    font-family: 'Aboreto', sans-serif;
-    font-size: 22px;
+    font-family: 'Open Sans', sans-serif;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
@@ -9,18 +8,21 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+    background-image: URL("https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg");
+    background-size: cover;
 }
 
 h1 {
-    color: #333;
     text-align: center;
-    padding-top: 20px;
+    margin-bottom: 40px;
     margin-top: 4%;
+    color: #6c757d;
+    font-size: 2em;
 }
 
 .custom-header {
-    background-color: #333;
-    color: #fff;
+    background-color: #11a086;
+    color:#11a086;
     padding: 20px 0;
     text-align: center;
     width: 100%;
@@ -29,24 +31,30 @@ h1 {
 .main {
     padding: 20px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start; 
+    
+    
+
+}
+main{
+    display:grid;
 }
 
 .team-card {
     border: 1px solid #ccc;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 30px;
     padding: 20px;
     margin-bottom: 20px;
     width: 80%;
     text-align: left;
+    background-color: #fff;
+    place-self: center;
 }
 
 h2 {
-    color: #333;
-    padding-top: 10px;
+    margin-bottom: 20px;
+    color: #495057;
+    font-size: 1.5em;
 }
 
 ul {
@@ -90,11 +98,11 @@ input[type="email"], select {
 }
 
 /* header.css */
-.custom-header {
+/* .custom-header {
     background-color: #333;
     color: #fff;
     padding: 10px 0;
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
-}
+} */

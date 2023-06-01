@@ -3,6 +3,7 @@ body, h1, h2, p {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
@@ -13,10 +14,12 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-image: URL("https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg");
+    background-size: cover;
 }
 
 .custom-header {
-    background-color: #343a40;
+    background-color: #11a086;
     color: #fff;
     padding: 20px 0;
     margin-bottom: 30px;
@@ -37,11 +40,13 @@ h1 {
 }
 
 .project {
+    width:70%;
+    place-self: center;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-bottom: 30px;
     padding: 30px;
-    border-radius: 5px;
+    border-radius: 30px;
 }
 
 .project h2 {
@@ -69,6 +74,7 @@ h1 {
 .project-link {
     text-decoration: none; 
     color: inherit; 
+    display:grid;
 }
 
 .project-link:hover .project {
