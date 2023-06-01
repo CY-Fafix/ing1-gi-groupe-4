@@ -30,8 +30,8 @@
 			
 			<p id="Title"> <strong>Nouveau questionnaire</strong> </p>
 			
-			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
-			<!--<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script> --> 
+			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDates()" method="POST" action="">
+			<script type="text/javascript" src="../js/verificationDates.js" defer> </script>
 				
 				<label id="DateDebut"> Date de début :
 					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required>
@@ -47,7 +47,7 @@
 					<br>
 				</label>
 				
-				
+				<span class="Erreur" id="FormatDate3" aria-live="polite"> <em>La date de fin ne peut pas être antérieure à celle de début (!)</em> </span>
 				<br>
 				
 				
