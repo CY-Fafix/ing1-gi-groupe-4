@@ -2,20 +2,6 @@
 class Database {
     private $host = "localhost";
     private $db_name = "datachallenge_db";
-<<<<<<< HEAD
-    private $username = "cyfafix";
-    private $password = "Xx&Yd9@7deEhee";
-=======
-    
-    
-    /*
-    private $username = "Anae";
-    private $password = "Mdp2@n@e";
-    */
-    
-    
-    private $username = "Pacpac";
-    private $password = "Pacome.bdd.6423";
     
     
     /*
@@ -28,7 +14,15 @@ class Database {
     private $password = "Mdp2@n@e";
     */
     
->>>>>>> 94baaae1464cd862361e4ba9f965497def141950
+    /*
+    private $username = "cyfafix";
+    private $password = "Xx&Yd9@7deEhee";
+    */
+    
+    private $username = "Pacpac";
+    private $password = "Pacome.bdd.6423";
+    
+    
     private $conn;
 
     public function connect() {
