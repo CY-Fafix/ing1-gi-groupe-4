@@ -6,25 +6,21 @@ require_once __DIR__ . '/../../src/classes/Ressource.php';
 
 function getProjectIdForRessource($ressourceId) {
     $db = new Database();
-
     $db->connect();
 
     $sql = "SELECT ID_Projet FROM Ressources WHERE ID = $ressourceId";
     $result = $db->query($sql);
 
-    // Vérifier si la requête a retourné des résultats
     if ($result->num_rows > 0) {
-        // Si oui, retourner l'ID du projet
         $row = $result->fetch_assoc();
         return $row['ID_Projet'];
     } else {
-        // Si non, retourner null
         return null;
     }
 
     $db->close();
 }
-//Ce qui nous intéresse c'est plus spécialement le libellé du projet, c'est pour ça que ya null à la fin
+
 function getAllProjects() {
     $db = new Database();
     $db->connect();
@@ -44,11 +40,12 @@ function getAllProjects() {
     return $projects;
 }
 
-
 $adminController = new AdminController();
 
+// Get all projects irrespective of the request method
+$projects = getAllProjects();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $projects = getAllProjects();
     if(isset($_POST['delete'])){
         $id = $_POST['delete'];
         $ressource = new Ressource($id, null, null, null, null);
@@ -58,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST['update'])){
         $id = $_POST['update'];
         $ressource = $adminController->getResourceById($id);
-        // Ici, vous pouvez modifier les propriétés de la ressource avec des valeurs POST
         $ressource->setUrl($_POST['url']);
         $ressource->setFormat($_POST['type']);
         $adminController->updateResource($ressource);

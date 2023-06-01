@@ -1,12 +1,5 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #f7f7f7;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     color: #333;
@@ -15,12 +8,6 @@ body {
     padding: 0;
     overflow-x: hidden;
     
-}
-.custom-header {
-    background-color: #3F51B5;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
 }
 .custom-header {
     background-color: #333;
