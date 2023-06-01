@@ -14,7 +14,10 @@ VALUES
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge, ID_Gestionnaire)
 VALUES
 ('Projet1', 'Un projet pour pour aider les services de renseignement français à detecter un profil type de telecommunication pour anticiper des attentats terroristes', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1, 2),
-('Projet2', 'Un projet pour aider la NASA à developper son IA, vous pourriez peut etre un jour avoir votre IA dans lespace', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2, NULL);
+('Projet2', 'Un projet pour aider la NASA à developper son IA, vous pourriez peut etre un jour avoir votre IA dans lespace', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2, NULL),
+('Projet3', 'Un projet au service du développement durable, utiliser l IA pour economiser de l energie dans un flux de transport', 'https://www.lecannetdesmaures.com/media/k2/items/cache/9415f9bcd76598f9c08127db1641b596_XL.jpg', 1, NULL);
+;
+
 
 INSERT INTO Ressources (URL, Type, ID_Projet)
 VALUES
