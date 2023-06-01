@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	include('header.php');
-	 session_start();
+	session_start();
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
@@ -66,7 +66,7 @@
 				?>
 				
 				
-				<input type="submit" id="Ok" name="ok" value="OK" />
+				<input type="submit" id="Ok" name="ok" value="OK" onclick="window.location.href='./choixNbQuestions.php'" />
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 				
 				
@@ -98,8 +98,9 @@
 </html>
 
 
-<?php include('./footer.php'); 
-ob_end_flush();
+<?php
+	include('./footer.php'); 
+	ob_end_flush();
 ?>
 
 
