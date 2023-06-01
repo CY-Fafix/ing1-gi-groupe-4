@@ -19,6 +19,11 @@ class Database {
     private $password = "adjariP2732!";
     */
     
+    /*
+    private $username = "Anae";
+    private $password = "Mdp2@n@e";
+    */
+    
         
     private $conn;
 
