@@ -221,6 +221,7 @@ class GestionnaireController extends UserController{
                 $stmt0->bind_result($mail_gest);
                 $stmt0->fetch();
                 $stmt0->close();
+                
         
                 foreach ($listemail as $mail) {
                     $sql = "SELECT ID FROM Equipes WHERE ID_Capitaine IN (SELECT ID FROM Utilisateurs WHERE Email = ?)";
@@ -230,7 +231,7 @@ class GestionnaireController extends UserController{
                     }
                     $stmt->bind_param("s", $mail);
                     $stmt->execute();
-                    $stmt->bind_result($ID_User);
+                    $stmt->bind_result($ID_Equipe);
                     $stmt->fetch();
                     $stmt->close();
                     $headers = "From: " . $mail_gest . "\r\n";
@@ -240,11 +241,11 @@ class GestionnaireController extends UserController{
                     if ($stmt2 === false) {
                         die('prepare() failed: ' . htmlspecialchars($this->conn->error));
                     }
-                    $stmt2->bind_param("ssii", $Contenu, $dateEnvoi, $ID_Gestionnaire, $ID_User);
+                    $stmt2->bind_param("ssii", $Contenu, $dateEnvoi, $ID_Gestionnaire, $ID_Equipe);
                     if ($stmt2->execute()) {
                         $mailSent = mail($mail, $Objet, $Contenu, $headers);
                         if ($mailSent) {
-                            echo 'Envoyé!';
+                            
                         } else {
                             echo 'Échec de l\'envoi de l\'e-mail.';
                         }

@@ -14,15 +14,15 @@ class Database {
     private $password = "Pacome.bdd.6423";
     */
     
-    /*
+    
     private $username = "adrien";
     private $password = "adjariP2732!";
-    */
     
     
+    /*
     private $username = "guillaume.bergadieu";
     private $password = "motdepasse";
-    
+    */
     
     private $conn;
 
