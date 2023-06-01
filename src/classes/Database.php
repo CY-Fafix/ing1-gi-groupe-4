@@ -9,10 +9,10 @@ class Database {
     private $password = "Xx&Yd9@7deEhee";
     */
     
-    /*
+    
     private $username = "Pacpac";
     private $password = "Pacome.bdd.6423";
-    */
+    
     
     /*
     private $username = "adrien";

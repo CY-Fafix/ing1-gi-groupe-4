@@ -31,7 +31,7 @@
 			<p id="Title"> <strong>Nouveau questionnaire</strong> </p>
 			
 			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
-			<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script>
+			<!-- <script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script> -->
 				
 				<label id="DateDebut"> Date de début :
 					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required>
@@ -66,7 +66,7 @@
 				?>
 				
 				
-				<input type="submit" id="Ok" name="ok" value="OK" onclick="window.location.href='./choixNbQuestions.php'" />
+				<input type="submit" id="Ok" name="ok" value="OK" onclick="window.location.href='./affichageQuestionnaire.php'" />
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 				
 				
