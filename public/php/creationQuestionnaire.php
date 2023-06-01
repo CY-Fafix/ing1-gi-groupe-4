@@ -84,8 +84,6 @@
 						}
 						
 						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
-						$_SESSION["questionnaire"] = $questionnaire;
-						
 						$controller = new GestionnaireController();
 						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
 						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);

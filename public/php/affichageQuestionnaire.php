@@ -87,21 +87,24 @@
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 
 				<?php
-					
+					$j=1;
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
-						$dateDebut = $_POST["dateDebut"];
-						$dateFin = $_POST["dateFin"];
-						$titre = $_POST["titre"];
-						for ($i = 1; $i <= $_SESSION["nbQuestions"]; $i ++) {
-							$contenu[$i] = $_POST["question$i"];
+						$reponses=array();
+						$id_etudiant = $_SESSION["user_id"];
+						$note=NULL;
+						$teamID = $etudiantController->getTeamId($id_etudiant);
+						foreach($tabQuestions as $contenuQuestion) {
+							$idQuestion  = $etudiantController->getQuestionId($contenuQuestion);
+							$contenu = $_POST["question$j"];
+							var_dump($contenu);
+							$reponse = new Reponse(16,$idQuestion,$id_etudiant,$contenu,$note);
+							array_push($reponses,$reponse);
+							$j +=1 ;
 						}
-						
-						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
-						$_SESSION["questionnaire"] = $questionnaire;
-						
-						$controller = new GestionnaireController();
-						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
-						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);
+
+						$id_Gestionnaire =$etudiantController->getGestionnaireIdByQuestionnaireId($id_Questionnaire);
+						$success = $etudiantController->answerQuestionnaire($teamID,$dateDebut,$dateFin,$reponses);
+						$_SESSION['successp']=$success;
 					}
 				?>
 			</form>

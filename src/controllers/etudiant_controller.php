@@ -487,16 +487,16 @@ class EtudiantController extends UserController{
 
     /* Méthode qui permet au capitaine de répondre à un questionnaire pour le défi de données. */
     /*On gère les transactions*/
-    public function answerQuestionnaire(Equipe $equipe, Questionnaire $questionnaire, array $reponses)
+    public function answerQuestionnaire( $id_equipe, $dateDebut,$dateFin, array $reponses)
     {
         // 1. Vérifier la date du questionnaire (il doit etre ouvert)
         $currentDate = date('Y-m-d');
-        if ($questionnaire->getDateDebut() > $currentDate || $questionnaire->getDateFin() < $currentDate) {
+        if ($dateDebut > $currentDate || $dateFin < $currentDate) {
             // Le questionnaire n'est pas ouvert
             throw new Exception("Le questionnaire n'est pas ouvert");
         }
     
-        if ($equipe == null) {
+        if (!isset($id_equipe)) {
             throw new Exception("L'équipe n'existe pas");
         }
     
@@ -516,7 +516,7 @@ class EtudiantController extends UserController{
                 $note = $reponse->getNote(); // Note peut être null si la réponse n'a pas encore été notée
                 $idQuestion = $reponse->getIdQuestion();
                 
-                $stmt->bind_param("siii", $contenu, $note, $idQuestion, $equipe->getId());
+                $stmt->bind_param("siii", $contenu, $note, $idQuestion, $id_equipe);
                 $stmt->execute();
             }
             
@@ -725,6 +725,75 @@ public function getTeamsByStudentId($etudiant_id) {
     return $equipes;
 }
     
+public function getTeamId($id_etudiant){
+    try{
+        $db = new Database();
+        $db->connect();
 
+        // On récup les équipes de l'étudiant
+        $sql = "SELECT ID FROM Equipes WHERE ID_Capitaine = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+        $stmt->bind_param("i",$id_etudiant);
+        if ($stmt->execute()) {
+            $stmt->bind_result($res);
+            $stmt->fetch();
+            return $res;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+public function getQuestionId($contenu){
+    try{
+        $db = new Database();
+        $db->connect();
+
+        // On récup les équipes de l'étudiant
+        $sql = "SELECT ID FROM Questions WHERE Contenu = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            throw new Exception('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+        $stmt->bind_param("s",$contenu);
+        if ($stmt->execute()) {
+            $stmt->bind_result($res);
+            $stmt->fetch();
+            return $res;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+}
+public function getGestionnaireIdByQuestionnaireId($id_questionnaire){
+    try{
+        $sql = "SELECT ID_Gestionnaire FROM Questionnaires WHERE ID =?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+        }
+    
+        $stmt->bind_param("i", $id_questionnaire);
+        if ($stmt->execute()) {
+            $stmt->bind_result($res);
+            $stmt->fetch();
+            return $res;
+        } else {
+            return false;
+        }
+
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+}
 }
 ?>

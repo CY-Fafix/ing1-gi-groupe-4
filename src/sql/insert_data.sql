@@ -13,23 +13,21 @@ VALUES
 
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge)
 VALUES
-('Projet1', 'Ce projet vise à développer des techniques danalyse des schémas de communication dans les données de la Direction générale de la sécurité extérieure (DGSE), le service de renseignement français', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
-('Projet2', 'Ce projet a pour objectif danalyser les données des missions spatiales de la NASA afin de détecter des tendances et des modèles significatifs', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
+('Projet1', 'Description du Projet1', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
+('Projet2', 'Description du Projet2', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
 
 INSERT INTO Ressources (URL, Type, ID_Projet)
 VALUES
-('https://www.emse.fr/~picard/cours/ai/chapter01.pdf', 'PDF', 1),
-('https://www.youtube.com/watch?v=CsQNF9s78Nc', 'Video', 2);
+('http://example.com/resource1', 'PDF', 1),
+('http://example.com/resource2', 'Notebook', 2);
 
 INSERT INTO Equipes (Nom, ID_Projet, ID_Capitaine)
 VALUES
-('Equipe1', 1, 3),
-('Equipe2', 2, 3);
+('Equipe1', 1, 3);
 
 INSERT INTO MembresEquipe (ID_Equipe, ID_Utilisateur)
 VALUES
-(1, 3),
-(2, 3);
+(1, 3);
 
 INSERT INTO Messages (Contenu, DateEnvoi, ID_Emetteur, ID_Equipe)
 VALUES
@@ -48,15 +46,12 @@ VALUES
 
 INSERT INTO Reponses (Contenu, Note, ID_Question, ID_Equipe)
 VALUES
-('42', 10, 1, 1),
-('La vie est ce que vous en faites', 8, 2, 2);
+('42', 10, 1, 1);
 
 INSERT INTO AnalysesCode (NombreLignes, NombreFonctions, LignesMinFonction, LignesMaxFonction, LignesMoyennesFonction, ID_Equipe)
 VALUES
-(100, 10, 5, 20, 10.0, 1),
-(200, 20, 5, 25, 15.0, 2);
+(100, 10, 5, 20, 10.0, 1);
 
 INSERT INTO OccurrencesTermes (ID_AnalyseCode, Terme, NombreOccurrences)
 VALUES
-(1, 'function', 10),
-(2, 'variable', 20);
+(1, 'function', 10);
