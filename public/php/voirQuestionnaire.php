@@ -43,7 +43,7 @@
 							<fieldset>
 								<legend>Sélectionnez une note</legend>
 								<?php for ($j = 0; $j <= 4; $j++) { ?>
-									<input type="radio" id="note-<?php echo $i; ?>-<?php echo $j; ?>" name="note-<?php echo $i; ?>" value="<?php echo $j; ?>" required>
+									<input type="radio" id="note-<?php echo $i; ?>-<?php echo $j; ?>" name="note-<?php echo $i; ?>" value="<?php echo $j; ?>" >
 									<label for="note-<?php echo $i; ?>-<?php echo $j; ?>"><?php echo $j; ?></label> 
 								<?php } ?>
 							</fieldset>
@@ -57,14 +57,16 @@
 			</form>
 			<?php
 				if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+					var_dump($_POST);
 					$i = 1;
 					foreach ($questions_Id as $id_Question) {
 						foreach ($tableau_reponse as $reponse) {
 							if (isset($_POST['note-' . $i])) {
 								$note = (int)$_POST['note-' . $i];
-								$idEquipe = $_SESSION['idEquipes'][$i];
-								$idQuestion = $_SESSION['idQuestions'][$i];
-								$controller->updateScore($idEquipe, $idQuestion, $note);
+								$idEquipe = $_SESSION['idEquipes'][$i - 1];
+								$idQuestion = $_SESSION['idQuestions'][$i - 1];
+								$success=$controller->updateScore($idEquipe, $idQuestion, $note);
+								$_SESSION['LE_SUCCES']=$success;
 							}
 						}
 						$i += 1;

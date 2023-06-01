@@ -31,7 +31,7 @@
 			<p id="Title"> <strong>Nouveau questionnaire</strong> </p>
 			
 			<form id="QuestionnaireFormulaire" name="questionnaireFormulaire" onsubmit="return verifDateUlterieure()" method="POST" action="">
-			<!--<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script> --> ;
+			<!--<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script> --> 
 				
 				<label id="DateDebut"> Date de début :
 					<input class="Verify" id="DateDebutZone" type="date" name="dateDebut" placeholder="Entrez la date de début" required>
