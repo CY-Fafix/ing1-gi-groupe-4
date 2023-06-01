@@ -69,26 +69,24 @@ Pour lancer le web service REST :
 1. Se déplacer dans `src/java/src/`
 
 2. Si les 3 `.class` ne sont pas créés, exécuter les commandes suivantes :
-
 ```
-$ javac Fonctions.java
-$ javac -cp .:../../jar/* Serveur.java
+javac Fonctions.java
+javac -cp .:../../jar/* Serveur.java
 ```
-
 3. Lancez ensuite le serveur :
+```
+java -cp .:../../jar/* Serveur
 
 ```
-$ java -cp .:../../jar/* Serveur
+4. À partir de là, un fichier Java s'exécute en arrière-plan pour faire tourner le web service REST.
 
+5. Pour terminer le web service REST, ouvrez un autre terminal et exécutez la commandes suivante :
 ```
-
-4. À partir de là, un fichier Java s'exécute en arrière-plan pour faire tourner le web service REST. Vous pouvez essayer d'aller sur `selectFichier.php`, choisir un fichier Python (j'en ai mis un exemple ici) et vérifier si tout fonctionne correctement. Pour afficher les graphiques, vous devez être connecté à Internet, car cela utilise une API d'un site externe.
-
-5. Pour terminer le web service REST, ouvrez un autre terminal et exécutez les commandes suivantes :
+ps -fC java
 ```
-$ ps -fC java
-Trouvez le PID souhaité
-$ kill -9 PID
+6. Trouvez le PID souhaité
+```
+kill -9 PID
 ```
 
 ## Lancement du site web
