@@ -27,7 +27,7 @@
 			<script type="text/javascript" src="../js/verificationDateUlterieure.js" defer> </script>
 				
 				<label id="TitreQuestionnaire"> Nombre de questions :
-					<input class="Verify" id="TitreZone" type="text" name="nbQuestions" placeholder="Entrez le nombre de questions" required>
+					<input class="Verify" id="TitreZone" type="text" name="nbQuestions" placeholder="Entrez le nombre de questions" pattern="[0-9]{1,}" required>
 				</label>
 				
 				<br>
