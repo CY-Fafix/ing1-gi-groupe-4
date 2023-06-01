@@ -43,7 +43,7 @@
         $valid = true;
 
         if (isset($_POST['modification'])) {
-            echo("set");
+            
             $nom = htmlentities(trim($nom));
             $prenom = htmlentities(trim($prenom));
             $email = htmlentities(strtolower(trim($email)));
