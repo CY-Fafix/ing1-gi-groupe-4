@@ -93,62 +93,66 @@ if (isset($_GET['edit'])) {
     <header class="custom-header">
         <?php include('./header.php'); ?>
     </header>
-    <h1>Liste des Projets</h1>
+    <div class="card">
+        <h1>Liste des Projets</h1>
 
-    <table>
-    <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Image</th>
-        <th>Data Challenge</th>
-        <th>Actions</th>
-    </tr>
-    <?php foreach ($projets as $projet) : ?>
-        <tr>
-            <td><?= $projet->getId() ?></td>
-            <td>
-                <form method="POST" action="projets.php?edit=<?= $projet->getId() ?>">
-                    <input type="text" name="nom" value="<?= $projet->getNom() ?>">
-            </td>
-            <td><textarea name="description"><?= $projet->getDescription() ?></textarea></td>
-            <td><input type="text" name="image_url" value="<?= $projet->getImage() ?>"></td>
-            <td>
-    <?php
-        $dataChallengeId = $dataChallengeController->getDataChallengeIdForProject($projet->getId());
-        $dataChallenge = $dataChallengeController->getDataChallengeById($dataChallengeId);
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Data Challenge</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($projets as $projet) : ?>
+                <tr>
+                    <td><?= $projet->getId() ?></td>
+                    <td>
+                        <form method="POST" action="projets.php?edit=<?= $projet->getId() ?>">
+                            <input type="text" name="nom" value="<?= $projet->getNom() ?>">
+                    </td>
+                    <td><textarea name="description"><?= $projet->getDescription() ?></textarea></td>
+                    <td><input type="text" name="image_url" value="<?= $projet->getImage() ?>"></td>
+                    <td>
+                        <?php
+                            $dataChallengeId = $dataChallengeController->getDataChallengeIdForProject($projet->getId());
+                            $dataChallenge = $dataChallengeController->getDataChallengeById($dataChallengeId);
 
-        if ($dataChallenge) {
-            echo $dataChallenge->getLibelle();
-        } else {
-            echo "Pas de défi associé";
-        }
-    ?>
-</td>
-            <td>
-                    <button type="submit" name="edit_project">Modifier</button>
-                </form>
-                <button onclick="window.location.href = 'projets.php?delete=<?= $projet->getId() ?>'">Supprimer</button>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-    </table>
-    <h2>Ajouter un Projet</h2>
-<form method="POST" action="projets.php">
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" required><br>
-    <label for="description">Description :</label>
-    <textarea id="description" name="description" required></textarea><br>
-    <label for="image_url">Image URL :</label>
-    <input type="text" id="image_url" name="image_url" required><br>
-    <label for="data_challenge_id">Data Challenge :</label>
-    <select id="data_challenge_id" name="data_challenge_id" required>
-        <?php foreach ($dataChallenges as $dataChallenge) : ?>
-            <option value="<?= $dataChallenge->getId() ?>"><?= $dataChallenge->getLibelle() ?></option>
-        <?php endforeach; ?>
-    </select><br>
-    <button type="submit">Ajouter</button>
-</form>
+                            if ($dataChallenge) {
+                                echo $dataChallenge->getLibelle();
+                            } else {
+                                echo "Pas de défi associé";
+                            }
+                        ?>
+                    </td>
+                    <td>
+                            <button type="submit" name="edit_project">Modifier</button>
+                        </form>
+                        <button id="sup" onclick="window.location.href = 'projets.php?delete=<?= $projet->getId() ?>'">Supprimer</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <div class="card">
+        <h2>Ajouter un Projet</h2>
+        <form method="POST" action="projets.php">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required><br>
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required></textarea><br>
+            <label for="image_url">Image URL :</label>
+            <input type="text" id="image_url" name="image_url" required><br>
+            <label for="data_challenge_id">Data Challenge :</label>
+            <select id="data_challenge_id" name="data_challenge_id" required>
+                <?php foreach ($dataChallenges as $dataChallenge) : ?>
+                    <option value="<?= $dataChallenge->getId() ?>"><?= $dataChallenge->getLibelle() ?></option>
+                <?php endforeach; ?>
+            </select><br>
+            <button type="submit" style="margin-top:20px">Ajouter</button>
+        </form>
+    </div>
     </main>
 </body>
 </html>

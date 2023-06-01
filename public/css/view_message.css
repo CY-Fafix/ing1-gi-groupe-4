@@ -1,5 +1,16 @@
 body {
+<<<<<<< HEAD
     font-family: 'Open Sans', sans-serif;
+=======
+    
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+body {
+    
+>>>>>>> 15a6623fad9bf1f07769b95b3a52b0ca3d7f3e7f
     font-size: 16px;
     line-height: 1.5;
     color: #333;

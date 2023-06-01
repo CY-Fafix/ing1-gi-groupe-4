@@ -1,6 +1,6 @@
 /* CSS du projet */
 body {
-    font-family: 'Open Sans', sans-serif;
+    
     font-size: 16px;
     line-height: 1.5;
     color: #333;
@@ -9,6 +9,8 @@ body {
     padding: 0;
     overflow-x: hidden;
     margin-bottom: 30px; /* Remplacez la valeur "30px" par l'écart souhaité */
+    background-image: URL("https://png.pngtree.com/background/20210715/original/pngtree-abstract-white-geometric-volume-hexagonal-decorative-background-in-minimalist-style-picture-image_1329186.jpg");
+    background-size: cover;
 }
 
 h1 {
@@ -68,10 +70,20 @@ select {
     border-radius: 4px;
     box-sizing: border-box;
 }
-
-button[type="submit"] {
+#sup{
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #11a086;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px; 
+
+}
+button[type="submit"] {
+    width:103.033px;
+    padding: 10px 20px;
+    background-color: #11a086;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -115,4 +127,17 @@ a:hover {
 
 main {
     margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    width:85%;
+    place-self: center;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 30px;
+    padding: 30px;
+    border-radius: 30px;
+    place-content: center;
 }
