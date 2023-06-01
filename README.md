@@ -119,13 +119,13 @@ Pour lancer le web service REST :
 
 C'est tout ! Vous pouvez maintenant naviguer sur le site web en utilisant les liens et les boutons fournis sur la page.
 Vous avez 3 comptes à disposition :
-Un compte Admin :
+### Un compte Admin :
 - mail : admin@gmail.com
 - mdp : 1234
-Un compte Gestionnaire :
+### Un compte Gestionnaire :
 - mail : projeting1pafa@gmail.com 
 - mdp : 1234
-Un compte Étudiant :
+### Un compte Étudiant :
 - mail : adri.jacob22@gmail.com
 - mdp : 1234
 
