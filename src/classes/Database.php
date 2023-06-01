@@ -3,28 +3,23 @@ class Database {
     private $host = "localhost";
     private $db_name = "datachallenge_db";
     
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    private $username = "cyfafix";
-    private $password = "Xx&Yd9@7deEhee";
-=======
-<<<<<<< HEAD
->>>>>>> 565606c9bd2ca9768dc42de7f3a12b5b5e71bae0
-    private $username = "Pacpac";
-    private $password = "Pacome.bdd.6423";
+    
     /*
     private $username = "cyfafix";
     private $password = "Xx&Yd9@7deEhee";
     */
-<<<<<<< HEAD
-=======
-=======
+    
+    /*
+    private $username = "Pacpac";
+    private $password = "Pacome.bdd.6423";
+    */
+    
+    /*
     private $username = "adrien";
     private $password = "adjariP2732!";
->>>>>>> 96af0ae00e4b73e09b977717c191df97c166da41
->>>>>>> 565606c9bd2ca9768dc42de7f3a12b5b5e71bae0
+    */
     
+        
     private $conn;
 
     public function connect() {
