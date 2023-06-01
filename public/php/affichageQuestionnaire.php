@@ -96,7 +96,6 @@
 						foreach($tabQuestions as $contenuQuestion) {
 							$idQuestion  = $etudiantController->getQuestionId($contenuQuestion);
 							$contenu = $_POST["question$j"];
-							var_dump($contenu);
 							$reponse = new Reponse(16,$idQuestion,$id_etudiant,$contenu,$note);
 							array_push($reponses,$reponse);
 							$j +=1 ;
@@ -105,6 +104,7 @@
 						$id_Gestionnaire =$etudiantController->getGestionnaireIdByQuestionnaireId($id_Questionnaire);
 						$success = $etudiantController->answerQuestionnaire($teamID,$dateDebut,$dateFin,$reponses);
 						$_SESSION['successp']=$success;
+						echo header('Location: ../index.php');
 					}
 				?>
 			</form>
@@ -114,6 +114,7 @@
 </html>
 
 
-<?php include('./footer.php'); ?>
+<?php include('./footer.php');
+ob_end_flush(); ?>
 
 
