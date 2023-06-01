@@ -149,7 +149,7 @@ class GestionnaireController extends UserController{
     public function viewResponses($ID_Question) {
         try {
             // Récupération des réponses dans un tableau en sortie
-            $sql = "SELECT Contenu FROM " . $this->table_reponse . " WHERE ID_Question = ?";
+            $sql = "SELECT * FROM " . $this->table_reponse . " WHERE ID_Question = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
@@ -251,6 +251,49 @@ class GestionnaireController extends UserController{
         }
     }
     
+    public function getQuestionIdByIdGest($id_gestionnaire){
+        try{
+            $sql = "SELECT ID FROM Questions WHERE ID_Questionnaire IN ( SELECT ID FROM Questionnaires WHERE ID_Gestionnaire = ?)";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $id_gestionnaire);
+            if ($stmt->execute()) {
+                $res = $stmt->get_result();
+                $tableau = array();
+                while ($row = $res->fetch_assoc()) {
+                    $tableau[] = $row;
+                }
+                return $tableau;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    public function getQuestionContenuById($id_Question){
+        try{
+            $res=NULL;
+            $_SESSION['id_ma']=$id_Question;
+            $sql = "SELECT Contenu FROM Questions WHERE ID = ?";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $id_Question);
+            if ($stmt->execute()) {
+                $stmt->bind_result($res);
+                $stmt->fetch();
+                return $res;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
     
 }
 
