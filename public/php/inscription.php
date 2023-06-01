@@ -27,8 +27,12 @@
     } catch (Exception $e) {
         $error_register = "Une erreur est survenue : " . $e->getMessage();
     }
-    ?>
-    <?php include('./header.php'); ?>
+    include('./header.php');
+    if (isset($_SESSION['role'])) {
+        header('Location: /public/index.php');
+        exit();
+    }
+?>
 
 
     <html lang="fr">
