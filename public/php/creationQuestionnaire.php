@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	include('header.php');
-	 session_start();
+	session_start();
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
@@ -98,8 +98,9 @@
 </html>
 
 
-<?php include('./footer.php'); 
-ob_end_flush();
+<?php
+	include('./footer.php'); 
+	ob_end_flush();
 ?>
 
 
