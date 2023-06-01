@@ -10,9 +10,14 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'Admin' && $_SESSION['ro
 //Connexion à la BDD
 $db = new Database();
 $db->connect();
+$user_id = $_SESSION['user_id'];
+if ($_SESSION['role'] == 'Admin'){
+    $sql1 = "SELECT Messages.ID as MessageID, Contenu, DateEnvoi, Nom FROM Messages INNER JOIN Equipes ON Messages.ID_Equipe = Equipes.ID";
+    $result1 = $db->query($sql1);
+    $messages = $result1->fetch_all(MYSQLI_ASSOC);
+}
 
 // On récupère les messages de l'utilisateur
-$user_id = $_SESSION['user_id'];
 $sql = "SELECT Messages.ID as MessageID, Contenu, DateEnvoi, Nom FROM Messages INNER JOIN Equipes ON Messages.ID_Equipe = Equipes.ID WHERE ID_Emetteur = $user_id";
 $result = $db->query($sql);
 $messages = $result->fetch_all(MYSQLI_ASSOC);
