@@ -37,7 +37,29 @@ Pour configurer la base de données MySQL, suivez ces étapes :
     ```
 
 ## Mise en place du serveur mail
-1. 
+1. Tout d'abord, ouvrez le terminal et tapez la commande : sudo apt autoremove sendmail, puis installez postfix via la commande: sudo apt install postfix.
+2. Si vous avez une interface configuration qui s'affiche laissez tout par défaut sauf postfix Configuration que vous mettrez sur "Site Internet".
+3. Tapez: sudo nano /etc/postfix/sasl_passwd puis validez.
+Dans la nouvelle interface tapez: [smtp.gmail.com]:587 adresse.mail@gmail.com:motdepassed'application (adresse gmail du gestionnaire qui peut envoyer des mails depuis le site et le mot de passe d'application du compte google lié à l'adresse gmail) puis enregistrez le fichier.
+4. Tapez: sudo nano /etc/postfixe/main.cf puis descendez dans le fichier qui apparaît jusqu'à voir "relayhost ="
+tapez derriere ce égal: [smtp.gmail.com]:587
+6. Descendez tout en bas puis tapez les commandes suivantes: smtp_sasl_auth_enable = yes
+smtp_tls_security_level = encrypt
+smtp_sasl_tls_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_use_tls = yes
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+puis sauvegardez.
+7. Tapez: sudo postmap /etc/postfix/sasl_passwd
+Pour plus de sécurité, tapez: 
+	sudo chmod 0600 /etc/postfix/sasl_passwd
+	sudo chmod 0600 /etc/postfix/sasl_passwd.db
+8. Cherchez votre fichier php.ini puis ouvrez le (il se trouvait sur ma machine dans /etc/php/7.2/apache2/php.ini).
+Recherchez "smtp" dans ce fichier
+Tapez devant "sendmail_path =" "/usr/sbin/sendmail -t -i" (tapez également les deux guillemets)
+9. Relancez le service postfixe: sudo service postfix restart
+puis lancez apache : sudo service apache2 start
+10. C'est bon! L'envoi de mail via le serveur de gmail est maintenant configuré sur votre machine!
 
 
 ## Mise en place de l'analyse de code
