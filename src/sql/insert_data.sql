@@ -2,9 +2,9 @@ USE datachallenge_db;
 
 INSERT INTO Utilisateurs (Nom, Prenom, Entreprise, Telephone, Email, DateDebut, DateFin, MotDePasse, Role, Niveau, Ecole, Ville)
 VALUES
-('Doe', 'John', 'Company1', '0123456789', 'john.doe@example.com', '2023-01-01', '2023-12-31', 'password1', 'Admin', NULL, NULL, NULL),
-('Smith', 'Jane', 'Company2', '0234567891', 'projeting1pafa@gmail.com', '2023-01-01', '2023-12-31', 'password2', 'Gestionnaire', NULL, NULL, NULL),
-('Brown', 'James', NULL, '0345678912', 'james.brown@example.com', '2023-01-01', '2023-12-31', 'password3', 'Etudiant', 'M2', 'Ecole1', 'Ville1');
+('Potter', 'Harry', 'Cy entreprise', '0123456789', 'admin@gmail.com', '2023-01-01', '2023-12-31', '1234', 'Admin', NULL, NULL, NULL),
+('Bombal', 'David', 'Helioparc Entreprise', '0234567891', 'gestionnaire@gmail.com', '2023-01-01', '2023-12-31', '1234', 'Gestionnaire', NULL, NULL, NULL),
+('Brown', 'Helian', NULL, '0345678912', 'etudiant@gmail.com', '2023-01-01', '2023-12-31', '1234', 'Etudiant', 'M2', 'Ecole1', 'Ville1');
 
 INSERT INTO DataChallenges (Libelle, DateDebut, DateFin, ID_Admin)
 VALUES
@@ -13,13 +13,13 @@ VALUES
 
 INSERT INTO Projets (Libelle, Description, ImageURL, ID_DataChallenge)
 VALUES
-('Projet1', 'Description du Projet1', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
-('Projet2', 'Description du Projet2', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
+('Projet1', 'Un projet pour pour aider les services de renseignement français à detecter un profil type de telecommunication pour anticiper des attentats terroristes', 'https://www.dgse.gouv.fr/sites/default/files/img/Logo_light_blue.png', 1),
+('Projet2', 'Un projet pour aider la NASA à developper son IA, vous pourriez peut etre un jour avoir votre IA dans lespace', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', 2);
 
 INSERT INTO Ressources (URL, Type, ID_Projet)
 VALUES
-('http://example.com/resource1', 'PDF', 1),
-('http://example.com/resource2', 'Notebook', 2);
+('https://www.emse.fr/~picard/cours/ai/chapter01.pdf', 'PDF', 1),
+('https://www.youtube.com/watch?v=CsQNF9s78Nc', 'Notebook', 2);
 
 INSERT INTO Equipes (Nom, ID_Projet, ID_Capitaine)
 VALUES
@@ -41,12 +41,12 @@ VALUES
 
 INSERT INTO Questions (Contenu, ID_Questionnaire)
 VALUES
-('Quelle est la réponse à la vie, l\'univers et tout ?', 1),
-('Quel est le sens de la vie ?', 2);
+('Donnez le modele IA utilisé pour votre projet, justifier de votre choix', 1),
+('Pensez vous qu il soit necessaire de nettoyer les donnes avant la phase d apprentissage ?', 2);
 
 INSERT INTO Reponses (Contenu, Note, ID_Question, ID_Equipe)
 VALUES
-('42', 10, 1, 1);
+('On utilise une IA de type reseau neuronal profond', 10, 1, 1);
 
 INSERT INTO AnalysesCode (NombreLignes, NombreFonctions, LignesMinFonction, LignesMaxFonction, LignesMoyennesFonction, ID_Equipe)
 VALUES

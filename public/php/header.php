@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php if (!isset($_SESSION['role'])): ?>
             	<!-- Rediriger vers l'accueil une fois connecte -->
-                <li><a href="/public/index.php" class="split">Accueil</a></li>
+                <li><a href="/public/php/inscription.php" class="split">Inscription</a></li>
                 <li>
                     <!-- Button to open the modal login form -->
                     <button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Modal Content -->
 	<form class="modal-content animate" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <div class="imgcontainer">
-        <img src="/public/assets/truc.jpg" alt="Avatar" class="avatar">
+    <img src="https://img.freepik.com/vecteurs-libre/homme-affaires-caractere-avatar-isole_24877-60111.jpg?w=360" class="Avatar" alt="bonbon miel">
     </div>
     <div class="container">
         <label for="uname" class="label"><b>E-mail</b></label>
