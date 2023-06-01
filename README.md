@@ -37,7 +37,14 @@ Pour configurer la base de données MySQL, suivez ces étapes :
     ```
 
 ## Mise en place du serveur mail
-1. Tout d'abord, ouvrez le terminal et tapez la commande : sudo apt autoremove sendmail, puis installez postfix via la commande: sudo apt install postfix.
+1. Tout d'abord, ouvrez le terminal et tapez la commande : 
+    ```
+    sudo apt autoremove sendmail
+    ```
+ puis installez postfix via la commande: 
+    ```
+    sudo apt install postfix.
+    ```
 2. Si vous avez une interface configuration qui s'affiche laissez tout par défaut sauf postfix Configuration que vous mettrez sur "Site Internet".
 3. Tapez: sudo nano /etc/postfix/sasl_passwd puis validez.
 Dans la nouvelle interface tapez: [smtp.gmail.com]:587 adresse.mail@gmail.com:motdepassed'application (adresse gmail du gestionnaire qui peut envoyer des mails depuis le site et le mot de passe d'application du compte google lié à l'adresse gmail) puis enregistrez le fichier.
