@@ -15,14 +15,16 @@ if ($_SESSION['role'] == 'Admin'){
     $sql1 = "SELECT Messages.ID as MessageID, Contenu, DateEnvoi, Nom FROM Messages INNER JOIN Equipes ON Messages.ID_Equipe = Equipes.ID";
     $result1 = $db->query($sql1);
     $messages = $result1->fetch_all(MYSQLI_ASSOC);
+    $db->close();
+}else {
+
+    // On récupère les messages de l'utilisateur
+    $sql = "SELECT Messages.ID as MessageID, Contenu, DateEnvoi, Nom FROM Messages INNER JOIN Equipes ON Messages.ID_Equipe = Equipes.ID WHERE ID_Emetteur = $user_id";
+    $result = $db->query($sql);
+    $messages = $result->fetch_all(MYSQLI_ASSOC);
+
+    $db->close();
 }
-
-// On récupère les messages de l'utilisateur
-$sql = "SELECT Messages.ID as MessageID, Contenu, DateEnvoi, Nom FROM Messages INNER JOIN Equipes ON Messages.ID_Equipe = Equipes.ID WHERE ID_Emetteur = $user_id";
-$result = $db->query($sql);
-$messages = $result->fetch_all(MYSQLI_ASSOC);
-
-$db->close();
 ?>
 <!DOCTYPE html>
 <html>
