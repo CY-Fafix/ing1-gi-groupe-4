@@ -3,8 +3,8 @@ class Database {
     private $host = "localhost";
     private $db_name = "datachallenge_db";
 
-    private $username = "guillaume.bergadieu";
-    private $password = "motdepasse";
+    private $username = "Anae";
+    private $password = "Mdp2@n@e";
     
     
 

@@ -59,7 +59,7 @@
         <body>
             <div class="Main">
                 
-                <p id="Title"> <strong>N'hésitez plus, rejoignez-nous !</strong> </p>
+                <p id="Title" style="color:white"> <strong>N'hésitez plus, rejoignez-nous !</strong> </p>
                 
                 <form id="InscriptionFormulaire" name="inscriptionFormulaire" method="POST" action="">
                     
