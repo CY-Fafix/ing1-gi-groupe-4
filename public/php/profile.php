@@ -50,8 +50,8 @@
 </head>
 
 <body>
-
     <img src="https://img.freepik.com/vecteurs-libre/homme-affaires-caractere-avatar-isole_24877-60111.jpg?w=360" class="Avatar" alt="bonbon miel">
+
 
     <div class="card_profil">
 

@@ -62,7 +62,8 @@
 	font-size: large;
 	display:block;
 	border:none;
-	background-color: aliceblue;
+	background-color:#c9fdff;
+	margin-top: 20px;
 }
 
 
@@ -74,7 +75,8 @@
 	font-size: large;
 	display:block;
 	border:none;
-	background-color: aliceblue;
+	background-color: #c9fdff;
+	margin-top: 20px;
 }
 
 
@@ -89,8 +91,6 @@ body{
 
 .Main {
 	width : 60%;
-	
-	padding : 30px;
 	float : right;
 	background-color : #ffffff;
 	color : #000000;
@@ -98,11 +98,14 @@ body{
 	border-radius: 30px;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	place-self: center;
+	margin-top: 10%;
+	margin-bottom:15%;
 }
 
 
 #QuestionnaireFormulaire{
 	color:black;
+	display:grid;
 
 }
 

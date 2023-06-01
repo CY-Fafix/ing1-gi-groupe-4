@@ -14,7 +14,7 @@ border: 1px solid black;*/
 body{
   
   font-family: 'Aboreto';font-size: 22px;
-  
+  overflow-x: hidden;
   width: 100%;
   margin: 70px auto;
   background-color: #ffffff;
@@ -417,7 +417,7 @@ li a:hover {
   footer{
     width:100%;
     background-color: #147cb4;
-    height: 400px;
+    height: 260px;
     place-items: center;
     display:flex;
     place-content: center;

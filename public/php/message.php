@@ -1,7 +1,7 @@
 <?php include('./header.php'); ?>
 
 
-<html lang="fr">
+<html lang="fr" style="background-color:#147cb4;">
 	
 	<head>
 		<meta charset="UTF-8">

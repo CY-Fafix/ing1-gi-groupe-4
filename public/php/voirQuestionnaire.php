@@ -1,6 +1,6 @@
 <?php
 	include('header.php');
-	 session_start();
+	 
 	
 	require_once '../../src/classes/Database.php';
 	require_once '../../src/classes/Utilisateur.php';
