@@ -6,7 +6,7 @@ erreur.style.visibility = "hidden";
 
 
 function verifDateUlterieure() {
-	const dateUlterieure = document.getElementsByClassName("DateUlterieureVerif")[0];
+	const dateUlterieure = document.getElementsByClassName("Verify")[0];
 	const dateEtudiee = new Date(dateUlterieure.value);
 	const dateDuJour = new Date().getTime();
 	

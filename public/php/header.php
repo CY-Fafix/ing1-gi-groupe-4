@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <li><a href="/public/index.php" >Accueil</a></li>
 
             <?php if (!isset($_SESSION['role'])): ?>
-                <li><a href="/public/php/inscription.php" class="split">Inscription</a></li>
+            	<!-- Rediriger vers l'accueil une fois connecte -->
+                <li><a href="/public/index.php" class="split">Accueil</a></li>
                 <li>
                     <!-- Button to open the modal login form -->
                     <button onclick="document.getElementById('id01').style.display='block'" id="loginbtn" class="split">Connexion</button>
