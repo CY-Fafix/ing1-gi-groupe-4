@@ -1,4 +1,10 @@
-<?php include('./header.php'); ?>
+<?php include('./header.php'); 
+	require_once '../../src/classes/Database.php';
+	require_once '../../src/classes/Utilisateur.php';
+	require_once '../../src/classes/Gestionnaire.php';
+	require_once '../../src/classes/Questionnaire.php';
+	require_once '../../src/controllers/gestionnaire_controller.php';
+session_start();?>
 
 
 <html lang="fr" style="background-color:#147cb4;">
@@ -18,12 +24,12 @@
 	<body>
 		<div class="Main">
 			<div id="Message_contact">
-				<p id="message1"> TOUJOURS A VOTRE ECOUTE </p>
-				<p id="message2">Contactez-nous!</p>
+				<p id="message1"> (au format mail1;mail2 si plusieurs étudiants) </p>
+				<p id="message2"> Si vous voulez contacter les étudiants!</p>
 			</div>
 			<div class="contact_fiche">
 			
-				<p id="Title"> <strong>Envoi de message</strong> </p>
+				<p id="Title"> <strong>Envoi du message</strong> </p>
 				<div id="carte">
 			
 					<form id="ContactFormulaire" class="element" name="contactFormulaire" onsubmit="return verifDateFuture()" method="POST" action="">
@@ -41,7 +47,7 @@
 						-->
 						
 						<label class="Email" id="Email" class="element" > E-mail :
-							<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez votre mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9_-]+.[a-zA-Z]{2,}" required>
+							<input class="Verify" id="EmailZone" type="mail" name="email" placeholder="Entrez le(s) mail(s)"  required>
 							<br>
 							<span class="Erreur" id="FormatMail1" aria-live="polite"> <em>Une adresse au format ___@___.__ est attendue</em> </span>
 						</label>
@@ -76,14 +82,14 @@
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$email = $_POST["email"];
+    $id_gestionnaire = $_SESSION['user_id'];
+	$emails = $_POST["email"];
 	$objet = $_POST["SujetZone"];
 	$contenu = $_POST["ContenuZone"];
-	$_SESSION['contenu']=$contenu;
-	$_SESSION['emailpls']=$email;
+    $date = date('Y-m-d');
 	
-	$controller = new userController();
-	$controller->contact($email,$objet,$contenu);
+	$controller = new gestionnaireController();
+	$controller->sendMessages($emails, $objet, $contenu, $id_gestionnaire, $date);
 
 }
  include('./footer.php'); ?>

@@ -33,28 +33,28 @@ public class Serveur {
             server.setExecutor(threadPoolExecutor);
             server.start();
             LOGGER.info(" Server started on port " + PORT);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
 
     private static class MyHttpHandler implements HttpHandler {
-        /**
-         * Manage GET request param
+    	/**
+         * Reçoit la requête, on regarde son type (POST dans notre cas), appelle handlePostRequest puis handleResponse
          * @param httpExchange
-         * @return first value
          */
-        private String handleGetRequest(HttpExchange httpExchange) {
-            return httpExchange.getRequestURI()
-                    .toString()
-                    .split("\\?")[1]
-                    .split("=")[1];
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            LOGGER.info(" Je réponds");
+            String requestParamValue=null;
+            if("POST".equals(httpExchange.getRequestMethod())) {
+                requestParamValue = handlePostRequest(httpExchange);
+            }
+            handleResponse(httpExchange,requestParamValue);
         }
-        
+    	
         /**
-         * Manage POST request param
+         * Gère les paramètres de la requete POST, récupère les arguments à l'aide de getRequestPayload et les traduit grâce à readFileToString
          * @param httpExchange
          * @return le json avec toutes les informations
          */
@@ -104,6 +104,11 @@ public class Serveur {
             return json;
         }
         
+        /**
+         * Récupère les arguments de la méthode POST
+         * @param inputStream
+         * @return les arguments au format String
+         */
         private String getRequestPayload(InputStream inputStream) throws IOException {
             StringBuilder stringBuilder = new StringBuilder();
             int byteRead;
@@ -114,39 +119,10 @@ public class Serveur {
         }
         
         /**
-         * Generate simple response html page
-         * @param httpExchange
-         * @param requestParamVaue
+         * Transforme le fichier Python en String
+         * @param filePath
+         * @return le fichier python au format String
          */
-        private void handleResponse(HttpExchange httpExchange, String requestParamValue)  throws  IOException {
-            OutputStream outputStream = httpExchange.getResponseBody();
-            StringBuilder htmlBuilder = new StringBuilder();
-            htmlBuilder.append("<?php $valeurs = json_decode('" + requestParamValue + "', true); ?>"); //true permet d'avoir un objet de type array
-            // encode HTML content
-            String htmlResponse = htmlBuilder.toString();
-            System.out.println(htmlResponse);
-            // this line is a must
-            httpExchange.sendResponseHeaders(200, htmlResponse.length());
-            outputStream.write(htmlResponse.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        }
-
-        // Interface method to be implemented
-        @Override
-        public void handle(HttpExchange httpExchange) throws IOException {
-            LOGGER.info(" Je réponds");
-            String requestParamValue=null;
-            if("GET".equals(httpExchange.getRequestMethod())) {
-                requestParamValue = handleGetRequest(httpExchange);
-            } else if("POST".equals(httpExchange.getRequestMethod())) {
-                requestParamValue = handlePostRequest(httpExchange);
-            }
-            handleResponse(httpExchange,requestParamValue);
-
-        }
-        
-        //Permet de transformer le fichier python en un String
         public static String readFileToString(String filePath) throws IOException {
             StringBuilder contentBuilder = new StringBuilder();
             
@@ -160,6 +136,22 @@ public class Serveur {
             
             return contentBuilder.toString();
         }
+        
+        /**
+         * Génère une page html à partit des informations traitées auparavant
+         * @param httpExchange
+         * @param requestParamVaue
+         */
+        private void handleResponse(HttpExchange httpExchange, String requestParamValue)  throws  IOException {
+            OutputStream outputStream = httpExchange.getResponseBody();
+            StringBuilder htmlBuilder = new StringBuilder();
+            htmlBuilder.append("<?php $valeurs = json_decode('" + requestParamValue + "', true); ?>"); //true permet d'avoir un objet de type array
+            String htmlResponse = htmlBuilder.toString();
+            System.out.println(htmlResponse);
+            httpExchange.sendResponseHeaders(200, htmlResponse.length());
+            outputStream.write(htmlResponse.getBytes());
+            outputStream.flush();
+            outputStream.close();
+        }
     }
-    
 }

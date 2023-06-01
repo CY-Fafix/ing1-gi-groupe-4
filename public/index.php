@@ -85,7 +85,7 @@ if ($resultChallenges->num_rows > 0) {
                     foreach ($defi->getProjets() as $projet) {
                         echo '<li>';
                         echo '<a href="php/project_details.php?id=' . $projet->getId() . '">';                        
-                        echo '<article class="card"style="background-image: url('.$projet->getImage().')">';
+                        echo '<article class="card"style="background-image: url('.$projet->getImage().');background-size:cover">';
                         echo '<div class="temporary_text">';
                         echo '</div>';
                         echo '<div class="card_content">';
