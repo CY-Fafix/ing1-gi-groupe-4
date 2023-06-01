@@ -24,7 +24,7 @@ class Database {
     private $password = "Mdp2@n@e";
     */
     
-        
+>>>>>>> ea74e56514dab00c773933033a14908c93e59c22
     private $conn;
 
     public function connect() {
