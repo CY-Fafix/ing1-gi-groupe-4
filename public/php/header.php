@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/public/php/envois_message.php">Messages</a></li> <!-- Le gestionnaire voit tous les projets -->
                 <li><a href="/public/php/choixNbQuestions.php">Créer Questionnaire</a></li> <!-- Permet de créer un questionnaire -->
                 <li><a href="/public/php/voirQuestionnaire.php">Voir Reponses</a></li><!-- Permet de voir les réponses -->
-                <li><a href="/public/php/profile_gestionnaire.php">Profile</a></li> <!-- Voir son profil/modifier infos -->
+                <li><a href="/public/php/profile_gestionnaire.php">Profil</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/view_message.php">Voir les messages</a></li> <!-- Voir son profil/modifier infos -->
                 <li><a href="/public/php/deconnexion.php">Déconnexion</a></li> 
             <?php endif; ?>
