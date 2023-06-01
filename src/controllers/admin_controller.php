@@ -406,6 +406,37 @@ class AdminController extends GestionnaireController{
             throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
         }
     }
+
+    public function getAllAdmins() {
+        $admins = array();
+    
+        $sql = "SELECT * FROM Utilisateurs WHERE Role = 'Admin'"; 
+        $result = $this->conn->query($sql);
+    
+        if ($result === false) {
+            // Il y a eu une erreur lors de l'exécution de la requête
+            throw new Exception("Erreur lors de l'exécution de la requête SQL: " . $this->conn->error);
+        }
+    
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $admins[] = new Utilisateur(
+                    $row["ID"], 
+                    $row["Nom"], 
+                    $row["Prenom"], 
+                    $row["Email"], 
+                    $row["Telephone"],
+                    $row["Ville"],
+                    $row["Role"]
+
+                );
+            }
+        }
+    
+        return $admins;
+    }
+    
+    
     
     
 }

@@ -66,7 +66,7 @@
 				?>
 				
 				
-				<input type="submit" id="Ok" name="ok" value="OK" />
+				<input type="submit" id="Ok" name="ok" value="OK" onclick="window.location.href='./choixNbQuestions.php'"/ >
 				<input type="reset" id="Reset" name="reset" value="Annuler" />
 				
 				
