@@ -56,15 +56,17 @@ class GestionnaireController extends UserController{
     public function createQuestionnaire(Questionnaire $questionnaire, $id_Gest){
         try {
             // Ajout des informations liées au questionnaire en base de données (dates, id)
-            $sql = "INSERT INTO " . $this->table_questionnaire . " (DateDebut, DateFin, ID_Gestionnaire) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO " . $this->table_questionnaire . " (DateDebut, DateFin, ID_Gestionnaire,ID_Projet) VALUES (?, ?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
             }
             $dateDebut = $questionnaire->getDateDebut();
             $dateFin = $questionnaire->getDateFin();
+            $ID_Projet= $questionnaire->getIdProjet();
+            $_SESSION['id_projet']=$ID_Projet;
             $ID_Gestionnaire = $id_Gest;
-            $stmt->bind_param("ssi", $dateDebut, $dateFin, $ID_Gestionnaire);
+            $stmt->bind_param("ssii", $dateDebut, $dateFin, $ID_Gestionnaire,$ID_Projet);
             if ($stmt->execute()) {
                 $stmt->bind_result($result); // Stocker les résultats de la première requête
                 $sql2 = "SELECT ID FROM " . $this->table_questionnaire . " WHERE ID = (SELECT MAX(ID) FROM " . $this->table_questionnaire . " ) ";
@@ -74,11 +76,9 @@ class GestionnaireController extends UserController{
                 }
                 $stmt2->execute();
                 $stmt2->bind_result($result);
-                $_SESSION["newTest"] = $result;
                 $stmt2->fetch(); // Récupérer les résultats
                 $stmt->close();
                 $stmt2->close();
-                $_SESSION["test"] = "coucou";
                 $value = $this->createQuestion($questionnaire,$result);
                 $stmt->free_result(); // Libérer les résultats de la première requête
                 return $result;
@@ -122,7 +122,7 @@ class GestionnaireController extends UserController{
     public function deleteQuestion($ID_Questionnaire) {
         try {
             // Suppression des questions de la base de données
-            $sql = "DELETE FROM " . $this->table_questions . " WHERE ID_Questionnaire = ?";
+            $sql = "DELETE * FROM " . $this->table_questions . " WHERE ID_Questionnaire = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
@@ -146,7 +146,7 @@ class GestionnaireController extends UserController{
             }
             
             // Suppression des informations du questionnaire de la base de données
-            $sql = "DELETE FROM Questionnaires WHERE ID = ?";
+            $sql = "DELETE * FROM Questionnaires WHERE ID = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->conn->error));
@@ -331,7 +331,45 @@ class GestionnaireController extends UserController{
             echo "Error: " . $e->getMessage();
         }
     }
-    
+    public function getIdProjetByIdGest($id_Gestionnaire){
+        try{
+            $sql = "SELECT ID FROM Projets WHERE ID_Gestionnaire = ?";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $id_Gestionnaire);
+            if ($stmt->execute()) {
+                $stmt->bind_result($res);
+                $stmt->fetch();
+                return $res;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+   public function getEmailsByIdProjet($idProjet){
+    try{
+            $sql = "SELECT Email FROM Utilisateurs WHERE ID IN ( SELECT ID_Capitaine FROM Equipes WHERE ID_Projet = ?)";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->conn->error));
+            }
+            $stmt->bind_param("i", $idProjet);
+            if ($stmt->execute()) {
+                $stmt->bind_result($res);
+                $stmt->fetch();
+                return $res;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+   }
 }
 
 ?>

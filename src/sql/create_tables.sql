@@ -33,8 +33,11 @@ CREATE TABLE Projets (
     Description TEXT,
     ImageURL VARCHAR(255),
     ID_DataChallenge INT,
+    ID_Gestionnaire INT,
+    FOREIGN KEY (ID_Gestionnaire) REFERENCES Utilisateurs(ID),
     FOREIGN KEY (ID_DataChallenge) REFERENCES DataChallenges(ID)
 );
+
 
 CREATE TABLE Ressources (
     ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -76,7 +79,9 @@ CREATE TABLE Questionnaires (
     DateDebut DATE,
     DateFin DATE,
     ID_Gestionnaire INT,
-    FOREIGN KEY (ID_Gestionnaire) REFERENCES Utilisateurs(ID)
+    ID_Projet INT,
+    FOREIGN KEY (ID_Gestionnaire) REFERENCES Utilisateurs(ID),
+    FOREIGN KEY (ID_Projet) REFERENCES Projets(ID)
 );
 
 CREATE TABLE Questions (

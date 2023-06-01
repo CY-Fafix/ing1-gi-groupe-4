@@ -5,13 +5,15 @@ class Questionnaire {
     private $questions; // Un tableau d'objets Question
     private $dateDebut;
     private $dateFin;
+    private $idProjet;
 
     // Constructeur
-    public function __construct($id, $nom, $questions, $dateDebut, $dateFin) {
+    public function __construct($id, $questions, $dateDebut, $dateFin, $idProjet) {
         $this->id = $id;
         $this->questions = $questions;
         $this->dateDebut = $dateDebut;
         $this->dateFin = $dateFin;
+        $this->idProjet = $idProjet;
     }
 
     // Getters
@@ -30,6 +32,10 @@ class Questionnaire {
 
     public function getDateFin() {
         return $this->dateFin;
+    }
+
+    public function getIdProjet() {
+        return $this->idProjet;
     }
 
     // Setters
@@ -52,6 +58,10 @@ class Questionnaire {
 
     public function setDateFin($dateFin) {
         $this->dateFin = $dateFin;
+    }
+
+    public function setIdProjet($idProjet) {
+        $this->idProjet = $idProjet;
     }
 }
 

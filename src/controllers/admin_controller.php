@@ -221,9 +221,10 @@ class AdminController extends GestionnaireController{
                 $nom = $row['Libelle'];
                 $description = $row['Description'];
                 $imageURL = $row['ImageURL'];
+                $idGestionnaire = $row['ID_Gestionnaire'];
     
                 // Créer l'objet ProjetData
-                $projetData = new ProjetData($id, $nom, $description, $imageURL, null, null);
+                $projetData = new ProjetData($id, $nom, $description, $imageURL, null, null,$idGestionnaire);
     
                 // Ajouter le ProjetData à la liste
                 $projets[] = $projetData;
@@ -386,7 +387,7 @@ class AdminController extends GestionnaireController{
             }
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            return new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], [], []);
+            return new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], [], [],$row['ID_Gestionnaire']);
         } else {
             throw new Exception("Erreur lors de la préparation de la requête : " . $this->conn->error);
         }

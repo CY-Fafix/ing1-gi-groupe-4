@@ -23,7 +23,7 @@ public function getAllProjects() {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $defiData = new DefiData($row['defi_data_id'], $row['defi_data_libelle'], '', '', '', array());
-            $projetData = new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], array(), array());
+            $projetData = new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], array(), array(),$row['ID_Gestionnaire']);
             $projetData->setDefiData($defiData); // associez defiData avec projetData
             $projetData->setDefiData($defiData);
 if ($projetData->getDefiData() == null) {
@@ -38,7 +38,7 @@ if ($projetData->getDefiData() == null) {
 }
 
 public function getProjectById($projectId) {
-    $sql = "SELECT p.ID, p.Libelle, p.Description, p.ImageURL, d.ID AS defi_data_id, d.Libelle AS defi_data_libelle
+    $sql = "SELECT p.ID, p.Libelle, p.Description, p.ImageURL, d.ID, p.ID_Gestionnaire AS defi_data_id, d.Libelle AS defi_data_libelle
             FROM Projets AS p
             INNER JOIN DataChallenges AS d ON p.ID_DataChallenge = d.ID
             WHERE p.ID = ?";
@@ -56,7 +56,7 @@ public function getProjectById($projectId) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $defiData = new DefiData($row['defi_data_id'], $row['defi_data_libelle'], '', '', '', array());
-        $projetData = new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], array(), array());
+        $projetData = new ProjetData($row['ID'], $row['Libelle'], $row['Description'], $row['ImageURL'], array(), array(),$row['ID_Gestionnaire']);
         $projetData->setDefiData($defiData); // associez defiData avec projetData
         $projetData->setDefiData($defiData);
 if ($projetData->getDefiData() == null) {

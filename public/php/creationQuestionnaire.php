@@ -76,16 +76,25 @@
 					$contenu = [];
 					
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
+						$controller = new GestionnaireController();
 						$dateDebut = $_POST["dateDebut"];
 						$dateFin = $_POST["dateFin"];
 						$titre = $_POST["titre"];
 						for ($i = 1; $i <= $_SESSION["nbQuestions"]; $i ++) {
 							$contenu[$i] = $_POST["question$i"];
 						}
-						
-						$questionnaire = new Questionnaire(16, $titre, $contenu, $dateDebut, $dateFin);
-						$controller = new GestionnaireController();
-						$id_questionnaire = $controller->createQuestionnaire($questionnaire, 2);
+						$id_gestionnaire = $_SESSION['user_id'];
+						$idProjet= $controller->getIdProjetByIdGest($id_gestionnaire);
+						$questionnaire = new Questionnaire(16,$contenu, $dateDebut, $dateFin, $idProjet);
+						$emails = $controller->getEmailsByIdProjet($idProjet);
+						$objet="Questionnaire";
+						$date = date('Y-m-d');
+						$id_questionnaire = $controller->createQuestionnaire($questionnaire, $id_gestionnaire);
+						$contenu="voici le lien du Questionnaire : http://localhost:8080/public/php/affichageQuestionnaire.php?id=" . $id_questionnaire;
+						$_SESSION['tout']=$emails;
+						$controller->sendMessages($emails, $objet, $contenu, $id_gestionnaire, $date);
+
+
 						header("Location:./affichageQuestionnaire.php?id=" . $id_questionnaire);
 					}
 				?>
