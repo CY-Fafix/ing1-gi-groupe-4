@@ -37,36 +37,44 @@ Pour configurer la base de données MySQL, suivez ces étapes :
     ```
 
 ## Mise en place du serveur mail
-1. Tout d'abord, ouvrez le terminal et tapez la commande : 
-    ```
+
+1. Tout d'abord, ouvrez le terminal et tapez la commande :
+    ```bash
     sudo apt autoremove sendmail
     ```
- puis installez postfix via la commande: 
+    puis installez postfix via la commande:
+    ```bash
+    sudo apt install postfix
     ```
-    sudo apt install postfix.
+
+2. Si vous avez une interface de configuration qui s'affiche, laissez tout par défaut sauf pour "postfix Configuration" que vous mettrez sur "Site Internet".
+
+3. Tapez: `sudo nano /etc/postfix/sasl_passwd` puis validez. Dans la nouvelle interface tapez: `[smtp.gmail.com]:587 adresse.mail@gmail.com:motdepassed'application` (adresse gmail du gestionnaire qui peut envoyer des mails depuis le site et le mot de passe d'application du compte google lié à l'adresse gmail) puis enregistrez le fichier.
+
+4. Tapez: `sudo nano /etc/postfix/main.cf` puis descendez dans le fichier qui apparaît jusqu'à voir "relayhost =". Tapez derrière ce égal: `[smtp.gmail.com]:587`.
+
+5. Descendez tout en bas puis tapez les commandes suivantes:
+    ```bash
+    smtp_sasl_auth_enable = yes
+    smtp_tls_security_level = encrypt
+    smtp_sasl_tls_security_options = noanonymous
+    smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+    smtp_use_tls = yes
+    smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
     ```
-2. Si vous avez une interface configuration qui s'affiche laissez tout par défaut sauf postfix Configuration que vous mettrez sur "Site Internet".
-3. Tapez: sudo nano /etc/postfix/sasl_passwd puis validez.
-Dans la nouvelle interface tapez: [smtp.gmail.com]:587 adresse.mail@gmail.com:motdepassed'application (adresse gmail du gestionnaire qui peut envoyer des mails depuis le site et le mot de passe d'application du compte google lié à l'adresse gmail) puis enregistrez le fichier.
-4. Tapez: sudo nano /etc/postfixe/main.cf puis descendez dans le fichier qui apparaît jusqu'à voir "relayhost ="
-tapez derriere ce égal: [smtp.gmail.com]:587
-6. Descendez tout en bas puis tapez les commandes suivantes: smtp_sasl_auth_enable = yes
-smtp_tls_security_level = encrypt
-smtp_sasl_tls_security_options = noanonymous
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-smtp_use_tls = yes
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-puis sauvegardez.
-7. Tapez: sudo postmap /etc/postfix/sasl_passwd
-Pour plus de sécurité, tapez: 
-	sudo chmod 0600 /etc/postfix/sasl_passwd
-	sudo chmod 0600 /etc/postfix/sasl_passwd.db
-8. Cherchez votre fichier php.ini puis ouvrez le (il se trouvait sur ma machine dans /etc/php/7.2/apache2/php.ini).
-Recherchez "smtp" dans ce fichier
-Tapez devant "sendmail_path =" "/usr/sbin/sendmail -t -i" (tapez également les deux guillemets)
-9. Relancez le service postfixe: sudo service postfix restart
-puis lancez apache : sudo service apache2 start
-10. C'est bon! L'envoi de mail via le serveur de gmail est maintenant configuré sur votre machine!
+    puis sauvegardez.
+
+6. Tapez: `sudo postmap /etc/postfix/sasl_passwd`. Pour plus de sécurité, tapez:
+    ```bash
+    sudo chmod 0600 /etc/postfix/sasl_passwd
+    sudo chmod 0600 /etc/postfix/sasl_passwd.db
+    ```
+
+7. Cherchez votre fichier php.ini puis ouvrez-le (il se trouvait sur ma machine dans `/etc/php/7.2/apache2/php.ini`). Recherchez "smtp" dans ce fichier. Tapez devant "sendmail_path =" `"/usr/sbin/sendmail -t -i"` (tapez également les deux guillemets).
+
+8. Relancez le service postfix: `sudo service postfix restart` puis lancez apache : `sudo service apache2 start`.
+
+9. C'est bon! L'envoi de mail via le serveur de gmail est maintenant configuré sur votre machine!
 
 
 ## Mise en place de l'analyse de code
@@ -76,25 +84,26 @@ Pour lancer le web service REST :
 1. Se déplacer dans `src/java/src/`
 
 2. Si les 3 `.class` ne sont pas créés, exécuter les commandes suivantes :
-```
-javac Fonctions.java
-javac -cp .:../../jar/* Serveur.java
-```
+    ```bash
+    javac Fonctions.java
+    javac -cp .:../../jar/* Serveur.java
+    ```
 3. Lancez ensuite le serveur :
-```
-java -cp .:../../jar/* Serveur
+    ```bash
+    java -cp .:../../jar/* Serveur
+    ```
 
-```
 4. À partir de là, un fichier Java s'exécute en arrière-plan pour faire tourner le web service REST.
 
 5. Pour terminer le web service REST, ouvrez un autre terminal et exécutez la commandes suivante :
-```
-ps -fC java
-```
-6. Trouvez le PID souhaité
-```
-kill -9 PID
-```
+    ```bash
+    ps -fC java
+    ```
+6. Trouvez le PID souhaité :
+    ```bash
+    kill -9 PID
+    ```
+
 
 ## Lancement du site web
 
@@ -105,17 +114,18 @@ kill -9 PID
 `php -S localhost:8080`
 5. Maintenant, ouvrez le navigateur de votre choix.
 6. Entrez dans la barre d'adresse :
-`http://localhost:8080/index.php`
+`http://localhost:8080/public/index.php`
 7. Vous êtes maintenant sur le site internet.
 
 C'est tout ! Vous pouvez maintenant naviguer sur le site web en utilisant les liens et les boutons fournis sur la page.
-Vous avez 3 comptes à disposition : 
-Un compte Admin : 
-    mail : admin@gmail.com
-    mdp : 1234
-Un compte Gestionnaire : 
-    mail : gestionnaire@gmail.com 
-    mdp : 1234
-Un compte Etudiant :
-    mail : etudiant@gmail.com
-    mdp : 1234
+Vous avez 3 comptes à disposition :
+Un compte Admin :
+- mail : admin@gmail.com
+- mdp : 1234
+Un compte Gestionnaire :
+- mail : projeting1pafa@gmail.com 
+- mdp : 1234
+Un compte Étudiant :
+- mail : adri.jacob22@gmail.com
+- mdp : 1234
+
