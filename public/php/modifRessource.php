@@ -5,13 +5,10 @@ require_once __DIR__ . '/../../src/classes/Database.php';
 require_once __DIR__ . '/../../src/classes/Ressource.php';
 
 function getProjectIdForRessource($ressourceId) {
-    // Créer une nouvelle instance de Database
     $db = new Database();
 
-    // Se connecter à la base de données
     $db->connect();
 
-    // Préparer une requête SQL pour obtenir l'ID du projet pour la ressource
     $sql = "SELECT ID_Projet FROM Ressources WHERE ID = $ressourceId";
     $result = $db->query($sql);
 
@@ -25,10 +22,9 @@ function getProjectIdForRessource($ressourceId) {
         return null;
     }
 
-    // Fermer la connexion à la base de données
     $db->close();
 }
-
+//Ce qui nous intéresse c'est plus spécialement le libellé du projet, c'est pour ça que ya null à la fin
 function getAllProjects() {
     $db = new Database();
     $db->connect();
